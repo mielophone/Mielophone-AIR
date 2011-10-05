@@ -21,7 +21,7 @@
 	</s:HGroup>
 	
 	<s:HGroup>
-		<home:AlbumButton />
+		<home:AlbumButton click="{onAlbumClick(event)}" />
 		<home:SongButton />
 		<home:SupportButton />
 	</s:HGroup>

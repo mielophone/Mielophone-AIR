@@ -1,7 +1,7 @@
 
 import flash.events.Event;
 
-import mielophone.ui.views.ArtistView;
+import mielophone.ui.views.ArtistSearchView;
 
 import mx.core.FlexGlobals;
 
@@ -11,4 +11,8 @@ public function doWork():void{
 
 private function onArtistClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.artistView);
+}
+
+private function onAlbumClick(e:Event):void{
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.albumView);
 }

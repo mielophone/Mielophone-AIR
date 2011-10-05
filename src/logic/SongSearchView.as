@@ -9,19 +9,19 @@ import mx.core.FlexGlobals;
 private var mse:MusicSearchEngine;
 
 public function doWork():void{
-	getTopAlbums();
+	getTopSongs();
 }
 
-private function getTopAlbums():void{
+private function getTopSongs():void{
 	mse = FlexGlobals.topLevelApplication.mse;
-	mse.addEventListener(Event.COMPLETE, onChart);
-	mse.getTopAlbums();
+	mse.addEventListener(Event.COMPLETE, onSongs);
+	mse.getTopTracks();
 }
 
-private function onChart(e:Event):void{
-	mse.removeEventListener(Event.COMPLETE, onChart);
+private function onSongs(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onSongs);
 	
-	albumList.dataProvider = new ArrayCollection(mse.albums);
+	songList.dataProvider = new ArrayCollection(mse.songs);
 	
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }

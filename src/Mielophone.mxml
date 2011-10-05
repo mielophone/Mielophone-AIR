@@ -20,4 +20,7 @@
 	<!-- ALBUM SEARCH VIEW -->
 	<views:AlbumSearchView width="100%" height="100%" id="albumView" visible="false" />
 	
+	<!-- SONG SEARCH VIEW -->
+	<views:SongSearchView width="100%" height="100%" id="songView" visible="false" />
+	
 </s:WindowedApplication>

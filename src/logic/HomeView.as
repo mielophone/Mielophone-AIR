@@ -16,3 +16,7 @@ private function onArtistClick(e:Event):void{
 private function onAlbumClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.albumView);
 }
+
+private function onSongClick(e:Event):void{
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.songView);
+}

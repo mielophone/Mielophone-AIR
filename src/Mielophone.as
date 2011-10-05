@@ -7,5 +7,5 @@ private function onAppicationComplete():void{
 	mse = new MusicSearchEngine();
 	
 	// todo: REMOVE THIS
-	artistView.getTopArtists();
+	//artistView.getTopArtists();
 }

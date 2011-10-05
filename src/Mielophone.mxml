@@ -8,12 +8,13 @@
 					   width="800" height="600">
 	
 	<fx:Script source="Mielophone.as" />
-	<fx:Script source="logic/vars.as" />
+	<fx:Script source="logic/Vars.as" />
+	<fx:Script source="logic/ViewHandling.as" />
 	
 	<!-- MAIN VIEW -->
 	<views:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />
 	
 	<!-- ARTIST SEARCH VIEW -->
-	<views:ArtistView width="100%" height="100%" id="artistView" />
+	<views:ArtistView width="100%" height="100%" id="artistView" visible="false" />
 	
 </s:WindowedApplication>

@@ -22,7 +22,7 @@
 				 prompt="Artist search.." />
 	
 	<!-- result list -->
-	<s:Scroller left="0" right="0" top="26" bottom="0">
+	<s:Scroller left="0" right="0" top="26" bottom="0" skinClass="com.codezen.skins.scroll.SmallScroll">
 		<s:DataGroup width="100%" height="100%" id="artistList" itemRenderer="mielophone.ui.itemrenderers.ArtistItem">
 			<s:layout>
 				<s:TileLayout paddingTop="5" paddingLeft="2" paddingRight="2" columnWidth="130" columnAlign="justifyUsingGap" />

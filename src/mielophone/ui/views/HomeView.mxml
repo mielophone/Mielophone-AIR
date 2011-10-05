@@ -4,9 +4,10 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:home="mielophone.ui.home.*">
 	
+	<fx:Script source="../../../logic/HomeView.as" />
+	
 	<s:layout>
-		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" 
-					  gap="6"/>
+		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" gap="6"/>
 	</s:layout>
 	
 	<s:Label text="Mielphone" color="#FFFFFF" fontSize="36" />
@@ -14,7 +15,7 @@
 	<s:Spacer height="20" />
 	
 	<s:HGroup>
-		<home:ArtistButton />
+		<home:ArtistButton click="{onArtistClick(event)}" />
 		<home:MarketButton />
 		<home:SettingsButton />
 	</s:HGroup>

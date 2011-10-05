@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:home="mielophone.ui.home.*">
+	
+	<s:layout>
+		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" 
+					  gap="6"/>
+	</s:layout>
+	
+	<s:Label text="Mielphone" color="#FFFFFF" fontSize="36" />
+	
+	<s:Spacer height="20" />
+	
+	<s:HGroup>
+		<home:ArtistButton />
+		<home:MarketButton />
+		<home:SettingsButton />
+	</s:HGroup>
+	
+	<s:HGroup>
+		<home:AlbumButton />
+		<home:SongButton />
+		<home:SupportButton />
+	</s:HGroup>
+	
+</s:Group>

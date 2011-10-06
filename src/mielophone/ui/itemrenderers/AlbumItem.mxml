@@ -2,6 +2,7 @@
 <s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" buttonMode="true" useHandCursor="true"
 				width="120"
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
 				dataChange="itemrenderer1_dataChangeHandler(event)">
@@ -51,7 +52,7 @@
 	<!-- TODO: add image when there's no image -->
 	<s:BitmapImage width="120" height="120" id="img" mask="{roundedMask}" maskType="clip" 
 				   smooth="true" smoothingQuality="high"/>
-	<s:Label width="100%" text="{new ObjectProxy(data).artist.name}" fontSize="14" textAlign="center" maxDisplayedLines="2" />
-	<s:Label width="100%" text="{new ObjectProxy(data).name}" textAlign="center" maxDisplayedLines="2" />
+	<s:Label width="100%" text="{new ObjectProxy(data).name}" textAlign="center" maxDisplayedLines="2" fontSize="16" />
+	<s:Label width="100%" text="{new ObjectProxy(data).artist.name}" fontSize="12" textAlign="center" maxDisplayedLines="2" alpha="0.5" />
 	
 </s:ItemRenderer>

@@ -87,7 +87,7 @@ public function changeView(view:*):void{
 	viewHistory.push(currentView);
 	
 	// show loader
-	loadingIndicator.visible = loadingIndicator.isLoading = true;
+	loadingOn();
 	
 	// do view work
 	view.addEventListener(Event.COMPLETE, onViewWork);
@@ -100,7 +100,7 @@ private function onViewWork(e:Event):void{
 	// activate back btn
 	isBackActive = true;
 	// remove loading indicator 
-	loadingIndicator.visible = loadingIndicator.isLoading = false;
+	loadingOff();
 	// get view
 	var view:Group = e.target as Group;
 	// set new current view
@@ -121,4 +121,15 @@ private function onViewWork(e:Event):void{
 			view.percentHeight = view.percentWidth = 100;
 		}});
 	}});
+}
+
+/******************************************************/
+/**					LOADING INDICATION				 **/
+/******************************************************/
+public function loadingOn():void{
+	loadingIndicator.visible = loadingIndicator.isLoading = true;
+}
+
+public function loadingOff():void{
+	loadingIndicator.visible = loadingIndicator.isLoading = false;
 }

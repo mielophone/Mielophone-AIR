@@ -3,7 +3,9 @@ import com.codezen.mse.MusicSearchEngine;
 import com.greensock.TweenLite;
 
 import flash.events.Event;
+import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
+import flash.ui.Keyboard;
 
 import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;
@@ -39,3 +41,24 @@ private function onMouseMove(e:MouseEvent):void{
 		//searchInput.height = 0;
 	}
 }
+
+private function onSearchKeyUp(e:KeyboardEvent):void{
+	if(e.keyCode == Keyboard.ENTER && searchInput.text.length > 1){
+		mse.addEventListener(Event.COMPLETE, onSearch);
+		mse.findArtist(searchInput.text);
+		
+		FlexGlobals.topLevelApplication.loadingOn();
+		
+		searchInput.text = '';
+	}
+}
+
+private function onSearch(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onSearch);
+	
+	FlexGlobals.topLevelApplication.loadingOff();
+	
+	artistList.dataProvider = new ArrayCollection(mse.artists);
+}
+
+

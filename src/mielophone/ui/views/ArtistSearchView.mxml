@@ -26,9 +26,9 @@
 		</s:Line>
 		
 		<!-- search input -->
-		<s:TextInput width="99%" height="0" 
+		<s:TextInput width="99%" height="0" prompt="Search for artist.." 
 					 fontSize="20" id="searchInput"
-					 prompt="Search for artist.." />
+					 keyUp="{onSearchKeyUp(event)}" />
 		
 		<!-- result list -->
 		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">

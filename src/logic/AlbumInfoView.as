@@ -23,14 +23,10 @@ public function doWork():void{
 	
 	mse.addEventListener(Event.COMPLETE, onAlbumTracks);
 	mse.getAlbumTracks(FlexGlobals.topLevelApplication.currentAlbum);
-	trace('start albums work');
 }
 
 private function onAlbumTracks(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onAlbumTracks);
-	
-	trace('got end from mse');
-	trace( ObjectUtil.toString(mse.album.songs) );
 	
 	FlexGlobals.topLevelApplication.currentAlbum.songs = mse.album.songs;
 	songsList.dataProvider = new ArrayCollection(mse.album.songs);

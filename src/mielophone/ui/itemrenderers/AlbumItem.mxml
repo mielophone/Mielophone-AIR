@@ -5,7 +5,8 @@
 				autoDrawBackground="false" buttonMode="true" useHandCursor="true"
 				width="120"
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
-				dataChange="itemrenderer1_dataChangeHandler(event)">
+				dataChange="itemrenderer1_dataChangeHandler(event)"
+				click="itemrenderer1_clickHandler(event)">
 	<fx:Script>
 		<![CDATA[
 			import com.codezen.mse.models.Album;
@@ -41,6 +42,12 @@
 				roundedMask.graphics.beginFill(0xFF0000);
 				roundedMask.graphics.drawRoundRect(0, 0, 120, 120, cornerRadius, cornerRadius);
 				roundedMask.graphics.endFill();
+			}
+			
+			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.currentAlbum = data as Album;
+				FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.albumInfoView);
 			}
 			
 		]]>

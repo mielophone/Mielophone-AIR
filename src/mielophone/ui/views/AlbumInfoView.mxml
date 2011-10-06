@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 width="400" height="300">
 	
-	<fx:Script source="../../../logic/SongSearchView.as" />
+	<fx:Script source="../../../logic/AlbumInfoView.as" />
 	
 	<!-- background fill -->
 	<s:Rect left="0" right="0" top="0" bottom="0" >
@@ -16,14 +16,13 @@
 		</s:fill>
 	</s:Rect>
 	
-	<!-- search input -->
-	<s:TextInput top="0" left="0" right="0" height="26"
-				 fontSize="22"
-				 prompt="Song search.." />
+	<s:HGroup width="100%" height="50" verticalAlign="middle">
+		<s:Image height="50" width="50" id="albumImage" />
+		<s:Label fontWeight="bold" fontSize="18" id="albumName" />
+	</s:HGroup>
 	
-	<!-- result list -->
-	<s:Scroller left="0" right="0" top="26" bottom="0" skinClass="com.codezen.skins.scroll.SmallScroll">
-		<s:DataGroup width="100%" height="100%" id="songList" itemRenderer="mielophone.ui.itemrenderers.FullSongItem">
+	<s:Scroller width="100%" top="50" bottom="0" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">
+		<s:DataGroup id="songsList" itemRenderer="mielophone.ui.itemrenderers.SongItem">
 			<s:layout>
 				<s:VerticalLayout gap="5" />
 			</s:layout>

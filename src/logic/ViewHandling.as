@@ -76,6 +76,8 @@ private function onBackButtonClick(e:Event):void{
 			view.visible = false;
 		}});
 	}});
+	
+	currentView = newView;
 }
 
 /******************************************************/

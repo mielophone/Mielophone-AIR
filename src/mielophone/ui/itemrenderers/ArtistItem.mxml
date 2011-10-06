@@ -5,7 +5,8 @@
 				autoDrawBackground="false" buttonMode="true" useHandCursor="true"
 				width="120"
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
-				dataChange="itemrenderer1_dataChangeHandler(event)">
+				dataChange="itemrenderer1_dataChangeHandler(event)"
+				click="itemrenderer1_clickHandler(event)">
 	
 	<s:layout>
 		<s:VerticalLayout gap="5" horizontalAlign="center" verticalAlign="top" />
@@ -53,9 +54,14 @@
 				lfm = null;
 			}
 			
+			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.artistInfoView);
+			}
+			
 		]]>
 	</fx:Script>
-	
+	<!-- TODO: add image when there's no image available -->
 	<s:BitmapImage width="120" height="120" source="{new ObjectProxy(data).image}" mask="{roundedMask}" maskType="clip"
 				   smooth="true" smoothingQuality="high"/>
 	<s:Label width="100%" text="{new ObjectProxy(data).name}" color="#FFFFFF" fontSize="16" textAlign="center" />

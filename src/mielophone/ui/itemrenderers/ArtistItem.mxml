@@ -56,6 +56,7 @@
 			
 			private function itemrenderer1_clickHandler(event:MouseEvent):void
 			{
+				FlexGlobals.topLevelApplication.currentArtist = data as Artist;
 				FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.artistInfoView);
 			}
 			

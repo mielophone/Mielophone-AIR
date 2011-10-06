@@ -16,4 +16,34 @@
 		</s:fill>
 	</s:Rect>
 	
+	<!-- image and description -->
+	<s:HGroup width="100%" height="100" verticalAlign="top">
+		<s:Image width="150" height="100" verticalAlign="top" id="artistImage" 
+				 smooth="true" smoothingQuality="high"/>
+		<s:VGroup width="100%" height="100%" variableRowHeight="true">
+			<s:Label width="100%" id="artistName" paddingTop="10" paddingLeft="5" paddingRight="5" 
+					 fontSize="16" fontWeight="bold"/>
+			<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
+				<s:Group>
+					<s:Label width="100%" id="artistDesc" paddingLeft="5" paddingRight="5" />
+				</s:Group>
+			</s:Scroller>
+		</s:VGroup>
+	</s:HGroup>
+	
+	<!-- separator line -->
+	<s:Line width="100%" top="102">
+		<s:stroke>
+			<s:SolidColorStroke color="#000000" alpha="0.4" />
+		</s:stroke>
+	</s:Line>
+	
+	<s:Scroller width="100%" bottom="0" top="105" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">		
+		<s:DataGroup id="albumsList" itemRenderer="mielophone.ui.itemrenderers.AlbumItem">
+			<s:layout>
+				<s:TileLayout paddingTop="5" paddingLeft="2" paddingRight="2" columnWidth="130" rowHeight="200" columnAlign="justifyUsingGap"/>
+			</s:layout>
+		</s:DataGroup>
+	</s:Scroller>
+	
 </s:Group>

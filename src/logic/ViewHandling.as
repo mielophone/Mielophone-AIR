@@ -61,13 +61,15 @@ private function onBackButtonClick(e:Event):void{
 	}
 	
 	// hide button
+	backTimer.stop();
+	backTimer.reset();
 	TweenLite.to(backButton, 0.3, {left:-36});
 	
 	// get current view
 	var view:Group = this[currentView];
 	// reset size and position to absolute 
 	view.horizontalCenter = view.verticalCenter = 0;
-	view.height = stage.height; 
+	view.height = stage.stageHeight; 
 	view.width = nativeWindow.width;
 	
 	// animate move-out
@@ -118,7 +120,7 @@ private function onViewWork(e:Event):void{
 	
 	// animate move-in
 	TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
-		TweenLite.to(view, 0.3, {width:nativeWindow.width, height:stage.stageHeight, onComplete:function():void{
+		TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
 			view.x = view.y = 0;
 			view.percentHeight = view.percentWidth = 100;
 		}});

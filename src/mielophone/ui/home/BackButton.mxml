@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 buttonMode="true" useHandCursor="true"
 		 width="36" height="300">
 	
 	<!-- background fill -->
@@ -16,5 +17,28 @@
 			<s:SolidColorStroke color="#432d5b" weight="1" />
 		</s:stroke>
 	</s:Rect>
+	
+	<s:VGroup width="100%" horizontalAlign="center" height="80%" verticalCenter="0" gap="10">
+		<s:Line height="100%" alpha="0.8">
+			<s:stroke>
+				<s:LinearGradientStroke weight="1" rotation="-90">
+					<s:GradientEntry color="#FFFFFF" />
+					<s:GradientEntry color="#432d5b" />
+				</s:LinearGradientStroke>
+			</s:stroke>
+		</s:Line>
+		
+		<s:Image source="/assets/home/back.png" horizontalCenter="0" verticalCenter="0" 
+				 smooth="true" width="24" height="24" />
+		
+		<s:Line height="100%" alpha="0.8">
+			<s:stroke>
+				<s:LinearGradientStroke weight="1" rotation="90">
+					<s:GradientEntry color="#FFFFFF" />
+					<s:GradientEntry color="#432d5b" />
+				</s:LinearGradientStroke>
+			</s:stroke>
+		</s:Line>
+	</s:VGroup>
 	
 </s:Group>

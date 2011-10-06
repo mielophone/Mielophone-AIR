@@ -3,9 +3,12 @@
 					   xmlns:s="library://ns.adobe.com/flex/spark" 
 					   xmlns:mx="library://ns.adobe.com/flex/mx"
 					   xmlns:views="mielophone.ui.views.*"
+					   xmlns:loader="com.codezen.component.loader.*" 
+					   xmlns:home="mielophone.ui.home.*"
 					   skinClass="mielophone.ui.skins.MielophoneApplication"
 					   applicationComplete="{onAppicationComplete()}"
-					   width="800" height="600" xmlns:loader="com.codezen.component.loader.*" xmlns:home="mielophone.ui.home.*">
+					   mouseMove="{onAppMouseMove(event)}"
+					   width="800" height="600" >
 	
 	<fx:Script source="Mielophone.as" />
 	<fx:Script source="logic/Vars.as" />
@@ -25,7 +28,7 @@
 	
 	
 	<!-- ACTIVE LEFT BORDER -->
-	<home:BackButton height="100%" left="0" id="backButton" />
+	<home:BackButton height="100%" left="-36" id="backButton" click="{onBackButtonClick(event)}" />
 	
 	<!-- LOADER -->
 	<loader:LoadingIndicator horizontalCenter="0" verticalCenter="0" width="64" height="64" 

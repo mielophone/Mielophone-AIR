@@ -6,6 +6,6 @@ private function onAppicationComplete():void{
 	// create search engine
 	mse = new MusicSearchEngine();
 	
-	// todo: REMOVE THIS
-	//artistView.getTopArtists();
+	// init view helpers
+	initViewHelpers();
 }

@@ -5,7 +5,7 @@
 					   xmlns:views="mielophone.ui.views.*"
 					   skinClass="mielophone.ui.skins.MielophoneApplication"
 					   applicationComplete="{onAppicationComplete()}"
-					   width="800" height="600" xmlns:loader="com.codezen.component.loader.*">
+					   width="800" height="600" xmlns:loader="com.codezen.component.loader.*" xmlns:home="mielophone.ui.home.*">
 	
 	<fx:Script source="Mielophone.as" />
 	<fx:Script source="logic/Vars.as" />
@@ -23,6 +23,9 @@
 	<!-- SONG SEARCH VIEW -->
 	<views:SongSearchView width="100%" height="100%" id="songView" visible="false" />
 	
+	
+	<!-- ACTIVE LEFT BORDER -->
+	<home:BackButton height="100%" left="0" id="backButton" />
 	
 	<!-- LOADER -->
 	<loader:LoadingIndicator horizontalCenter="0" verticalCenter="0" width="64" height="64" 

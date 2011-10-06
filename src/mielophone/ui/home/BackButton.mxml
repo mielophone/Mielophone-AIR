@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="36" height="300">
+	
+	<!-- background fill -->
+	<s:Rect left="0" right="0" top="0" bottom="0" >
+		<s:fill>
+			<s:LinearGradient rotation="-90">
+				<s:GradientEntry color="#210B39" />
+				<s:GradientEntry color="#432d5b" />
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="#432d5b" weight="1" />
+		</s:stroke>
+	</s:Rect>
+	
+</s:Group>

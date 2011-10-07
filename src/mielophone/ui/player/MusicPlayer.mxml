@@ -3,7 +3,9 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:advancedprogress="com.codezen.component.advancedprogress.*"
-		 width="300" height="300">
+		 width="300" height="300"
+		 mouseMove="{onMouseMove(event)}"
+		 mouseOut="{onMouseOut(event)}">
 	
 	<fx:Script source="../../../logic/player/Player.as" />
 	
@@ -24,7 +26,8 @@
 	</s:Rect>
 	
 	<!-- top player UI -->
-	<s:VGroup width="100%" height="100%" variableRowHeight="true" horizontalAlign="center" gap="5">
+	<s:VGroup width="100%" height="100%" variableRowHeight="true" horizontalAlign="center" 
+			  gap="5" paddingLeft="10" paddingRight="5">
 		
 		<s:HGroup width="100%" paddingLeft="5" paddingTop="10" paddingRight="5" paddingBottom="5" 
 				  variableColumnWidth="true">

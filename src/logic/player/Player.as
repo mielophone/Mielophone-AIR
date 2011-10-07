@@ -12,6 +12,9 @@ import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
 import flash.events.Event;
+import flash.events.MouseEvent;
+import flash.events.TimerEvent;
+import flash.utils.Timer;
 
 import mx.core.FlexGlobals;
 import mx.events.FlexEvent;
@@ -28,6 +31,8 @@ private var pauseImg:Class;
 [Embed(source="/assets/images/nocover.png")]
 private var nocoverImg:Class;
 
+private var hideTimer:Timer;
+
 private var mse:MusicSearchEngine;
 
 private var player:Playr;
@@ -37,6 +42,9 @@ private var playPos:int;
 public var mp3sList:Array;
 
 public function initPlayer():void{
+	hideTimer = new Timer(500, 1);
+	hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimer);
+	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
 	player = new Playr();
@@ -192,6 +200,16 @@ private function playSong(song:PlayrTrack):void{
 	player.play();
 }
 
-private function onMouseOut(e:Event):void{
+// ---------------------------------------------------------
+private function onHideTimer(e:Event):void{
 	TweenLite.to(this, 0.4, {right:-300});
+}
+
+private function onMouseOut(e:MouseEvent):void{
+	hideTimer.start();
+}
+
+private function onMouseMove(e:MouseEvent):void{
+	hideTimer.stop();
+	hideTimer.reset();
 }

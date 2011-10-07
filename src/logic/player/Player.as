@@ -79,11 +79,11 @@ private function onPlayerState(e:PlayrEvent):void{
 			playBtn.source = pauseImg;
 			break;
 		case PlayrStates.STOPPED:
-		case PlayrStates.PAUSED:
 		case PlayrStates.WAITING:
-			playBtn.source = playImg;
 			timeMax.text = "--:--";
 			timeCurrent.text = "--:--";
+		case PlayrStates.PAUSED:
+			playBtn.source = playImg;
 			break;
 	}
 }

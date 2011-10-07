@@ -9,6 +9,7 @@ import com.codezen.mse.playr.PlayrTrack;
 import com.codezen.mse.services.LastFM;
 import com.codezen.mse.services.MusicBrainz;
 import com.codezen.util.CUtils;
+import com.greensock.TweenLite;
 
 import flash.events.Event;
 
@@ -153,4 +154,8 @@ private function playSong(song:PlayrTrack):void{
 	player.stop();
 	player.playlist = pl;
 	player.play();
+}
+
+private function onMouseOut(e:Event):void{
+	TweenLite.to(this, 0.4, {right:-300});
 }

@@ -12,8 +12,11 @@ import spark.components.Group;
 /******************************************************/
 // back button activator
 private var isBackActive:Boolean = false;
-// back button display timer
+// display timers
+// back button 
 private var backTimer:Timer;
+// player
+private var playerTimer:Timer;
 // current view
 private var currentView:String;
 // views array
@@ -28,6 +31,17 @@ private function initViewHelpers():void{
 	
 	backTimer = new Timer(500, 1);
 	backTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onBackTimer);
+	
+	playerTimer = new Timer(500, 1);
+	playerTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onPlayerTimer);
+}
+
+/******************************************************/
+/**					PLAYER HANDLING			 		 **/
+/******************************************************/
+
+private function onPlayerTimer(e:Event):void{
+	TweenLite.to(musicPlayer, 0.3, {right:0});	
 }
 
 /******************************************************/
@@ -38,7 +52,13 @@ private function onAppMouseMove(e:MouseEvent):void{
 	
 	if( e.stageX < 20 ){	
 		backTimer.start();
+	}else if( e.stageX > this.stage.stageWidth - 20 ){
+		playerTimer.start();
 	}else{
+		// player stop
+		playerTimer.stop();
+		playerTimer.reset();
+		// back stop
 		backTimer.stop();
 		backTimer.reset();
 		if(backButton.left != -36){

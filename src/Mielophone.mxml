@@ -38,7 +38,7 @@
 	<home:BackButton height="100%" left="-36" id="backButton" click="{onBackButtonClick(event)}" />
 	
 	<!-- MUSIC PLAYER -->
-	<player:MusicPlayer height="100%" right="0" id="musicPlayer" />
+	<player:MusicPlayer height="100%" right="-300" id="musicPlayer" />
 	
 	<!-- LOADER -->
 	<loader:LoadingIndicator horizontalCenter="0" verticalCenter="0" width="64" height="64" 

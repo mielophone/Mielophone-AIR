@@ -8,4 +8,7 @@ private function onAppicationComplete():void{
 	
 	// init view helpers
 	initViewHelpers();
+	
+	// init player
+	musicPlayer.initPlayer();
 }

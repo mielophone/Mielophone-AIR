@@ -34,6 +34,7 @@ private var player:Playr;
 private var playQueue:Array;
 private var playPos:int;
 
+public var mp3sList:Array;
 
 public function initPlayer():void{
 	mse = FlexGlobals.topLevelApplication.mse;
@@ -156,10 +157,14 @@ private function prev_btn_clickHandler(event:MouseEvent):void{
 // -----------------------------
 
 public function findSongAndPlay(song:Song):void{
-	artistName.text = "Searching for stream..";
-	songName.text = "";
-	mse.addEventListener(Event.COMPLETE, onSongLinks);
-	mse.findMP3(song);
+	if(mp3sList != null){
+		playSong(mp3sList[song.number] as PlayrTrack);
+	}else{
+		artistName.text = "Searching for stream..";
+		songName.text = "";
+		mse.addEventListener(Event.COMPLETE, onSongLinks);
+		mse.findMP3(song);
+	}
 }
 
 private function onSongLinks(e:Event):void{

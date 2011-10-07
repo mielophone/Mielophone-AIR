@@ -3,7 +3,8 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				width="100%" height="32"
-				dataChange="itemrenderer1_dataChangeHandler(event)">
+				dataChange="itemrenderer1_dataChangeHandler(event)"
+				click="itemrenderer1_clickHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
@@ -23,6 +24,13 @@
 				}else{
 					bg = 0xeeeeee;
 				}
+			}
+			
+			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
+				//trace(this.itemIndex);
+				FlexGlobals.topLevelApplication.musicPlayer.findSongAndPlay(data as Song);
 			}
 			
 		]]>

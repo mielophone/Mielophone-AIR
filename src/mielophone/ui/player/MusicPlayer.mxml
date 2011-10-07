@@ -28,12 +28,12 @@
 		<s:HGroup width="100%" paddingLeft="5" paddingTop="10" paddingRight="5" paddingBottom="5" 
 				  variableColumnWidth="true">
 			<!-- album image -->
-			<s:Image width="50" height="50" source="/assets/images/nocover.png" 
-					 smooth="true" smoothingQuality="high"/>
+			<s:Image width="50" height="50" source="{nocoverImg}" 
+					 smooth="true" smoothingQuality="high" id="albumCover" />
 			<!-- track info and buttons -->
 			<s:VGroup height="100%" width="100%">
 				<s:RichText fontWeight="bold" fontSize="16" color="#FFFFFF" 
-						 text="1. Some song name here" 
+						 text="1. Some song name here"
 						 width="100%" maxDisplayedLines="1" id="songName" />
 				
 				<s:RichText fontSize="12" color="#FFFFFF" 
@@ -65,7 +65,7 @@
 			<!-- prev play-pause next --> 
 			<s:Image source="@Embed('/assets/player/previous.png')" 
 					 buttonMode="true" useHandCursor="true" />
-			<s:Image source="{playImg}"
+			<s:Image source="{playImg}" id="playBtn"
 					 buttonMode="true" useHandCursor="true" />
 			<s:Image source="@Embed('/assets/player/next.png')"
 					 buttonMode="true" useHandCursor="true" />
@@ -87,9 +87,9 @@
 		
 		<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true"
 				  paddingLeft="10" paddingRight="10">
-			<s:Label color="#FFFFFF" text="00:00" />
-			<advancedprogress:AdvancedProgressBar width="100%" gradientStartColor="#afdf72" gradientEndColor="#38a226" />
-			<s:Label color="#FFFFFF" text="00:00" />
+			<s:Label color="#FFFFFF" text="00:00" id="timeCurrent" />
+			<advancedprogress:AdvancedProgressBar width="100%" gradientStartColor="#afdf72" gradientEndColor="#38a226" id="timeSlider" />
+			<s:Label color="#FFFFFF" text="00:00" id="timeMax" />
 		</s:HGroup>
 		
 		<s:Spacer height="10" />

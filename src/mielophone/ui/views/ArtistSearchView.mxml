@@ -5,7 +5,7 @@
 		 width="400" height="300"
 		 mouseMove="{onMouseMove(event)}">
 	
-	<fx:Script source="../../../logic/ArtistSearchView.as" />
+	<fx:Script source="../../../logic/views/ArtistSearchView.as" />
 	
 	<!-- background fill -->
 	<s:Rect left="0" right="0" top="0" bottom="0" >

@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:home="mielophone.ui.home.*">
 	
-	<fx:Script source="../../../logic/HomeView.as" />
+	<fx:Script source="../../../logic/views/HomeView.as" />
 	
 	<s:layout>
 		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" gap="6"/>

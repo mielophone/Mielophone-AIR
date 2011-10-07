@@ -18,6 +18,10 @@
 		</s:stroke>
 	</s:Rect>
 	
+	<s:Image source="/assets/home/home.png" horizontalCenter="0" top="10" 
+			 smooth="true" width="24" height="24" id="homeBtn" 
+			 buttonMode="true" useHandCursor="true"/>
+	
 	<s:VGroup width="100%" horizontalAlign="center" height="80%" verticalCenter="0" gap="10">
 		<s:Line height="100%" alpha="0.8">
 			<s:stroke>

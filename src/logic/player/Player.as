@@ -154,6 +154,10 @@ private function prev_btn_clickHandler(event:MouseEvent):void{
 	findPrevSong();
 }*/
 
+private function onVolumeSlider(e:Event):void{
+	player.volume = volumeSlider.value/100;
+}
+
 // -----------------------------
 
 public function findSongAndPlay(song:Song):void{

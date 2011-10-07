@@ -54,19 +54,16 @@ private function onBackTimer(e:Event):void{
 private function onBackButtonClick(e:Event):void{
 	if( viewHistory.length == 0 ) return;
 	
+	// new view var
 	var newView:String;
 	
 	// if home button pressed - go home
 	if( e.target.parent.id == "homeBtn" ){
-		isBackActive = false;
-		
+		// pop and hide all old views
 		while(viewHistory.length > 1){
 			newView = viewHistory.pop();
 			this[newView].visible = false;
 		}
-		
-		// set destination as home
-		newView = viewHistory.pop();
 	}
 	
 	// get new view string

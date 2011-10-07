@@ -91,6 +91,7 @@ private function onPlayerState(e:PlayrEvent):void{
 		case PlayrStates.WAITING:
 			timeMax.text = "--:--";
 			timeCurrent.text = "--:--";
+			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 		case PlayrStates.PAUSED:
 			playBtn.source = playImg;
 			break;
@@ -103,6 +104,7 @@ private function onProgress(e:PlayrEvent):void{
 		timeMax.text = player.totalTime;
 		artistName.text = CUtils.convertHTMLEntities(player.artist); 
 		songName.text = CUtils.convertHTMLEntities(player.title);
+		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artistName.text+" - "+songName.text;
 	}
 	timeSlider.position = player.currentSeconds;
 	
@@ -132,6 +134,8 @@ private function onSong(e:PlayrEvent):void{
 	timeMax.text = player.totalTime;
 	artistName.text = CUtils.convertHTMLEntities(player.artist); 
 	songName.text = CUtils.convertHTMLEntities(player.title);
+	
+	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artistName.text+" - "+songName.text;
 }
 
 // ------------------			

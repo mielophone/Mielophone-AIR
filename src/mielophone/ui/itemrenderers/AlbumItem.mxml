@@ -24,8 +24,6 @@
 			[Bindable]
 			public var roundedMask:Sprite;
 			
-			private var imageLoader:Loader;
-			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				img.source = nocoverImg;
 				if(data == null) return;
@@ -43,16 +41,31 @@
 			}
 			
 			private function preloadImage():void{
-				imageLoader = new Loader();
+				var imageLoader:Loader = new Loader();
 				var theURL:String = data.image;
 				var imageRequest:URLRequest = new URLRequest(theURL);
 				
-				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void{
-					if( imageLoader.content == null ) return;
-					if( imageLoader.content.width > 10 && imageLoader.content.height > 10 )
-						img.source = imageLoader.content;
-				});
+				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onImageContent);
+				imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
 				imageLoader.load(imageRequest);
+			}
+			
+			private function onImageContent(e:Event):void{
+				var imageLoader:LoaderInfo = e.target as LoaderInfo;
+				if( imageLoader.content == null ) return;
+				if( imageLoader.content.width > 10 && imageLoader.content.height > 10 )
+					img.source = imageLoader.content;
+				
+				imageLoader.removeEventListener(Event.COMPLETE, onImageContent);
+				imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+				imageLoader = null;
+			}
+			
+			private function onError(e:Event):void{
+				var imageLoader:LoaderInfo = e.target as LoaderInfo;
+				imageLoader.removeEventListener(Event.COMPLETE, onImageContent);
+				imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+				imageLoader = null;
 			}
 			
 			private function itemrenderer1_creationCompleteHandler(event:FlexEvent):void

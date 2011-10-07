@@ -4,6 +4,8 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 width="300" height="300" xmlns:advancedprogress="com.codezen.component.advancedprogress.*">
 	
+	<fx:Script source="../../../logic/player/Player.as" />
+	
 	<!-- background fill -->
 	<s:Rect left="0" right="0" top="0" bottom="0" >
 		<s:fill>
@@ -40,9 +42,11 @@
 				
 				<s:HGroup width="100%">
 					<s:Button label="Download" chromeColor="#36679f" color="#FFFFFF" 
-							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"/>
+							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"
+							  useHandCursor="true" />
 					<s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 
-							  icon="@Embed('/assets/player/favourite.png')" iconPlacement="right"/>
+							  icon="@Embed('/assets/player/favourite.png')" iconPlacement="right"
+							  useHandCursor="true" />
 				</s:HGroup>
 			</s:VGroup>
 		</s:HGroup>
@@ -59,21 +63,26 @@
 		<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true" 
 				  gap="5" paddingLeft="5" paddingRight="10">
 			<!-- prev play-pause next --> 
-			<s:Image source="@Embed('/assets/player/previous.png')" />
-			<s:Image source="/assets/player/play.png" />
-			<s:Image source="@Embed('/assets/player/next.png')" />
+			<s:Image source="@Embed('/assets/player/previous.png')" 
+					 buttonMode="true" useHandCursor="true" />
+			<s:Image source="{playImg}"
+					 buttonMode="true" useHandCursor="true" />
+			<s:Image source="@Embed('/assets/player/next.png')"
+					 buttonMode="true" useHandCursor="true" />
 			
 			<s:Spacer width="30" />
 			
 			<!-- repeat random -->
-			<s:Image source="@Embed('/assets/player/repeat.png')" />
-			<s:Image source="@Embed('/assets/player/shuffle.png')" />
+			<s:Image source="@Embed('/assets/player/repeat.png')" 
+					 buttonMode="true" useHandCursor="true" />
+			<s:Image source="@Embed('/assets/player/shuffle.png')" 
+					 buttonMode="true" useHandCursor="true" />
 			
 			<s:Spacer width="30" />
 			
 			<!-- volume control -->
 			<s:Image source="@Embed('/assets/player/volume.png')" />
-			<s:HSlider width="100%" />
+			<s:HSlider width="100%" minimum="0" maximum="100" value="100" />
 		</s:HGroup>
 		
 		<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true"

@@ -21,7 +21,7 @@
 	</s:Rect>
 	
 	<!-- top player UI -->
-	<s:VGroup width="100%" variableRowHeight="true" horizontalAlign="center">
+	<s:VGroup width="100%" height="100%" variableRowHeight="true" horizontalAlign="center" gap="5">
 		
 		<s:HGroup width="100%" paddingLeft="5" paddingTop="10" paddingRight="5" paddingBottom="5" 
 				  variableColumnWidth="true">
@@ -39,8 +39,10 @@
 						 width="100%" maxDisplayedLines="1" id="artistName" />
 				
 				<s:HGroup width="100%">
-					<s:Button label="Download" />
-					<s:Button label="Playlist" />
+					<s:Button label="Download" chromeColor="#36679f" color="#FFFFFF" 
+							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"/>
+					<s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 
+							  icon="@Embed('/assets/player/favourite.png')" iconPlacement="right"/>
 				</s:HGroup>
 			</s:VGroup>
 		</s:HGroup>
@@ -54,18 +56,35 @@
 			</s:filters>
 		</s:Line>
 		
-		<s:HGroup width="100%" verticalAlign="middle">
+		<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true" 
+				  gap="5" paddingLeft="5" paddingRight="10">
 			<!-- prev play-pause next --> 
-			<s:Button skinClass="spark.skins.spark.ScrollBarLeftButtonSkin" />
-			<s:ToggleButton skinClass="spark.skins.spark.mediaClasses.fullScreen.PlayPauseButtonSkin" />
-			<s:Button skinClass="spark.skins.spark.ScrollBarRightButtonSkin" />
+			<s:Image source="@Embed('/assets/player/previous.png')" />
+			<s:Image source="/assets/player/play.png" />
+			<s:Image source="@Embed('/assets/player/next.png')" />
+			
+			<s:Spacer width="30" />
 			
 			<!-- repeat random -->
+			<s:Image source="@Embed('/assets/player/repeat.png')" />
+			<s:Image source="@Embed('/assets/player/shuffle.png')" />
+			
+			<s:Spacer width="30" />
 			
 			<!-- volume control -->
+			<s:Image source="@Embed('/assets/player/volume.png')" />
+			<s:HSlider width="100%" />
 		</s:HGroup>
 		
-		<advancedprogress:AdvancedProgressBar width="95%" gradientStartColor="#65cee1" gradientEndColor="#3395c2" />
+		<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true"
+				  paddingLeft="10" paddingRight="10">
+			<s:Label color="#FFFFFF" text="00:00" />
+			<advancedprogress:AdvancedProgressBar width="100%" gradientStartColor="#afdf72" gradientEndColor="#38a226" />
+			<s:Label color="#FFFFFF" text="00:00" />
+		</s:HGroup>
+		
+		<s:Spacer height="10" />
+		
+		
 	</s:VGroup>
-	
 </s:Group>

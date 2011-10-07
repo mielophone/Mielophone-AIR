@@ -14,6 +14,7 @@ import com.greensock.TweenLite;
 import flash.events.Event;
 
 import mx.core.FlexGlobals;
+import mx.events.FlexEvent;
 
 [Bindable]
 [Embed(source="/assets/player/play.png")]
@@ -41,9 +42,31 @@ public function initPlayer():void{
 	
 	player.addEventListener(PlayrEvent.PLAYRSTATE_CHANGED, onPlayerState);
 	player.addEventListener(PlayrEvent.TRACK_PROGRESS, onProgress);
+	player.addEventListener(PlayrEvent.STREAM_PROGRESS, onStreamProgress);
 	player.addEventListener(PlayrEvent.SONGINFO, onSong);
 	player.addEventListener(PlayrEvent.TRACK_COMPLETE, onTrackEnd);
+	
+	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
+	timeSlider.slider.dataTipFormatFunction = timeDataTip;
 }
+
+/**
+ * Data tip for time slider 
+ * @param val
+ * @return 
+ * 
+ */
+private function timeDataTip(val:String):String{
+	var duration:Number = Number(val);
+	
+	return CUtils.secondsToString(duration);
+}
+
+private function onSeek(e:Event):void{
+	var seekTime:Number = timeSlider.slider.value*1000;
+	player.scrobbleTo(seekTime);
+}
+
 
 private function onTrackEnd(e:PlayrEvent):void{
 	//nowplay_text.text = "Searching for stream..";
@@ -82,6 +105,10 @@ private function onProgress(e:PlayrEvent):void{
 	}
 	
 	timeCurrent.text = player.currentTime;
+}
+
+private function onStreamProgress(e:PlayrEvent):void{
+	timeSlider.progress = e.progress;
 }
 
 private function onSong(e:PlayrEvent):void{	

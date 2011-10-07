@@ -3,8 +3,7 @@
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:advancedprogress="com.codezen.component.advancedprogress.*"
-		 width="300" height="300"
-		 mouseOut="{onMouseOut(event)}">
+		 width="300" height="300">
 	
 	<fx:Script source="../../../logic/player/Player.as" />
 	
@@ -90,7 +89,8 @@
 		<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true"
 				  paddingLeft="10" paddingRight="10">
 			<s:Label color="#FFFFFF" text="00:00" id="timeCurrent" />
-			<advancedprogress:AdvancedProgressBar width="100%" gradientStartColor="#afdf72" gradientEndColor="#38a226" id="timeSlider" />
+			<advancedprogress:AdvancedProgressBar width="100%" gradientStartColor="#afdf72" gradientEndColor="#38a226" id="timeSlider" 
+												  />
 			<s:Label color="#FFFFFF" text="00:00" id="timeMax" />
 		</s:HGroup>
 		

@@ -16,6 +16,9 @@
 		<s:stroke>
 			<s:SolidColorStroke color="#432d5b" weight="1" />
 		</s:stroke>
+		<s:filters>
+			<s:DropShadowFilter angle="0" color="#432d5b" blurX="16" blurY="16" distance="4" />
+		</s:filters>
 	</s:Rect>
 	
 	<s:Image source="/assets/home/home.png" horizontalCenter="0" top="10" 

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="300" height="300" xmlns:advancedprogress="com.codezen.component.advancedprogress.*">
+	
+	<!-- background fill -->
+	<s:Rect left="0" right="0" top="0" bottom="0" >
+		<s:fill>
+			<s:LinearGradient rotation="-90">
+				<s:GradientEntry color="#1A1917" />
+				<s:GradientEntry color="#3c3b39" />
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="#3c3b39" weight="1" />
+		</s:stroke>
+		<s:filters>
+			<s:DropShadowFilter angle="180" color="#3c3b39" blurX="16" blurY="16" distance="4" />
+		</s:filters>
+	</s:Rect>
+	
+	<!-- top player UI -->
+	<s:VGroup width="100%" variableRowHeight="true" horizontalAlign="center">
+		
+		<s:HGroup width="100%" paddingLeft="5" paddingTop="10" paddingRight="5" paddingBottom="5" 
+				  variableColumnWidth="true">
+			<!-- album image -->
+			<s:Image width="50" height="50" source="/assets/images/nocover.png" 
+					 smooth="true" smoothingQuality="high"/>
+			<!-- track info and buttons -->
+			<s:VGroup height="100%" width="100%">
+				<s:RichText fontWeight="bold" fontSize="16" color="#FFFFFF" 
+						 text="1. Some song name here" 
+						 width="100%" maxDisplayedLines="1" id="songName" />
+				
+				<s:RichText fontSize="12" color="#FFFFFF" 
+						 text="by Some artist name here"
+						 width="100%" maxDisplayedLines="1" id="artistName" />
+				
+				<s:HGroup width="100%">
+					<s:Button label="Download" />
+					<s:Button label="Playlist" />
+				</s:HGroup>
+			</s:VGroup>
+		</s:HGroup>
+		
+		<s:Line width="100%">
+			<s:stroke>
+				<s:SolidColorStroke color="#272727" weight="1" />
+			</s:stroke>
+			<s:filters>
+				<s:DropShadowFilter color="#535353" distance="1" angle="90" />
+			</s:filters>
+		</s:Line>
+		
+		<s:HGroup width="100%" verticalAlign="middle">
+			<!-- prev play-pause next --> 
+			<s:Button skinClass="spark.skins.spark.ScrollBarLeftButtonSkin" />
+			<s:ToggleButton skinClass="spark.skins.spark.mediaClasses.fullScreen.PlayPauseButtonSkin" />
+			<s:Button skinClass="spark.skins.spark.ScrollBarRightButtonSkin" />
+			
+			<!-- repeat random -->
+			
+			<!-- volume control -->
+		</s:HGroup>
+		
+		<advancedprogress:AdvancedProgressBar width="95%" gradientStartColor="#65cee1" gradientEndColor="#3395c2" />
+	</s:VGroup>
+	
+</s:Group>

@@ -21,9 +21,15 @@
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectProxy;
 			
+			[Bindable]
+			[Embed(source="/assets/images/nocover.png")]
+			private var nocoverImg:Class;
+			
 			// mask
 			[Bindable]
-			public var roundedMask:Sprite;
+			private var roundedMask:Sprite;
+			
+			private var imageLoader:Loader;
 						
 			private function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
 			{
@@ -36,13 +42,29 @@
 			}
 			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
+				image.source = nocoverImg;
 				if(data == null) return;
 				
 				if( data.image == null || data.image.length < 5 ){
 					var lfm:LastFM = new LastFM();
 					lfm.addEventListener(Event.COMPLETE, onImage);
 					lfm.getArtistInfo(data as Artist);
+				}else{
+					preloadImage();
 				}
+			}
+			
+			private function preloadImage():void{
+				imageLoader = new Loader();
+				var theURL:String = data.image;
+				var imageRequest:URLRequest = new URLRequest(theURL);
+				
+				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void{
+					if( imageLoader.content == null ) return;
+					if( imageLoader.content.width > 10 && imageLoader.content.height > 10 )
+						image.source = imageLoader.content;
+				});
+				imageLoader.load(imageRequest);
 			}
 			
 			private function onImage(e:Event):void{
@@ -50,6 +72,8 @@
 				lfm.removeEventListener(Event.COMPLETE, onImage);
 				
 				data = lfm.artist;
+				
+				preloadImage();
 				
 				lfm = null;
 			}
@@ -63,8 +87,8 @@
 		]]>
 	</fx:Script>
 	<!-- TODO: add image when there's no image available -->
-	<s:BitmapImage width="120" height="120" source="{new ObjectProxy(data).image}" mask="{roundedMask}" maskType="clip"
-				   smooth="true" smoothingQuality="high"/>
+	<s:BitmapImage width="120" height="120" source="{nocoverImg}" mask="{roundedMask}" maskType="clip"
+				   smooth="true" smoothingQuality="high" id="image"/>
 	<s:Label width="100%" text="{new ObjectProxy(data).name}" color="#FFFFFF" fontSize="16" textAlign="center" />
 	
 </s:ItemRenderer>

@@ -5,10 +5,11 @@
 					   xmlns:views="mielophone.ui.views.*"
 					   xmlns:loader="com.codezen.component.loader.*" 
 					   xmlns:home="mielophone.ui.home.*"
+					   xmlns:player="mielophone.ui.player.*" 
 					   skinClass="mielophone.ui.skins.MielophoneApplication"
 					   applicationComplete="{onAppicationComplete()}"
 					   mouseMove="{onAppMouseMove(event)}"
-					   width="800" height="600" xmlns:player="mielophone.ui.player.*" >
+					   width="800" height="600">
 	
 	<fx:Script source="Mielophone.as" />
 	<fx:Script source="logic/Vars.as" />

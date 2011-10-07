@@ -16,22 +16,43 @@
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectProxy;
 			
+			[Bindable]
+			[Embed(source="/assets/images/nocover.png")]
+			private var nocoverImg:Class;
+			
 			// mask
 			[Bindable]
 			public var roundedMask:Sprite;
 			
+			private var imageLoader:Loader;
+			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
+				img.source = nocoverImg;
 				if(data == null) return;
 				
 				var mb:MusicBrainz = new MusicBrainz();
 				mb.addEventListener(Event.COMPLETE, function onCover(e:Event):void{
 					mb.removeEventListener(Event.COMPLETE, onCover);
 					
-					data.image = img.source = mb.albumCover;
+					data.image = mb.albumCover;
+					preloadImage();
 					
 					mb = null;
 				});
 				mb.findAlbumCover(data.name, data.artist.name);
+			}
+			
+			private function preloadImage():void{
+				imageLoader = new Loader();
+				var theURL:String = data.image;
+				var imageRequest:URLRequest = new URLRequest(theURL);
+				
+				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, function(e:Event):void{
+					if( imageLoader.content == null ) return;
+					if( imageLoader.content.width > 10 && imageLoader.content.height > 10 )
+						img.source = imageLoader.content;
+				});
+				imageLoader.load(imageRequest);
 			}
 			
 			private function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
@@ -57,7 +78,7 @@
 		<s:VerticalLayout gap="5" horizontalAlign="center" verticalAlign="top" />
 	</s:layout>
 	<!-- TODO: add image when there's no image -->
-	<s:BitmapImage width="120" height="120" id="img" mask="{roundedMask}" maskType="clip" 
+	<s:BitmapImage width="120" height="120" id="img" source="{nocoverImg}" mask="{roundedMask}" maskType="clip" 
 				   smooth="true" smoothingQuality="high"/>
 	<s:Label width="100%" text="{new ObjectProxy(data).name}" textAlign="center" maxDisplayedLines="2" fontSize="16" />
 	<s:Label width="100%" text="{new ObjectProxy(data).artist.name}" fontSize="12" textAlign="center" maxDisplayedLines="2" alpha="0.5" />

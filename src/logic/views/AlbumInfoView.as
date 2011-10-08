@@ -3,12 +3,14 @@ import com.codezen.mse.MusicSearchEngine;
 import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
+import flash.events.ErrorEvent;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.ui.Keyboard;
 
 import mx.collections.ArrayCollection;
+import mx.controls.Alert;
 import mx.core.FlexGlobals;
 import mx.utils.ObjectUtil;
 
@@ -24,7 +26,13 @@ public function doWork():void{
 	albumImage.source = FlexGlobals.topLevelApplication.currentAlbum.image;
 	
 	mse.addEventListener(Event.COMPLETE, onAlbumTracks);
+	mse.addEventListener(ErrorEvent.ERROR, onAlbumError);
 	mse.getAlbumTracks(FlexGlobals.topLevelApplication.currentAlbum);
+}
+
+private function onAlbumError(e:ErrorEvent):void{
+	Alert.show(e.text, "Error finding album!");
+	this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, true, false, "Album error"));
 }
 
 private function onAlbumTracks(e:Event):void{

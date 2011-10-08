@@ -3,12 +3,14 @@ import com.codezen.skins.scroll.SmallVScrollThumb;
 import com.codezen.skins.scroll.SmallVScrollTrack;
 import com.greensock.TweenLite;
 
+import flash.events.ErrorEvent;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.ui.Mouse;
 import flash.utils.Timer;
 
+import mx.messaging.messages.ErrorMessage;
 import mx.utils.ObjectUtil;
 
 import spark.components.Group;
@@ -140,7 +142,15 @@ public function changeView(view:*):void{
 	
 	// do view work
 	view.addEventListener(Event.COMPLETE, onViewWork);
+	view.addEventListener(ErrorEvent.ERROR, onViewError);
 	view.doWork();
+}
+
+private function onViewError(e:ErrorEvent):void{
+	e.target.removeEventListener(Event.COMPLETE, onViewWork);
+	e.target.removeEventListener(ErrorEvent.ERROR, onViewError);
+	
+	loadingOff();
 }
 
 private function onViewWork(e:Event):void{

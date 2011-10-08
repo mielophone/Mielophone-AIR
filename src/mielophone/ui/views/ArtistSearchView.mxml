@@ -11,8 +11,8 @@
 	<s:Rect left="0" right="0" top="0" bottom="0" >
 		<s:fill>
 			<s:LinearGradient rotation="90">
-				<s:GradientEntry color="#6D8E01" />
-				<s:GradientEntry color="#8fb023" />
+				<s:GradientEntry color="#8ca320" />
+				<s:GradientEntry color="#7A852D" />
 			</s:LinearGradient>
 		</s:fill>
 	</s:Rect>

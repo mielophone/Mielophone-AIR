@@ -50,7 +50,7 @@
 				 fontSize="16" color="#3e444f" fontWeight="bold" />
 		<s:Label width="50%" text="{new ObjectProxy(data).artist.name}" maxDisplayedLines="1" 
 				 fontSize="16" color="#8c919a" fontWeight="bold" />
-		<s:Label text="{new ObjectProxy(data).durationText}" paddingRight="10" fontSize="14" color="#858a92" />
+		<s:Label text="{new ObjectProxy(data).durationText}" fontSize="14" color="#858a92" />
 	</s:HGroup>
 	
 </s:ItemRenderer>

@@ -1,9 +1,15 @@
+import com.codezen.skins.scroll.SmallScroll;
+import com.codezen.skins.scroll.SmallVScrollThumb;
+import com.codezen.skins.scroll.SmallVScrollTrack;
 import com.greensock.TweenLite;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
+import flash.ui.Mouse;
 import flash.utils.Timer;
+
+import mx.utils.ObjectUtil;
 
 import spark.components.Group;
 
@@ -32,7 +38,7 @@ private function initViewHelpers():void{
 	backTimer = new Timer(500, 1);
 	backTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onBackTimer);
 	
-	playerTimer = new Timer(500, 1);
+	playerTimer = new Timer(1000, 1);
 	playerTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onPlayerTimer);
 }
 
@@ -52,8 +58,14 @@ private function onAppMouseMove(e:MouseEvent):void{
 	
 	if( e.stageX < 20 ){	
 		backTimer.start();
-	}else if( e.stageX > this.stage.stageWidth - 20 ){
-		playerTimer.start();
+	}else if( e.stageX > this.stage.stageWidth - 25 ){
+		// detect if user is using scroll
+		if(e.target.id == "track" || e.target.id == "thumb"){
+			playerTimer.stop();
+			playerTimer.reset();
+		}else{
+			playerTimer.start();
+		}
 	}else{
 		// player stop
 		playerTimer.stop();

@@ -20,9 +20,9 @@
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				if(data == null) return;
 				if( int(data.number) % 2 == 0 ){
-					bg = 0xFFFFFF;
+					bg = 0xc3cdd8;
 				}else{
-					bg = 0xeeeeee;
+					bg = 0xe1e6ec;
 				}
 			}
 			
@@ -42,10 +42,11 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:HGroup width="100%" height="100%" gap="2" verticalAlign="bottom">
-		<s:Label text="{new ObjectProxy(data).number}." fontSize="20" color="#888888" />
-		<s:Label width="100%" text="{new ObjectProxy(data).name}" fontSize="24" maxDisplayedLines="1" />
-		<s:Label text="[{new ObjectProxy(data).durationText}]" paddingRight="10" fontSize="20" color="#888888" />
+	<s:HGroup width="100%" height="100%" gap="2" verticalAlign="bottom" paddingLeft="10" paddingRight="10">
+		<s:Label text="{new ObjectProxy(data).number}." fontSize="14" color="#858a92" />		
+		<s:Label width="100%" text="{new ObjectProxy(data).name}" maxDisplayedLines="1" 
+				 fontSize="16" color="#3e444f" fontWeight="bold" />
+		<s:Label text="{new ObjectProxy(data).durationText}" fontSize="14" color="#858a92" />
 	</s:HGroup>
 	
 </s:ItemRenderer>

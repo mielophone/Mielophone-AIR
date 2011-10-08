@@ -53,11 +53,9 @@ private function onPlayerTimer(e:Event):void{
 /******************************************************/
 /**				BACK BUTTON HANDLING			 	 **/
 /******************************************************/
-private function onAppMouseMove(e:MouseEvent):void{
-	if( !isBackActive ) return;
-	
-	if( e.stageX < 20 ){	
-		backTimer.start();
+private function onAppMouseMove(e:MouseEvent):void{	
+	if( e.stageX < 20 ){
+		if( isBackActive )	backTimer.start();
 	}else if( e.stageX > this.stage.stageWidth - 25 ){
 		// detect if user is using scroll
 		if(e.target.id == "track" || e.target.id == "thumb"){
@@ -70,7 +68,9 @@ private function onAppMouseMove(e:MouseEvent):void{
 		// player stop
 		playerTimer.stop();
 		playerTimer.reset();
+		
 		// back stop
+		if( !isBackActive ) return;
 		backTimer.stop();
 		backTimer.reset();
 		if(backButton.left != -36){

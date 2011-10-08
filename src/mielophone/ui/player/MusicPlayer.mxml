@@ -44,14 +44,14 @@
 						 text="by No one"
 						 width="100%" maxDisplayedLines="1" id="artistName" />
 				
-				<s:HGroup width="100%">
+				<!-- <s:HGroup width="100%">
 					<s:Button label="Download" chromeColor="#36679f" color="#FFFFFF" 
 							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"
 							  useHandCursor="true" />
 					<s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 
 							  icon="@Embed('/assets/player/favourite.png')" iconPlacement="right"
 							  useHandCursor="true" />
-				</s:HGroup>
+				</s:HGroup> -->
 			</s:VGroup>
 		</s:HGroup>
 		

@@ -19,8 +19,8 @@ public function doWork():void{
 	
 	FlexGlobals.topLevelApplication.musicPlayer.mp3sList = null;
 	
-	albumName.text = FlexGlobals.topLevelApplication.currentAlbum.artist.name + " - " + 
-		FlexGlobals.topLevelApplication.currentAlbum.name;
+	artistName.text = FlexGlobals.topLevelApplication.currentAlbum.artist.name; 
+	albumName.text = FlexGlobals.topLevelApplication.currentAlbum.name;
 	albumImage.source = FlexGlobals.topLevelApplication.currentAlbum.image;
 	
 	mse.addEventListener(Event.COMPLETE, onAlbumTracks);

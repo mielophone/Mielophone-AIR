@@ -16,9 +16,24 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:HGroup width="100%" height="50" verticalAlign="middle">
+	<!-- header bg -->
+	<s:Rect left="0" right="0" top="0" height="50" >
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#dee3e9" />
+				<s:GradientEntry color="#b8bdc3" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<!-- header -->
+	<s:HGroup width="100%" height="50" verticalAlign="middle" variableColumnWidth="true">
 		<s:Image height="50" width="50" id="albumImage" />
-		<s:Label fontWeight="bold" fontSize="18" id="albumName" />
+		
+		<s:VGroup width="100%">
+			<s:Label fontWeight="bold" fontSize="18" id="albumName" />
+			<s:Label id="artistName" />
+		</s:VGroup>
 	</s:HGroup>
 	
 	<s:Scroller width="100%" top="50" bottom="0" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">

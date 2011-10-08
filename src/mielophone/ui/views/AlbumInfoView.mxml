@@ -27,13 +27,17 @@
 	</s:Rect>
 	
 	<!-- header -->
-	<s:HGroup width="100%" height="50" verticalAlign="middle" variableColumnWidth="true">
+	<s:HGroup width="100%" height="50" verticalAlign="middle" variableColumnWidth="true"
+			  paddingRight="30">
 		<s:Image height="50" width="50" id="albumImage" />
 		
 		<s:VGroup width="100%">
 			<s:Label fontWeight="bold" fontSize="18" id="albumName" />
 			<s:Label id="artistName" />
 		</s:VGroup>
+		
+		<s:Image source="@Embed('/assets/images/music.png')" toolTip="Play all" 
+				 buttonMode="true" useHandCursor="true" click="{playAll()}"/>
 	</s:HGroup>
 	
 	<s:Scroller width="100%" top="50" bottom="0" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">

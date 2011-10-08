@@ -36,3 +36,6 @@ private function onAlbumTracks(e:Event):void{
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }
 
+private function playAll():void{
+	FlexGlobals.topLevelApplication.musicPlayer.playCurrentAlbum();
+}

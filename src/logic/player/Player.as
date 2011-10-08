@@ -204,6 +204,10 @@ private function playSong(song:PlayrTrack):void{
 	player.play();
 }
 
+public function playCurrentAlbum():void{
+	
+}
+
 // ---------------------------------------------------------
 private function onHideTimer(e:Event):void{
 	TweenLite.to(this, 0.4, {right:-300});

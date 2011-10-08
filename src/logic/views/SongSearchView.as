@@ -24,6 +24,11 @@ public function doWork():void{
 }
 
 private function getTopSongs():void{
+	if(mse != null && songList.dataProvider != null){
+		this.dispatchEvent(new Event(Event.COMPLETE));
+		return;
+	}
+	
 	mse = FlexGlobals.topLevelApplication.mse;
 	mse.addEventListener(Event.COMPLETE, onSongs);
 	mse.getTopTracks();

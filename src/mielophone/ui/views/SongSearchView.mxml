@@ -34,7 +34,7 @@
 		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
 			<s:DataGroup width="100%" height="100%" id="songList" itemRenderer="mielophone.ui.itemrenderers.FullSongItem">
 				<s:layout>
-					<s:VerticalLayout gap="5" />
+					<s:VerticalLayout gap="0" />
 				</s:layout>
 			</s:DataGroup>
 		</s:Scroller>

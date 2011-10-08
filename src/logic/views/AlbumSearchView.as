@@ -17,6 +17,11 @@ public function doWork():void{
 }
 
 private function getTopAlbums():void{
+	if(mse != null && albumList.dataProvider != null){
+		this.dispatchEvent(new Event(Event.COMPLETE));
+		return;
+	}
+	
 	mse = FlexGlobals.topLevelApplication.mse;
 	mse.addEventListener(Event.COMPLETE, onChart);
 	mse.getTopAlbums();

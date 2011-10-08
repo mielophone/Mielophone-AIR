@@ -17,6 +17,11 @@ public function doWork():void{
 }
 
 private function getTopArtists():void{
+	if(mse != null && artistList.dataProvider != null){
+		this.dispatchEvent(new Event(Event.COMPLETE));
+		return;
+	}
+	
 	mse = FlexGlobals.topLevelApplication.mse;
 	mse.addEventListener(Event.COMPLETE, onArtists);
 	mse.getTopArtists();

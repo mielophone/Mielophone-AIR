@@ -5,7 +5,7 @@
 		 xmlns:advancedprogress="com.codezen.component.advancedprogress.*"
 		 width="300" height="300"
 		 mouseMove="{onMouseMove(event)}"
-		 mouseOut="{onMouseOut(event)}">
+		 rollOut="{onMouseOut(event)}">
 	
 	<fx:Script source="../../../logic/player/Player.as" />
 	
@@ -68,12 +68,14 @@
 				  gap="5" paddingLeft="5" paddingRight="10">
 			<!-- prev play-pause next --> 
 			<s:Image source="@Embed('/assets/player/previous.png')" 
-					 buttonMode="true" useHandCursor="true" />
+					 buttonMode="true" useHandCursor="true"
+					 click="{prev_btn_clickHandler(event)}"/>
 			<s:Image source="{playImg}" id="playBtn"
 					 buttonMode="true" useHandCursor="true" 
 					 click="{playBtn_clickHandler(event)}"/>
 			<s:Image source="@Embed('/assets/player/next.png')"
-					 buttonMode="true" useHandCursor="true" />
+					 buttonMode="true" useHandCursor="true"
+					 click="{next_btn_clickHandler(event)}"/>
 			
 			<s:Spacer width="30" />
 			
@@ -101,6 +103,10 @@
 		
 		<s:Spacer height="10" />
 		
-		
+		<s:DataGroup width="100%" id="songList" itemRenderer="mielophone.ui.itemrenderers.FullMiniSongItem">
+			<s:layout>
+				<s:VerticalLayout gap="0" paddingRight="5" />
+			</s:layout>
+		</s:DataGroup>
 	</s:VGroup>
 </s:Group>

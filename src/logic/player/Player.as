@@ -16,9 +16,13 @@ import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.utils.Timer;
 
+import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;
 import mx.events.FlexEvent;
 
+/******************************************************/
+/**						IMAGES						 **/
+/******************************************************/
 [Bindable]
 [Embed(source="/assets/player/play.png")]
 private var playImg:Class;
@@ -31,9 +35,14 @@ private var pauseImg:Class;
 [Embed(source="/assets/images/nocover.png")]
 private var nocoverImg:Class;
 
+/******************************************************/
+/**						VARS						 **/
+/******************************************************/
 private var hideTimer:Timer;
 
 private var mse:MusicSearchEngine;
+// TODO: move this to MSE as a state
+private var nowSearching:Boolean = false;
 
 private var player:Playr;
 private var playQueue:Array;
@@ -41,6 +50,9 @@ private var playPos:int;
 
 public var mp3sList:Array;
 
+/******************************************************/
+/**					INIT STUFF					 	**/
+/******************************************************/
 public function initPlayer():void{
 	hideTimer = new Timer(500, 1);
 	hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimer);
@@ -71,6 +83,9 @@ private function timeDataTip(val:String):String{
 	return CUtils.secondsToString(duration);
 }
 
+/******************************************************/
+/**					PLAYER EVENTS					 **/
+/******************************************************/
 private function onSeek(e:Event):void{
 	var seekTime:Number = timeSlider.slider.value*1000;
 	player.scrobbleTo(seekTime);
@@ -78,8 +93,10 @@ private function onSeek(e:Event):void{
 
 
 private function onTrackEnd(e:PlayrEvent):void{
-	//nowplay_text.text = "Searching for stream..";
-	//FlexGlobals.topLevelApplication.findNextSong();
+	timeMax.text = "--:--";
+	timeCurrent.text = "--:--";
+	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
+	findNextSong();
 }
 
 private function onPlayerState(e:PlayrEvent):void{
@@ -108,6 +125,7 @@ private function onProgress(e:PlayrEvent):void{
 	}
 	timeSlider.position = player.currentSeconds;
 	
+	// workaround for end event not dispatching
 	if(player.currentSeconds >= player.totalSeconds){
 		player.scrobbleTo(0);
 		player.stop();
@@ -138,46 +156,53 @@ private function onSong(e:PlayrEvent):void{
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artistName.text+" - "+songName.text;
 }
 
-// ------------------			
-private function secToTime(sec:Number):String{
-	var duration:String = '';
-	var secs:int = sec;
-	var mins:int = Math.floor(secs/60);
-	secs = secs - mins*60;
-	if( secs < 10 ){
-		duration = mins+":0"+secs;
-	}else{
-		duration = mins+":"+secs;
-	}
-	return duration;
-}
-
-// -----------------------------------
-
+/******************************************************/
+/**				PLAYER BUTTONS HANDLERS			 	 **/
+/******************************************************/
 private function playBtn_clickHandler(event:Event):void{
 	player.togglePlayPause();
 }
 
-/*private function next_btn_clickHandler(event:MouseEvent):void{
+private function next_btn_clickHandler(event:MouseEvent):void{
 	findNextSong();
 }
 
 private function prev_btn_clickHandler(event:MouseEvent):void{
 	findPrevSong();
-}*/
+}
 
 private function onVolumeSlider(e:Event):void{
 	player.volume = volumeSlider.value/100;
 }
 
-// -----------------------------
+/******************************************************/
+/**					SEARCH AND PLAY				 	 **/
+/******************************************************/
+public function findNextSong():void{
+	trace('next song');	
+	playPos++;
+	if(playPos < 0 || playPos >= playQueue.length) playPos = 0;
+	findSongAndPlay(playQueue[playPos] as Song);
+}
+
+public function findPrevSong():void{
+	trace('prev song');
+	if(nowSearching) return;
+	
+	playPos--;
+	if(playPos < 0) playPos = playQueue.length-1;
+	nowSearching = true;
+	findSongAndPlay(playQueue[playPos] as Song);
+}
 
 public function findSongAndPlay(song:Song):void{
 	if(mp3sList != null){
+		nowSearching = false;
 		playSong(mp3sList[song.number] as PlayrTrack);
 	}else{
 		artistName.text = "Searching for stream..";
 		songName.text = "";
+		nowSearching = true;
 		mse.addEventListener(Event.COMPLETE, onSongLinks);
 		mse.findMP3(song);
 	}
@@ -186,9 +211,11 @@ public function findSongAndPlay(song:Song):void{
 private function onSongLinks(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onSongLinks);
 	
+	nowSearching = false;
+	
 	if( mse.mp3s.length == 0 ){
 		trace('nothing :(');
-		//findNextSong();
+		findNextSong();
 		return;
 	}
 	
@@ -204,11 +231,21 @@ private function playSong(song:PlayrTrack):void{
 	player.play();
 }
 
+/******************************************************/
+/**					ALBUM PLAYBACK					 **/
+/******************************************************/
 public function playCurrentAlbum():void{
+	playQueue = FlexGlobals.topLevelApplication.currentAlbum.songs.concat();
+	playPos = -1;
 	
+	songList.dataProvider = new ArrayCollection(playQueue);
+	
+	findNextSong();
 }
 
-// ---------------------------------------------------------
+/******************************************************/
+/**					UI HIDING STUFF					 **/
+/******************************************************/
 private function onHideTimer(e:Event):void{
 	TweenLite.to(this, 0.4, {right:-300});
 }

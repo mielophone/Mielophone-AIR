@@ -11,6 +11,7 @@ import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;
 
 private var mse:MusicSearchEngine;
+private var topAlbums:ArrayCollection;
 
 public function doWork():void{
 	getTopAlbums();
@@ -30,7 +31,8 @@ private function getTopAlbums():void{
 private function onChart(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onChart);
 	
-	albumList.dataProvider = new ArrayCollection(mse.albums);
+	topAlbums = new ArrayCollection(mse.albums);
+	albumList.dataProvider = topAlbums;
 	
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }
@@ -55,6 +57,8 @@ private function onSearchKeyUp(e:KeyboardEvent):void{
 		FlexGlobals.topLevelApplication.loadingOn();
 		
 		searchInput.text = '';
+	}else if(e.keyCode == Keyboard.ESCAPE && searchInput.text.length < 1){
+		albumList.dataProvider = topAlbums;
 	}
 }
 

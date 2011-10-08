@@ -12,6 +12,8 @@ import mx.core.FlexGlobals;
 
 private var mse:MusicSearchEngine;
 
+private var topArtists:ArrayCollection;
+
 public function doWork():void{
 	getTopArtists();
 }
@@ -30,7 +32,8 @@ private function getTopArtists():void{
 private function onArtists(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onArtists);
 	
-	artistList.dataProvider = new ArrayCollection(mse.artists);
+	topArtists = new ArrayCollection(mse.artists);
+	artistList.dataProvider = topArtists;
 	
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }
@@ -55,6 +58,8 @@ private function onSearchKeyUp(e:KeyboardEvent):void{
 		FlexGlobals.topLevelApplication.loadingOn();
 		
 		searchInput.text = '';
+	}else if(e.keyCode == Keyboard.ESCAPE && searchInput.text.length < 1){
+		artistList.dataProvider = topArtists;
 	}
 }
 

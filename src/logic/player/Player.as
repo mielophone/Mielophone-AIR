@@ -179,7 +179,10 @@ private function onVolumeSlider(e:Event):void{
 /**					SEARCH AND PLAY				 	 **/
 /******************************************************/
 public function findNextSong():void{
-	trace('next song');	
+	trace('next song');
+	if(nowSearching) return;
+	if(playQueue == null) return;
+	
 	playPos++;
 	if(playPos < 0 || playPos >= playQueue.length) playPos = 0;
 	findSongAndPlay(playQueue[playPos] as Song);
@@ -188,6 +191,7 @@ public function findNextSong():void{
 public function findPrevSong():void{
 	trace('prev song');
 	if(nowSearching) return;
+	if(playQueue == null) return;
 	
 	playPos--;
 	if(playPos < 0) playPos = playQueue.length-1;

@@ -119,6 +119,9 @@ private function onBackButtonClick(e:Event):void{
 	view.height = stage.stageHeight; 
 	view.width = nativeWindow.width;
 	
+	// show new view
+	this[newView].visible = true;
+	
 	// animate move-out
 	TweenLite.to(view, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
 		TweenLite.to(view, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
@@ -173,11 +176,17 @@ private function onViewWork(e:Event):void{
 	view.verticalCenter = 0;
 	view.visible = true;
 	
+	// get old view
+	var oldView:Group = this[viewHistory[viewHistory.length-1]] as Group;
+	
 	// animate move-in
 	TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
 		TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
+			// set new params
 			view.x = view.y = 0;
 			view.percentHeight = view.percentWidth = 100;
+			// hide old view
+			oldView.visible = false;
 		}});
 	}});
 }

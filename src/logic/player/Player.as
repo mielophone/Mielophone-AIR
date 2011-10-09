@@ -290,9 +290,9 @@ private function toggleFullMode():void{
 		// enable full mode
 		toggleFullBtn.source = normalImg;
 		
-		var w:int = this.width;
+		this.x = stage.stageWidth - this.width;
 		var grp:Group = this;
-		TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width: w, onComplete:function():void{
+		TweenLite.to(this, 0.5, {x:0, width: stage.stageWidth, onComplete:function():void{
 			grp.percentWidth = 100;
 		}});
 		//TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width:w});
@@ -301,9 +301,8 @@ private function toggleFullMode():void{
 		toggleFullBtn.source = fullImg;
 		
 		this.x = 0;
-		this.width = 300;
 		this.right = 0;
-		TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width:800});
+		TweenLite.to(this, 0.5, {width:300});
 	}
 }
 

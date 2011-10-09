@@ -14,6 +14,7 @@ import com.greensock.TweenLite;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
+import flash.net.SharedObject;
 import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
@@ -58,6 +59,7 @@ private var mse:MusicSearchEngine;
 private var nowSearching:Boolean = false;
 
 // Player stuff
+private var playerSettings:SharedObject;
 private var player:Playr;
 private var playQueue:Array;
 public var playPos:int;
@@ -77,12 +79,18 @@ public function initPlayer():void{
 	mse = FlexGlobals.topLevelApplication.mse;
 	
 	player = new Playr();
-	
+	// add events
 	player.addEventListener(PlayrEvent.PLAYRSTATE_CHANGED, onPlayerState);
 	player.addEventListener(PlayrEvent.TRACK_PROGRESS, onProgress);
 	player.addEventListener(PlayrEvent.STREAM_PROGRESS, onStreamProgress);
 	player.addEventListener(PlayrEvent.SONGINFO, onSong);
 	player.addEventListener(PlayrEvent.TRACK_COMPLETE, onTrackEnd);
+	// load settings
+	playerSettings = SharedObject.getLocal("mielophone.player");
+	if( playerSettings.data.buffer != null ){
+		player.buffer = playerSettings.data.buffer;
+		FlexGlobals.topLevelApplication.settingsView.bufferingSlider.value = playerSettings.data.buffer / 1000; 
+	}
 	
 	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
 	timeSlider.slider.dataTipFormatFunction = timeDataTip;
@@ -98,6 +106,16 @@ private function timeDataTip(val:String):String{
 	var duration:Number = Number(val);
 	
 	return CUtils.secondsToString(duration);
+}
+
+/******************************************************/
+/**					PLAYER FUNCS					 **/
+/******************************************************/
+
+public function setBuffer(b:int):void{
+	player.buffer = b;
+	playerSettings.data.buffer = b;
+	playerSettings.flush();
 }
 
 /******************************************************/

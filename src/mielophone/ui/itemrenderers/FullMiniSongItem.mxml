@@ -20,7 +20,9 @@
 			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				if(data == null) return;
-				if( int(data.number) % 2 == 0 ){
+				if( int(data.number-1) == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
+					bg = 0xa0d3a0;
+				}else if( int(data.number) % 2 == 0 ){
 					bg = 0xc3cdd8;
 				}else{
 					bg = 0xe1e6ec;

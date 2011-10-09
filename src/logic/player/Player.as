@@ -60,7 +60,7 @@ private var nowSearching:Boolean = false;
 // Player stuff
 private var player:Playr;
 private var playQueue:Array;
-private var playPos:int;
+public var playPos:int;
 
 // mp3s list
 public var mp3sList:Array;
@@ -200,6 +200,8 @@ public function findNextSong():void{
 	if(nowSearching) return;
 	if(playQueue == null) return;
 	
+	(songList.dataProvider as ArrayCollection).refresh();
+	
 	playPos++;
 	if(playPos < 0 || playPos >= playQueue.length) playPos = 0;
 	findSongAndPlay(playQueue[playPos] as Song);
@@ -210,13 +212,15 @@ public function findPrevSong():void{
 	if(nowSearching) return;
 	if(playQueue == null) return;
 	
+	(songList.dataProvider as ArrayCollection).refresh();
+	
 	playPos--;
 	if(playPos < 0) playPos = playQueue.length-1;
 	nowSearching = true;
 	findSongAndPlay(playQueue[playPos] as Song);
 }
 
-public function findSongAndPlay(song:Song):void{
+public function findSongAndPlay(song:Song):void{	
 	if(mp3sList != null){
 		nowSearching = false;
 		playSong(mp3sList[song.number] as PlayrTrack);

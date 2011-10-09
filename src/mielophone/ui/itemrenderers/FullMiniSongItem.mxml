@@ -33,7 +33,7 @@
 			{
 				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
 				//trace(this.itemIndex);
-				FlexGlobals.topLevelApplication.musicPlayer.findSongAndPlay(data as Song);
+				FlexGlobals.topLevelApplication.musicPlayer.playSongByNum(data.number-1);
 			}
 			
 		]]>

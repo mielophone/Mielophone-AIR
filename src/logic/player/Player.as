@@ -195,14 +195,19 @@ private function onVolumeSlider(e:Event):void{
 /******************************************************/
 /**					SEARCH AND PLAY				 	 **/
 /******************************************************/
+public function playSongByNum(num:int):void{
+	playPos = num;
+	(songList.dataProvider as ArrayCollection).refresh();
+	findSongAndPlay(playQueue[playPos] as Song);
+}
+
 public function findNextSong():void{
 	trace('next song');
 	if(nowSearching) return;
 	if(playQueue == null) return;
 	
-	(songList.dataProvider as ArrayCollection).refresh();
-	
 	playPos++;
+	(songList.dataProvider as ArrayCollection).refresh();
 	if(playPos < 0 || playPos >= playQueue.length) playPos = 0;
 	findSongAndPlay(playQueue[playPos] as Song);
 }
@@ -212,9 +217,8 @@ public function findPrevSong():void{
 	if(nowSearching) return;
 	if(playQueue == null) return;
 	
-	(songList.dataProvider as ArrayCollection).refresh();
-	
 	playPos--;
+	(songList.dataProvider as ArrayCollection).refresh();
 	if(playPos < 0) playPos = playQueue.length-1;
 	nowSearching = true;
 	findSongAndPlay(playQueue[playPos] as Song);

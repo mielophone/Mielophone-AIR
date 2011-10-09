@@ -20,6 +20,8 @@ import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;
 import mx.events.FlexEvent;
 
+import spark.components.Group;
+
 /******************************************************/
 /**						IMAGES						 **/
 /******************************************************/
@@ -35,19 +37,32 @@ private var pauseImg:Class;
 [Embed(source="/assets/images/nocover.png")]
 private var nocoverImg:Class;
 
+[Bindable]
+[Embed(source="/assets/player/playernormal.png")]
+private var normalImg:Class;
+
+[Bindable]
+[Embed(source="/assets/player/playerfull.png")]
+private var fullImg:Class;
+
 /******************************************************/
 /**						VARS						 **/
 /******************************************************/
+// UI Stuff
 private var hideTimer:Timer;
+private var isFullMode:Boolean;
 
+// MSE
 private var mse:MusicSearchEngine;
 // TODO: move this to MSE as a state
 private var nowSearching:Boolean = false;
 
+// Player stuff
 private var player:Playr;
 private var playQueue:Array;
 private var playPos:int;
 
+// mp3s list
 public var mp3sList:Array;
 
 /******************************************************/
@@ -56,6 +71,8 @@ public var mp3sList:Array;
 public function initPlayer():void{
 	hideTimer = new Timer(500, 1);
 	hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimer);
+	
+	isFullMode = false;
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -248,10 +265,11 @@ public function playCurrentAlbum():void{
 }
 
 /******************************************************/
-/**					UI HIDING STUFF					 **/
+/**					UI STUFF					 **/
 /******************************************************/
 private function onHideTimer(e:Event):void{
-	TweenLite.to(this, 0.4, {right:-300});
+	if( !isFullMode )
+		TweenLite.to(this, 0.4, {right:-300});
 }
 
 private function onMouseOut(e:MouseEvent):void{
@@ -262,3 +280,30 @@ private function onMouseMove(e:MouseEvent):void{
 	hideTimer.stop();
 	hideTimer.reset();
 }
+
+private function toggleFullMode():void{
+	isFullMode = !isFullMode;
+	if(isFullMode){
+		hideTimer.stop();
+		hideTimer.reset();
+		
+		// enable full mode
+		toggleFullBtn.source = normalImg;
+		
+		var w:int = this.width;
+		var grp:Group = this;
+		TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width: w, onComplete:function():void{
+			grp.percentWidth = 100;
+		}});
+		//TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width:w});
+	}else{
+		// revert to normal
+		toggleFullBtn.source = fullImg;
+		
+		this.x = 0;
+		this.width = 300;
+		this.right = 0;
+		TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width:800});
+	}
+}
+

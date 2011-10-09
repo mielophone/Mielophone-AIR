@@ -47,10 +47,10 @@
 				<s:HGroup width="100%">
 					<s:Button label="Download" chromeColor="#36679f" color="#FFFFFF"  
 							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"
-							  useHandCursor="true" />
+							  useHandCursor="true" alpha="0.5" />
 					<s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 
 							  icon="@Embed('/assets/player/favourite.png')" iconPlacement="right"
-							  useHandCursor="true" />
+							  useHandCursor="true" alpha="0.5" />
 				</s:HGroup>
 			</s:VGroup>
 		</s:HGroup>
@@ -112,5 +112,10 @@
 				</s:layout>
 			</s:DataGroup>
 		</s:Scroller>
+		
+		<s:HGroup width="100%" horizontalAlign="center" verticalAlign="middle">
+			<s:Image source="{fullImg}" id="toggleFullBtn" click="{toggleFullMode()}"
+					 buttonMode="true" useHandCursor="true"/>
+		</s:HGroup>
 	</s:VGroup>
 </s:Group>

@@ -82,7 +82,7 @@
 		<!-- <y></y> -->
 
 		<!-- The window's minimum size, specified as a width/height pair in pixels, such as "400 200". Optional. -->
-		<minSize>350 200</minSize>
+		<!-- <minSize>350 200</minSize> -->
 
 		<!-- The window's initial maximum size, specified as a width/height pair in pixels, such as "1600 1200". Optional. -->
 		<!-- <maxSize></maxSize> -->

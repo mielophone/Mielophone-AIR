@@ -23,6 +23,10 @@ private function onSongClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.songView);
 }
 
+private function onSettingsClick(e:Event):void{
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.settingsView);
+}
+
 private function onSupportClick(e:Event):void{
 	FlexGlobals.topLevelApplication.supportOverlay.alpha = 0;
 	FlexGlobals.topLevelApplication.supportOverlay.visible = true;

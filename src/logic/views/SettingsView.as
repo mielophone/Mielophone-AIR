@@ -8,10 +8,12 @@ import mx.utils.ObjectUtil;
 [Bindable]
 private var pluginsCollection:ArrayCollection;
 
+public function doWork():void{
+	this.dispatchEvent(new Event(Event.COMPLETE));
+}
+
 public function initSettings():void{
 	pluginsCollection = new ArrayCollection( FlexGlobals.topLevelApplication.mse.getActivePlugins() );
-	trace('plugins:');
-	trace(ObjectUtil.toString(pluginsCollection));
 }
 
 private function onBufferChange(e:Event):void{

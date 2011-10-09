@@ -18,6 +18,11 @@
 	<!-- MAIN VIEW -->
 	<views:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />
 	
+	<!--- HELPING VIEWS -->
+	<!-- SUPPORT OVERLAY -->
+	<views:SupportOverlay width="100%" height="100%" id="supportOverlay" visible="false" />
+	
+	<!--- MAIN INFO VIEW -->
 	<!-- ARTIST SEARCH VIEW -->
 	<views:ArtistSearchView width="100%" height="100%" id="artistView" visible="false" />
 	
@@ -32,7 +37,6 @@
 	
 	<!-- ALBUM INFO VIEW -->
 	<views:AlbumInfoView width="100%" height="100%" id="albumInfoView" visible="false" />
-	
 	
 	<!--- ELEMENTS PRESENT EVERYWHERE -->
 	<!-- ACTIVE LEFT BORDER -->

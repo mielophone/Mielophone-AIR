@@ -17,13 +17,13 @@
 	<s:HGroup>
 		<home:ArtistButton click="{onArtistClick(event)}" />
 		<home:MarketButton alpha="0.5"/>
-		<home:SettingsButton alpha="0.5" />
+		<home:SettingsButton />
 	</s:HGroup>
 	
 	<s:HGroup>
 		<home:AlbumButton click="{onAlbumClick(event)}" />
 		<home:SongButton click="{onSongClick(event)}" />
-		<home:SupportButton />
+		<home:SupportButton click="{onSupportClick(event)}" />
 	</s:HGroup>
 	
 </s:Group>

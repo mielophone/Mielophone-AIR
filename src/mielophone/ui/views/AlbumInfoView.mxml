@@ -33,7 +33,9 @@
 		
 		<s:VGroup width="100%">
 			<s:Label fontWeight="bold" fontSize="18" id="albumName" />
-			<s:Label id="artistName" />
+			<s:Label id="artistName"
+					 buttonMode="true" useHandCursor="true"
+					 click="{openAritst()}"/>
 		</s:VGroup>
 		
 		<s:Image source="@Embed('/assets/images/music.png')" toolTip="Play all" 

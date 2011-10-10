@@ -23,3 +23,7 @@ private function onBufferChange(e:Event):void{
 private function pluginName(p:Object):String{
 	return p.index + ". " + p.name + " (by " + p.author + ")";
 }
+
+private function saveSettings():void{
+	FlexGlobals.topLevelApplication.musicPlayer.setScrobblingAuth(lastfmLogin.text, lastfmPass.text);
+}

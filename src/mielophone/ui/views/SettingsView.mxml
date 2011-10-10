@@ -22,17 +22,34 @@
 		
 		<mx:ViewStack width="100%" height="100%" id="views">
 			<s:NavigatorContent id="general" label="General">
-				<s:layout>
-					<s:VerticalLayout paddingLeft="10" paddingTop="10" />
-				</s:layout>
-				
-				<s:HGroup verticalAlign="middle">
-					<s:Label color="#FFFFFF" text="Buffering time:" />
-					<s:HSlider width="100" minimum="5" maximum="120" value="10"
-							   id="bufferingSlider"
-							   change="{onBufferChange(event)}"/>
-				</s:HGroup>
-				
+				<s:VGroup paddingLeft="10" paddingTop="10" gap="5" >
+					
+					<!-- player -->
+					<s:Label color="#FFFFFF" text="Player" fontSize="14" />
+					<s:HGroup verticalAlign="middle">
+						<s:Label color="#FFFFFF" text="Buffering time:" />
+						<s:HSlider width="100" minimum="5" maximum="120" value="10"
+								   id="bufferingSlider"
+								   change="{onBufferChange(event)}"/>
+					</s:HGroup>
+					
+					<s:Spacer height="20"/>
+					
+					<!-- last.fm -->
+					<s:Label color="#FFFFFF" text="Last.FM Scrobbling" fontSize="14" />
+					<s:HGroup verticalAlign="middle">
+						<s:Label color="#FFFFFF" text="Last.FM login:" />
+						<s:TextInput id="lastfmLogin" />					
+					</s:HGroup>
+					<s:HGroup verticalAlign="middle">
+						<s:Label color="#FFFFFF" text="Last.FM pass:" />
+						<s:TextInput id="lastfmPass" displayAsPassword="true" />					
+					</s:HGroup>
+					
+					<s:Spacer height="20"/>
+					
+					<s:Button label="Save" click="{saveSettings()}" />
+				</s:VGroup>
 			</s:NavigatorContent>
 			<s:NavigatorContent id="plugins" label="Plugins">
 				<s:layout>

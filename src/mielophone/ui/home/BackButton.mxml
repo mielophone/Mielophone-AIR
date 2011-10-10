@@ -21,7 +21,7 @@
 		</s:filters>
 	</s:Rect>
 	
-	<s:Image source="/assets/home/home.png" horizontalCenter="0" top="10" 
+	<s:Image source="@Embed('/assets/home/home.png')" horizontalCenter="0" top="10" 
 			 smooth="true" width="24" height="24" id="homeBtn" 
 			 buttonMode="true" useHandCursor="true"/>
 	
@@ -35,7 +35,7 @@
 			</s:stroke>
 		</s:Line>
 		
-		<s:Image source="/assets/home/back.png" horizontalCenter="0" verticalCenter="0" 
+		<s:Image source="@Embed('/assets/home/back.png')" horizontalCenter="0" verticalCenter="0" 
 				 smooth="true" width="24" height="24" />
 		
 		<s:Line height="100%" alpha="0.8">

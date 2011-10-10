@@ -28,6 +28,8 @@
 				img.source = nocoverImg;
 				if(data == null) return;
 				
+				if(data.date == null) dateText.visible = false;
+				
 				var mb:MusicBrainz = new MusicBrainz();
 				mb.addEventListener(Event.COMPLETE, function onCover(e:Event):void{
 					mb.removeEventListener(Event.COMPLETE, onCover);
@@ -91,8 +93,14 @@
 		<s:VerticalLayout gap="5" horizontalAlign="center" verticalAlign="top" />
 	</s:layout>
 	<!-- TODO: add image when there's no image -->
-	<s:BitmapImage width="120" height="120" id="img" source="{nocoverImg}" mask="{roundedMask}" maskType="clip" 
-				   smooth="true" smoothingQuality="high"/>
+	<s:Group width="120" height="120">
+		<s:BitmapImage width="120" height="120" id="img" source="{nocoverImg}" mask="{roundedMask}" maskType="clip" 
+					   smooth="true" smoothingQuality="high"/>
+		
+		<s:Label text="{new ObjectProxy(data).date}" maxDisplayedLines="1" fontSize="14" alpha="0.8"
+				 id="dateText" bottom="0" right="0" backgroundColor="#000000" color="#FFFFFF" 
+				 paddingLeft="3" paddingRight="3" paddingTop="3" paddingBottom="3"/>
+	</s:Group>
 	<s:Label width="100%" text="{new ObjectProxy(data).name}" textAlign="center" maxDisplayedLines="2" fontSize="16" />
 	<s:Label width="100%" text="{new ObjectProxy(data).artist.name}" fontSize="12" textAlign="center" maxDisplayedLines="2" alpha="0.5" />
 	

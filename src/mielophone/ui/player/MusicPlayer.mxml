@@ -29,7 +29,7 @@
 	<s:VGroup width="100%" height="100%" variableRowHeight="true" horizontalAlign="center" 
 			  gap="5" paddingLeft="10" paddingRight="5" paddingBottom="10" paddingTop="10">
 		
-		<s:HGroup width="300" paddingLeft="5" paddingRight="5" paddingBottom="5" 
+		<s:HGroup width="290" paddingLeft="5" paddingRight="5" paddingBottom="5" 
 				  variableColumnWidth="true">
 			<!-- album image -->
 			<s:Image width="50" height="50" source="{nocoverImg}" 
@@ -55,7 +55,7 @@
 			</s:VGroup>
 		</s:HGroup>
 		
-		<s:Line width="300">
+		<s:Line width="290">
 			<s:stroke>
 				<s:SolidColorStroke color="#272727" weight="1" />
 			</s:stroke>
@@ -64,7 +64,7 @@
 			</s:filters>
 		</s:Line>
 		
-		<s:HGroup width="300" verticalAlign="middle" horizontalAlign="left" variableColumnWidth="true" 
+		<s:HGroup width="290" verticalAlign="middle" horizontalAlign="left" variableColumnWidth="true" 
 				  gap="5" paddingLeft="5" paddingRight="10">
 			<!-- prev play-pause next --> 
 			<s:Image source="@Embed('/assets/player/previous.png')" 
@@ -95,7 +95,7 @@
 					   id="volumeSlider" change="{onVolumeSlider(event)}"/>
 		</s:HGroup>
 		
-		<s:HGroup width="300" verticalAlign="middle" variableColumnWidth="true"
+		<s:HGroup width="290" verticalAlign="middle" variableColumnWidth="true"
 				  paddingLeft="10" paddingRight="10">
 			<s:Label color="#FFFFFF" text="--:--" id="timeCurrent" />
 			<advancedprogress:AdvancedProgressBar width="100%" gradientStartColor="#afdf72" gradientEndColor="#38a226" id="timeSlider" 

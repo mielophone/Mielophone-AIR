@@ -5,6 +5,9 @@ import flash.events.Event;
 
 
 private function onAppicationComplete():void{
+	// check update
+	initAutoupdate();
+	
 	// create search engine
 	mse = new MusicSearchEngine();
 	mse.addEventListener(Event.INIT, onMseInit);

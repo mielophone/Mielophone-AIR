@@ -125,15 +125,15 @@
 
 	<!-- The icon the system uses for the application. For at least one resolution,
 	specify the path to a PNG file included in the AIR package. Optional. -->
-	<!-- <icon>
-		<image16x16></image16x16>
-		<image32x32></image32x32>
-		<image36x36></image36x36>
-		<image48x48></image48x48>
-		<image72x72></image72x72>
-		<image114x114></image114x114>
-		<image128x128></image128x128>
-	</icon> -->
+	<icon>
+		<image16x16>assets/logo/logo-16.png</image16x16>
+		<image32x32>assets/logo/logo-32.png</image32x32>
+		<image36x36>assets/logo/logo-36.png</image36x36>
+		<image48x48>assets/logo/logo-48.png</image48x48>
+		<image72x72>assets/logo/logo-72.png</image72x72>
+		<image114x114>assets/logo/logo-114.png</image114x114>
+		<image128x128>assets/logo/logo-128.png</image128x128>
+	</icon>
 
 	<!-- Whether the application handles the update when a user double-clicks an update version
 	of the AIR file (true), or the default AIR application installer handles the update (false).

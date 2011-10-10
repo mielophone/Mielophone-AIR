@@ -47,3 +47,11 @@ private function onAlbumTracks(e:Event):void{
 private function playAll():void{
 	FlexGlobals.topLevelApplication.musicPlayer.playCurrentAlbum();
 }
+
+private function openAritst():void{
+	if( FlexGlobals.topLevelApplication.currentArtist == null || FlexGlobals.topLevelApplication.currentArtist.name != FlexGlobals.topLevelApplication.currentAlbum.artist.name ){
+		FlexGlobals.topLevelApplication.currentArtist = FlexGlobals.topLevelApplication.currentAlbum.artist;
+	}
+	
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.artistInfoView);
+}

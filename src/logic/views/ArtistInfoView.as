@@ -14,6 +14,8 @@ import mx.utils.ObjectUtil;
 
 private var mse:MusicSearchEngine;
 
+private var loadedArtist:String;
+
 public function doWork():void{
 	artistImage.source = FlexGlobals.topLevelApplication.currentArtist.image;
 	artistDesc.text = FlexGlobals.topLevelApplication.currentArtist.description_short;
@@ -21,8 +23,14 @@ public function doWork():void{
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
-	mse.addEventListener(Event.COMPLETE, onArtistInfo);
-	mse.getArtistInfo(FlexGlobals.topLevelApplication.currentArtist);
+	if(loadedArtist != FlexGlobals.topLevelApplication.currentArtist.name){
+		loadedArtist = FlexGlobals.topLevelApplication.currentArtist.name;
+		
+		mse.addEventListener(Event.COMPLETE, onArtistInfo);
+		mse.getArtistInfo(FlexGlobals.topLevelApplication.currentArtist);
+	}else{
+		this.dispatchEvent(new Event(Event.COMPLETE));
+	}
 }
 
 private function onArtistInfo(e:Event):void{

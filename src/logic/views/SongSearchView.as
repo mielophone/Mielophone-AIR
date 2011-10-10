@@ -44,18 +44,6 @@ private function onSongs(e:Event):void{
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }
 
-private function onMouseMove(e:MouseEvent):void{
-	if( e.stageY < 32 ){
-		TweenLite.to(searchInput, 0.3, {height:32});
-		//searchInput.height = 26;
-	}else{
-		if( searchInput.text.length == 0 ){
-			TweenLite.to(searchInput, 0.3, {height:0});
-		}
-		//searchInput.height = 0;
-	}
-}
-
 private function onSearchKeyUp(e:KeyboardEvent):void{
 	if(e.keyCode == Keyboard.ENTER && searchInput.text.length > 1){
 		mse.addEventListener(Event.COMPLETE, onSearch);

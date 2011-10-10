@@ -136,10 +136,7 @@ private function onBackButtonClick(e:Event):void{
 /**					VIEW CHANGING					 **/
 /******************************************************/
 
-public function changeView(view:*):void{
-	// save last view
-	viewHistory.push(currentView);
-	
+public function changeView(view:*):void{	
 	// show loader
 	loadingOn();
 	
@@ -165,30 +162,62 @@ private function onViewWork(e:Event):void{
 	loadingOff();
 	// get view
 	var view:Group = e.target as Group;
+	var reverse:Boolean = this.getElementIndex(view) < this.getElementIndex(this[currentView]);
+	
+	if(reverse){
+		// remove old view
+		viewHistory.pop();
+		
+		// get current view
+		var viewOld:Group = this[currentView];
+		// reset size and position to absolute 
+		viewOld.horizontalCenter = viewOld.verticalCenter = 0;
+		viewOld.height = stage.stageHeight; 
+		viewOld.width = nativeWindow.width;
+		
+		// show new view
+		view.x = view.y = 0;
+		view.horizontalCenter = view.verticalCenter = 0;
+		view.percentHeight = view.percentWidth = 100;
+		view.visible = true;
+		
+		trace(view.horizontalCenter, view.id, view.visible);
+		
+		// animate move-out
+		TweenLite.to(viewOld, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
+			TweenLite.to(viewOld, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
+				viewOld.visible = false;
+			}});
+		}});
+	}else{
+		// save last view
+		viewHistory.push(currentView);
+		
+		// position window outside
+		//view.percentWidth = view.percentHeight = 95;
+		view.width = this.stage.stageWidth - 100;
+		view.height = this.stage.stageHeight - 100;
+		view.horizontalCenter = this.stage.stageWidth; 
+		view.verticalCenter = 0;
+		view.visible = true;
+		
+		// get old view
+		var oldView:Group = this[viewHistory[viewHistory.length-1]] as Group;
+		
+		// animate move-in
+		TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
+			TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
+				// set new params
+				view.x = view.y = 0;
+				view.percentHeight = view.percentWidth = 100;
+				// hide old view
+				oldView.visible = false;
+			}});
+		}});
+	}
+	
 	// set new current view
 	currentView = view.id;
-	
-	// position window outside
-	//view.percentWidth = view.percentHeight = 95;
-	view.width = this.stage.stageWidth - 100;
-	view.height = this.stage.stageHeight - 100;
-	view.horizontalCenter = this.stage.stageWidth; 
-	view.verticalCenter = 0;
-	view.visible = true;
-	
-	// get old view
-	var oldView:Group = this[viewHistory[viewHistory.length-1]] as Group;
-	
-	// animate move-in
-	TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
-		TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
-			// set new params
-			view.x = view.y = 0;
-			view.percentHeight = view.percentWidth = 100;
-			// hide old view
-			oldView.visible = false;
-		}});
-	}});
 }
 
 /******************************************************/

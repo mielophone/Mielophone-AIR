@@ -7,10 +7,12 @@ import com.codezen.mse.playr.PlayrEvent;
 import com.codezen.mse.playr.PlayrStates;
 import com.codezen.mse.playr.PlayrTrack;
 import com.codezen.mse.services.LastFM;
+import com.codezen.mse.services.LastfmScrobbler;
 import com.codezen.mse.services.MusicBrainz;
 import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
+import flash.events.ErrorEvent;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
@@ -18,6 +20,7 @@ import flash.net.SharedObject;
 import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
+import mx.controls.Alert;
 import mx.core.FlexGlobals;
 import mx.events.FlexEvent;
 
@@ -67,6 +70,13 @@ public var playPos:int;
 // mp3s list
 public var mp3sList:Array;
 
+// Scrobbler 
+private var scrobbler:LastfmScrobbler;
+private var scrobblerSettings:SharedObject;
+private var scrobbleName:String;
+private var scrobblePass:String;
+private var trackScrobbled:Boolean;
+
 /******************************************************/
 /**					INIT STUFF					 	**/
 /******************************************************/
@@ -85,7 +95,7 @@ public function initPlayer():void{
 	player.addEventListener(PlayrEvent.STREAM_PROGRESS, onStreamProgress);
 	player.addEventListener(PlayrEvent.SONGINFO, onSong);
 	player.addEventListener(PlayrEvent.TRACK_COMPLETE, onTrackEnd);
-	// load settings
+	// load player settings
 	playerSettings = SharedObject.getLocal("mielophone.player");
 	if( playerSettings.data.buffer != null ){
 		player.buffer = playerSettings.data.buffer;
@@ -94,6 +104,32 @@ public function initPlayer():void{
 	
 	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
 	timeSlider.slider.dataTipFormatFunction = timeDataTip;
+	
+	// load scrobbling settings
+	scrobblerSettings = SharedObject.getLocal("mielophone.scrobbling");
+	if( scrobblerSettings.data.username != null ){
+		scrobbleName = scrobblerSettings.data.username;
+		scrobblePass = scrobblerSettings.data.pass;
+		FlexGlobals.topLevelApplication.settingsView.lastfmLogin.text = scrobbleName;
+		FlexGlobals.topLevelApplication.settingsView.lastfmPass.text = scrobblePass;
+		
+		// scrobbling
+		initScrobbler();
+	}
+}
+
+public function initScrobbler():void{	
+	if(scrobbleName.length > 1 && scrobblePass.length > 1){
+		trace("scrobble init");
+		scrobbler = new LastfmScrobbler("0b18095c48d2bb8bf4acbab629bcc30e", "536549b8e66a766fe3de7d61a0fa7390");
+		scrobbler.addEventListener(ErrorEvent.ERROR, function():void{
+			Alert.show("Some error in scrobbling class! Wrong login/pass?", "Scrobbling error!");
+		});
+		scrobbler.addEventListener(Event.INIT, function(e:Event):void{
+			trace('scrobble inited');
+		});
+		scrobbler.auth(scrobbleName, scrobblePass);
+	}
 }
 
 /**
@@ -116,6 +152,14 @@ public function setBuffer(b:int):void{
 	player.buffer = b;
 	playerSettings.data.buffer = b;
 	playerSettings.flush();
+}
+
+public function setScrobblingAuth(login:String, pass:String):void{
+	scrobblerSettings.data.username = scrobbleName = login;
+	scrobblerSettings.data.pass = scrobblePass = pass;
+	scrobblerSettings.flush();
+	
+	initScrobbler();
 }
 
 /******************************************************/
@@ -159,6 +203,12 @@ private function onProgress(e:PlayrEvent):void{
 		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artistName.text+" - "+songName.text;
 	}
 	timeSlider.position = player.currentSeconds;
+	
+	// scrobble track on 70%
+	if( scrobbler.isInitialized && !trackScrobbled && player.currentSeconds > (player.totalSeconds * 0.7) ){
+		scrobbler.doScrobble(artistName.text, songName.text, new Date().time.toString());
+		trackScrobbled = true;
+	}
 	
 	// workaround for end event not dispatching
 	if(player.currentSeconds >= player.totalSeconds){
@@ -272,6 +322,8 @@ private function onSongLinks(e:Event):void{
 private function playSong(song:PlayrTrack):void{
 	var pl:PlaylistManager = new PlaylistManager();
 	pl.addTrack(song);
+	
+	trackScrobbled = false;
 	
 	player.stop();
 	player.playlist = pl;

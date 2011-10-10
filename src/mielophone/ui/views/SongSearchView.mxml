@@ -2,8 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="400" height="300"
-		 mouseMove="{onMouseMove(event)}">
+		 width="400" height="300">
 	
 	<fx:Script source="../../../logic/views/SongSearchView.as" />
 	
@@ -26,8 +25,8 @@
 		</s:Line>
 		
 		<!-- search input -->
-		<s:TextInput width="99%" height="0" prompt="Search for song.." 
-					 fontSize="20" id="searchInput"
+		<s:TextInput width="99%" height="24" prompt="Search for song.." 
+					 fontSize="18" id="searchInput"
 					 keyUp="{onSearchKeyUp(event)}" />
 	
 		<!-- result list -->

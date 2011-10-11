@@ -38,6 +38,7 @@ private function getTopSongs():void{
 private function onSongs(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onSongs);
 	
+	FlexGlobals.topLevelApplication.musicPlayer.setQueue(mse.songs);
 	topSongs = new ArrayCollection(mse.songs);
 	songList.dataProvider = topSongs;
 	
@@ -63,8 +64,8 @@ private function onSearch(e:Event):void{
 	FlexGlobals.topLevelApplication.loadingOff();
 	
 	FlexGlobals.topLevelApplication.musicPlayer.mp3sList = mse.mp3s;
-	var _songs:ArrayCollection = new ArrayCollection();
 	
+	var _songs:Array = [];
 	var pl:PlayrTrack;
 	var song:Song;
 	var num:int = 0;
@@ -76,8 +77,9 @@ private function onSearch(e:Event):void{
 		song.duration = pl.totalSeconds;
 		song.durationText = pl.totalTime;
 		song.number = num++;
-		_songs.addItem(song);
+		_songs.push(song);
 	}
 	
-	songList.dataProvider = _songs;
+	FlexGlobals.topLevelApplication.musicPlayer.setQueue(_songs);
+	songList.dataProvider = new ArrayCollection( _songs );
 }

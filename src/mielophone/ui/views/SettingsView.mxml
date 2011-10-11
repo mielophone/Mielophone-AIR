@@ -32,6 +32,17 @@
 								   id="bufferingSlider"
 								   change="{onBufferChange(event)}"/>
 					</s:HGroup>
+					<s:Label color="#FFFFFF" text="Playlist behavior (what happens on click):" />
+					<s:DropDownList id="playlistBehavior" width="220" selectedIndex="0"
+									change="{onPlaylistBehaveChange(event)}">
+						<s:dataProvider>
+							<s:ArrayList>
+								<fx:Object label="Ignore playlist, just play song" value="IgnorePlaylist" />
+								<fx:Object label="Create new playlist" value="ClearPlaylist" />
+								<fx:Object label="Append to existing playlist" value="AppendPlaylist" />
+							</s:ArrayList>
+						</s:dataProvider>
+					</s:DropDownList>
 					
 					<s:Spacer height="20"/>
 					

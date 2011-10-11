@@ -23,6 +23,7 @@ import mx.collections.ArrayCollection;
 import mx.controls.Alert;
 import mx.core.FlexGlobals;
 import mx.events.FlexEvent;
+import mx.utils.ObjectUtil;
 
 import spark.components.Group;
 
@@ -50,6 +51,14 @@ private var normalImg:Class;
 private var fullImg:Class;
 
 /******************************************************/
+/**					CONSTANTS						 **/
+/******************************************************/
+
+public static const PLAYLIST_IGNORE:String = "IgnorePlaylist";
+public static const PLAYLIST_CLEAR:String = "ClearPlaylist";
+public static const PLAYLIST_APPEND:String = "AppendPlaylist";
+
+/******************************************************/
 /**						VARS						 **/
 /******************************************************/
 // UI Stuff
@@ -63,6 +72,7 @@ private var nowSearching:Boolean = false;
 
 // Player stuff
 private var playerSettings:SharedObject;
+private var playerBehavior:String;
 private var player:Playr;
 private var playQueue:Array;
 public var playPos:int;
@@ -85,6 +95,7 @@ public function initPlayer():void{
 	hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimer);
 	
 	isFullMode = false;
+	playQueue = [];
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -97,9 +108,17 @@ public function initPlayer():void{
 	player.addEventListener(PlayrEvent.TRACK_COMPLETE, onTrackEnd);
 	// load player settings
 	playerSettings = SharedObject.getLocal("mielophone.player");
+	// buffer
 	if( playerSettings.data.buffer != null ){
 		player.buffer = playerSettings.data.buffer;
 		FlexGlobals.topLevelApplication.settingsView.bufferingSlider.value = playerSettings.data.buffer / 1000; 
+	}
+	// behavior
+	if( playerSettings.data.behavior != null ){
+		playerBehavior = playerSettings.data.behavior;
+		FlexGlobals.topLevelApplication.settingsView.playlistBehavior.selectedIndex = playerSettings.data.behaviorIndex;
+	}else{
+		playerBehavior = PLAYLIST_IGNORE;
 	}
 	
 	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
@@ -151,6 +170,13 @@ private function timeDataTip(val:String):String{
 public function setBuffer(b:int):void{
 	player.buffer = b;
 	playerSettings.data.buffer = b;
+	playerSettings.flush();
+}
+
+public function setPlaylistBehavior(behavior:String, index:int):void{
+	playerBehavior = behavior;
+	playerSettings.data.behavior = behavior;
+	playerSettings.data.behaviorIndex = index;
 	playerSettings.flush();
 }
 
@@ -266,7 +292,14 @@ private function onVolumeSlider(e:Event):void{
 public function playSongByNum(num:int):void{
 	playPos = num;
 	(songList.dataProvider as ArrayCollection).refresh();
-	findSongAndPlay(playQueue[playPos] as Song);
+	
+	artistName.text = "Searching for stream..";
+	songName.text = "";
+	nowSearching = true;
+	mse.addEventListener(Event.COMPLETE, onSongLinks);
+	mse.findMP3(playQueue[playPos] as Song);
+	
+	//findSongAndPlay(playQueue[playPos] as Song);
 }
 
 public function findNextSong():void{
@@ -293,15 +326,51 @@ public function findPrevSong():void{
 }
 
 public function findSongAndPlay(song:Song):void{	
-	if(mp3sList != null){
+	if(mp3sList != null){ // if mp3 list is already found
 		nowSearching = false;
 		playSong(mp3sList[song.number] as PlayrTrack);
-	}else{
-		artistName.text = "Searching for stream..";
-		songName.text = "";
-		nowSearching = true;
-		mse.addEventListener(Event.COMPLETE, onSongLinks);
-		mse.findMP3(song);
+	}else{ // if there's no mp3 list
+		// check is song is already in queue
+		var i:int, inqueue:Boolean;
+		for(i = 0; i < playQueue.length; i++){
+			if(playQueue[i] == song){
+				trace('match');
+				inqueue = true;
+				break;
+			}
+		}
+		// if song there, just play it
+		if(inqueue){ 
+			playPos = i;
+			(songList.dataProvider as ArrayCollection).refresh();
+			artistName.text = "Searching for stream..";
+			songName.text = "";
+			nowSearching = true;
+			mse.addEventListener(Event.COMPLETE, onSongLinks);
+			mse.findMP3(song);
+			return;
+		}
+		
+		switch(playerBehavior)
+		{
+			case PLAYLIST_APPEND:
+				playQueue.push(song);
+				songList.dataProvider = new ArrayCollection(playQueue);
+				break;
+			
+			case PLAYLIST_CLEAR:
+				playQueue = [song];
+				playPos = -1;
+				songList.dataProvider = new ArrayCollection(playQueue);
+			case PLAYLIST_IGNORE:
+			default:
+				artistName.text = "Searching for stream..";
+				songName.text = "";
+				nowSearching = true;
+				mse.addEventListener(Event.COMPLETE, onSongLinks);
+				mse.findMP3(song);
+				break;
+		}
 	}
 }
 
@@ -334,12 +403,30 @@ private function playSong(song:PlayrTrack):void{
 /**					ALBUM PLAYBACK					 **/
 /******************************************************/
 public function playCurrentAlbum():void{
-	playQueue = FlexGlobals.topLevelApplication.currentAlbum.songs.concat();
+	switch(playerBehavior)
+	{
+		case PLAYLIST_APPEND:
+			playQueue = playQueue.concat(FlexGlobals.topLevelApplication.currentAlbum.songs);
+			songList.dataProvider = new ArrayCollection(playQueue);
+			break;
+		
+		case PLAYLIST_CLEAR:
+		case PLAYLIST_IGNORE:
+			playQueue = FlexGlobals.topLevelApplication.currentAlbum.songs.concat();
+			playPos = -1;
+			
+			songList.dataProvider = new ArrayCollection(playQueue);
+			
+			findNextSong();
+			break;
+	}
+}
+
+public function setQueue(ac:Array):void{
+	playQueue = ac.concat();
 	playPos = -1;
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
-	
-	findNextSong();
 }
 
 /******************************************************/

@@ -29,6 +29,10 @@ private function onSettingsClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.settingsView);
 }
 
+private function onMarketClick(e:Event):void{
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.marketView);
+}
+
 private function onSupportClick(e:Event):void{
 	FlexGlobals.topLevelApplication.supportOverlay.alpha = 0;
 	FlexGlobals.topLevelApplication.supportOverlay.visible = true;

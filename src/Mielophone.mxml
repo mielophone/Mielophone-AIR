@@ -26,6 +26,9 @@
 	<!-- SETTINGS VIEW -->
 	<views:SettingsView width="100%" height="100%" id="settingsView" visible="false" />
 	
+	<!-- MARKET VIEW -->
+	<views:MarketView width="100%" height="100%" id="marketView" visible="false" />
+	
 	<!--- MAIN INFO VIEW -->
 	<!-- GLOBAL SEARCH RESULTS VIEW -->
 	<views:SearchResultsView width="100%" height="100%" id="searchResView" visible="false" />

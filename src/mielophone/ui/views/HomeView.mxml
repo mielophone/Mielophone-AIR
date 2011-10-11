@@ -21,7 +21,7 @@
 	
 	<s:HGroup>
 		<home:ArtistButton click="{onArtistClick(event)}" />
-		<home:MarketButton alpha="0.5"/>
+		<home:MarketButton click="{onMarketClick(event)}"/>
 		<home:SettingsButton click="{onSettingsClick(event)}" />
 	</s:HGroup>
 	

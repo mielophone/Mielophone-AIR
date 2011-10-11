@@ -305,7 +305,7 @@ public function playSongByNum(num:int):void{
 public function findNextSong():void{
 	trace('next song');
 	if(nowSearching) return;
-	if(playQueue == null) return;
+	if(playQueue == null || playQueue.length < 2) return;
 	
 	playPos++;
 	(songList.dataProvider as ArrayCollection).refresh();
@@ -316,7 +316,7 @@ public function findNextSong():void{
 public function findPrevSong():void{
 	trace('prev song');
 	if(nowSearching) return;
-	if(playQueue == null) return;
+	if(playQueue == null || playQueue.length < 2) return;
 	
 	playPos--;
 	(songList.dataProvider as ArrayCollection).refresh();

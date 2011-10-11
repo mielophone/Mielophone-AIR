@@ -10,7 +10,12 @@
 		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" gap="6"/>
 	</s:layout>
 	
-	<s:Label text="Mielophone" color="#FFFFFF" fontSize="36" />
+	<s:HGroup width="100%" variableColumnWidth="true" verticalAlign="middle">
+		<s:Label text="Mielophone" color="#FFFFFF" fontSize="36" />
+		<s:Spacer width="100%" />
+		<s:TextInput width="200" height="30" fontSize="18" id="searchInput"
+					 keyDown="{onSearchKey(event)}"/>
+	</s:HGroup>
 	
 	<s:Spacer height="20" />
 	

@@ -44,7 +44,7 @@
 						 text="by No one"
 						 width="100%" maxDisplayedLines="1" id="artistName" />
 				
-				<s:HGroup width="100%">
+				<s:HGroup width="100%" visible="false">
 					<s:Button label="Download" chromeColor="#36679f" color="#FFFFFF"  
 							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"
 							  useHandCursor="true" alpha="0.5" />
@@ -91,7 +91,8 @@
 			
 			<!-- volume control -->
 			<s:Image source="@Embed('/assets/player/volume.png')" />
-			<s:HSlider width="100%" minimum="0" maximum="100" value="100" liveDragging="true" 
+			<s:HSlider width="100%" minimum="0" maximum="100" value="100" 
+					   liveDragging="true" mouseFocusEnabled="false" 
 					   id="volumeSlider" change="{onVolumeSlider(event)}"/>
 		</s:HGroup>
 		

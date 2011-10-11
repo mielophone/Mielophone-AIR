@@ -20,6 +20,10 @@ private function onBufferChange(e:Event):void{
 	FlexGlobals.topLevelApplication.musicPlayer.setBuffer(bufferingSlider.value * 1000);
 }
 
+private function onPlaylistBehaveChange(e:Event):void{
+	FlexGlobals.topLevelApplication.musicPlayer.setPlaylistBehavior(playlistBehavior.selectedItem.value, playlistBehavior.selectedIndex);
+}
+
 private function pluginName(p:Object):String{
 	return p.index + ". " + p.name + " (by " + p.author + ")";
 }

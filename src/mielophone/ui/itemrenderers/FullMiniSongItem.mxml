@@ -20,7 +20,7 @@
 			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				if(data == null) return;
-				if( int(data.number-1) == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
+				if( this.itemIndex == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
 					bg = 0xa0d3a0;
 				}else if( int(data.number) % 2 == 0 ){
 					bg = 0xc3cdd8;
@@ -33,7 +33,7 @@
 			{
 				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
 				//trace(this.itemIndex);
-				FlexGlobals.topLevelApplication.musicPlayer.playSongByNum(data.number-1);
+				FlexGlobals.topLevelApplication.musicPlayer.playSongByNum(this.itemIndex);
 			}
 			
 		]]>

@@ -46,10 +46,15 @@
 				if( data.image == null || data.image.length < 5 ){
 					var lfm:LastFM = new LastFM();
 					lfm.addEventListener(Event.COMPLETE, onImage);
+					lfm.addEventListener(ErrorEvent.ERROR, onLfmError);
 					lfm.getArtistInfo(data as Artist);
 				}else{
 					preloadImage();
 				}
+			}
+			
+			private function onLfmError(e:Event):void{
+				trace('aritst cover not found');
 			}
 			
 			private function preloadImage():void{

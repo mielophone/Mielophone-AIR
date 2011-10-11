@@ -2,6 +2,8 @@
 import com.greensock.TweenLite;
 
 import flash.events.Event;
+import flash.events.KeyboardEvent;
+import flash.ui.Keyboard;
 
 import mielophone.ui.views.ArtistSearchView;
 
@@ -31,4 +33,16 @@ private function onSupportClick(e:Event):void{
 	FlexGlobals.topLevelApplication.supportOverlay.alpha = 0;
 	FlexGlobals.topLevelApplication.supportOverlay.visible = true;
 	TweenLite.to(FlexGlobals.topLevelApplication.supportOverlay, 0.5, {alpha:1});
+}
+
+private function onSearchKey(e:KeyboardEvent):void{
+	if(e.keyCode == Keyboard.ENTER && searchInput.text.length > 1){
+		FlexGlobals.topLevelApplication.searchResView.query = searchInput.text;
+		
+		FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.searchResView);
+		
+		searchInput.text = '';
+	}else if(e.keyCode == Keyboard.ESCAPE){
+		searchInput.text = '';
+	}
 }

@@ -91,7 +91,8 @@
 			
 			<!-- volume control -->
 			<s:Image source="@Embed('/assets/player/volume.png')" />
-			<s:HSlider width="100%" minimum="0" maximum="100" value="100" liveDragging="true" 
+			<s:HSlider width="100%" minimum="0" maximum="100" value="100" 
+					   liveDragging="true" mouseFocusEnabled="false" 
 					   id="volumeSlider" change="{onVolumeSlider(event)}"/>
 		</s:HGroup>
 		

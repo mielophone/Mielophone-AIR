@@ -159,7 +159,7 @@ public function setScrobblingAuth(login:String, pass:String):void{
 	scrobblerSettings.data.pass = scrobblePass = pass;
 	scrobblerSettings.flush();
 	
-	initScrobbler();
+	if(login.length > 0 && pass.length > 0) initScrobbler();
 }
 
 /******************************************************/
@@ -205,7 +205,7 @@ private function onProgress(e:PlayrEvent):void{
 	timeSlider.position = player.currentSeconds;
 	
 	// scrobble track on 70%
-	if( scrobbler.isInitialized && !trackScrobbled && player.currentSeconds > (player.totalSeconds * 0.7) ){
+	if( scrobbler != null && scrobbler.isInitialized && !trackScrobbled && player.currentSeconds > (player.totalSeconds * 0.7) ){
 		scrobbler.doScrobble(artistName.text, songName.text, new Date().time.toString());
 		trackScrobbled = true;
 	}

@@ -75,6 +75,7 @@ private var playerSettings:SharedObject;
 private var playerBehavior:String;
 private var player:Playr;
 private var playQueue:Array;
+private var playerVolume:int;
 public var playPos:int;
 
 // mp3s list
@@ -112,6 +113,12 @@ public function initPlayer():void{
 	if( playerSettings.data.buffer != null ){
 		player.buffer = playerSettings.data.buffer;
 		FlexGlobals.topLevelApplication.settingsView.bufferingSlider.value = playerSettings.data.buffer / 1000; 
+	}
+	// volume
+	if( playerSettings.data.volume != null ){
+		playerVolume = playerSettings.data.volume;
+		player.volume = playerVolume/100;
+		volumeSlider.value = playerVolume;
 	}
 	// behavior
 	if( playerSettings.data.behavior != null ){
@@ -283,6 +290,11 @@ private function prev_btn_clickHandler(event:MouseEvent):void{
 }
 
 private function onVolumeSlider(e:Event):void{
+	playerVolume = volumeSlider.value;
+	
+	playerSettings.data.volume = playerVolume;
+	playerSettings.flush();
+		
 	player.volume = volumeSlider.value/100;
 }
 
@@ -397,6 +409,7 @@ private function playSong(song:PlayrTrack):void{
 	player.stop();
 	player.playlist = pl;
 	player.play();
+	player.volume = playerVolume/100;
 }
 
 /******************************************************/

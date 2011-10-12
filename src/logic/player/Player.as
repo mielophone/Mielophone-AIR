@@ -12,8 +12,11 @@ import com.codezen.mse.services.MusicBrainz;
 import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
+import flash.errors.EOFError;
+import flash.errors.IOError;
 import flash.events.ErrorEvent;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.net.SharedObject;
@@ -259,21 +262,36 @@ private function onStreamProgress(e:PlayrEvent):void{
 }
 
 private function onSong(e:PlayrEvent):void{	
-	if(FlexGlobals.topLevelApplication.currentAlbum != null){
-		albumCover.source = FlexGlobals.topLevelApplication.currentAlbum.image; 
-	}else{
-		albumCover.source = nocoverImg;
-		// TODO: SEARCH FOR TRACK COVER
-	}
-	
 	timeSlider.maximum = player.totalSeconds;
 	timeMax.text = player.totalTime;
 	artistName.text = CUtils.convertHTMLEntities(player.artist); 
 	songName.text = CUtils.convertHTMLEntities(player.title);
 	
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
+	
+	// get cover
+	mse.addEventListener(Event.COMPLETE, onTrackCover);
+	mse.addEventListener(ErrorEvent.ERROR, onCoverError);
+	mse.getTrackInfo(artistName.text, songName.text);
 }
 
+private function onTrackCover(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onTrackCover);
+	
+	if(mse.songInfo.album.image != null && mse.songInfo.album.image.length > 0){
+		albumCover.source = mse.songInfo.album.image;
+	}else{
+		albumCover.source = nocoverImg;
+	}
+}
+
+private function onCoverError(e:Event):void{
+	mse.removeEventListener(ErrorEvent.ERROR, onCoverError);
+	
+	trace('album search error');
+	
+	albumCover.source = nocoverImg;
+}
 /******************************************************/
 /**				PLAYER BUTTONS HANDLERS			 	 **/
 /******************************************************/
@@ -305,6 +323,7 @@ public function playSongByNum(num:int):void{
 	playPos = num;
 	(songList.dataProvider as ArrayCollection).refresh();
 	
+	albumCover.source = nocoverImg;
 	artistName.text = "Searching for stream..";
 	songName.text = "";
 	nowSearching = true;
@@ -355,6 +374,7 @@ public function findSongAndPlay(song:Song):void{
 		if(inqueue){ 
 			playPos = i;
 			(songList.dataProvider as ArrayCollection).refresh();
+			albumCover.source = nocoverImg;
 			artistName.text = "Searching for stream..";
 			songName.text = "";
 			nowSearching = true;
@@ -376,6 +396,7 @@ public function findSongAndPlay(song:Song):void{
 				songList.dataProvider = new ArrayCollection(playQueue);
 			case PLAYLIST_IGNORE:
 			default:
+				albumCover.source = nocoverImg;
 				artistName.text = "Searching for stream..";
 				songName.text = "";
 				nowSearching = true;

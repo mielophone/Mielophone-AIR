@@ -19,6 +19,7 @@
 			
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
+			import mx.utils.DisplayUtil;
 			import mx.utils.ObjectProxy;
 			
 			[Bindable]
@@ -35,7 +36,7 @@
 				var cornerRadius:uint = 10;
 				roundedMask.graphics.clear();
 				roundedMask.graphics.beginFill(0xFF0000);
-				roundedMask.graphics.drawRoundRect(0, 0, 120, 120, cornerRadius, cornerRadius);
+				roundedMask.graphics.drawRoundRect(0, 0, 90, 90, cornerRadius, cornerRadius);
 				roundedMask.graphics.endFill();
 			}
 			
@@ -105,8 +106,8 @@
 		]]>
 	</fx:Script>
 	<!-- TODO: add image when there's no image available -->
-	<s:BitmapImage width="120" height="120" source="{nocoverImg}" mask="{roundedMask}" maskType="clip"
-				   smooth="true" smoothingQuality="high" id="image"/>
+	<s:BitmapImage width="90" height="90" source="{nocoverImg}" mask="{roundedMask}" maskType="clip"
+				   smooth="true" smoothingQuality="high" id="image" scaleMode="letterbox" fillMode="clip" />
 	<s:Label width="100%" text="{new ObjectProxy(data).name}" color="#FFFFFF" fontSize="16" textAlign="center" />
 	
 </s:ItemRenderer>

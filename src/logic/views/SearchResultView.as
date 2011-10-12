@@ -2,6 +2,7 @@
 import com.codezen.mse.MusicSearchEngine;
 import com.greensock.TweenLite;
 
+import flash.events.ErrorEvent;
 import flash.events.Event;
 
 import mielophone.ui.views.ArtistSearchView;
@@ -21,6 +22,8 @@ public function doWork():void{
 }
 
 private function onResults(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onResults);
+	
 	artistList.dataProvider = new ArrayCollection(mse.artists.slice(0,5));
 	albumList.dataProvider = new ArrayCollection(mse.albums.slice(0,5));
 	songList.dataProvider = new ArrayCollection(mse.songs.slice(0,7));

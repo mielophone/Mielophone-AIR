@@ -12,8 +12,11 @@ import com.codezen.mse.services.MusicBrainz;
 import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
+import flash.errors.EOFError;
+import flash.errors.IOError;
 import flash.events.ErrorEvent;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.net.SharedObject;
@@ -75,6 +78,9 @@ private var playerSettings:SharedObject;
 private var playerBehavior:String;
 private var player:Playr;
 private var playQueue:Array;
+private var playerVolume:int;
+private var playerRepeat:Boolean;
+private var playerShuffle:Boolean;
 public var playPos:int;
 
 // mp3s list
@@ -94,6 +100,7 @@ public function initPlayer():void{
 	hideTimer = new Timer(500, 1);
 	hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimer);
 	
+	playerRepeat = playerShuffle = false;
 	isFullMode = false;
 	playQueue = [];
 	
@@ -112,6 +119,12 @@ public function initPlayer():void{
 	if( playerSettings.data.buffer != null ){
 		player.buffer = playerSettings.data.buffer;
 		FlexGlobals.topLevelApplication.settingsView.bufferingSlider.value = playerSettings.data.buffer / 1000; 
+	}
+	// volume
+	if( playerSettings.data.volume != null ){
+		playerVolume = playerSettings.data.volume;
+		player.volume = playerVolume/100;
+		volumeSlider.value = playerVolume;
 	}
 	// behavior
 	if( playerSettings.data.behavior != null ){
@@ -226,7 +239,7 @@ private function onProgress(e:PlayrEvent):void{
 		timeMax.text = player.totalTime;
 		artistName.text = CUtils.convertHTMLEntities(player.artist); 
 		songName.text = CUtils.convertHTMLEntities(player.title);
-		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artistName.text+" - "+songName.text;
+		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	}
 	timeSlider.position = player.currentSeconds;
 	
@@ -252,21 +265,36 @@ private function onStreamProgress(e:PlayrEvent):void{
 }
 
 private function onSong(e:PlayrEvent):void{	
-	if(FlexGlobals.topLevelApplication.currentAlbum != null){
-		albumCover.source = FlexGlobals.topLevelApplication.currentAlbum.image; 
-	}else{
-		albumCover.source = nocoverImg;
-		// TODO: SEARCH FOR TRACK COVER
-	}
-	
 	timeSlider.maximum = player.totalSeconds;
 	timeMax.text = player.totalTime;
 	artistName.text = CUtils.convertHTMLEntities(player.artist); 
 	songName.text = CUtils.convertHTMLEntities(player.title);
 	
-	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artistName.text+" - "+songName.text;
+	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
+	
+	// get cover
+	mse.addEventListener(Event.COMPLETE, onTrackCover);
+	mse.addEventListener(ErrorEvent.ERROR, onCoverError);
+	mse.getTrackInfo(artistName.text, songName.text);
 }
 
+private function onTrackCover(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onTrackCover);
+	
+	if(mse.songInfo.album.image != null && mse.songInfo.album.image.length > 0){
+		albumCover.source = mse.songInfo.album.image;
+	}else{
+		albumCover.source = nocoverImg;
+	}
+}
+
+private function onCoverError(e:Event):void{
+	mse.removeEventListener(ErrorEvent.ERROR, onCoverError);
+	
+	trace('album search error');
+	
+	albumCover.source = nocoverImg;
+}
 /******************************************************/
 /**				PLAYER BUTTONS HANDLERS			 	 **/
 /******************************************************/
@@ -283,6 +311,11 @@ private function prev_btn_clickHandler(event:MouseEvent):void{
 }
 
 private function onVolumeSlider(e:Event):void{
+	playerVolume = volumeSlider.value;
+	
+	playerSettings.data.volume = playerVolume;
+	playerSettings.flush();
+		
 	player.volume = volumeSlider.value/100;
 }
 
@@ -291,14 +324,15 @@ private function onVolumeSlider(e:Event):void{
 /******************************************************/
 public function playSongByNum(num:int):void{
 	playPos = num;
-	(songList.dataProvider as ArrayCollection).refresh();
+	// notify about index change
+	this.dispatchEvent(new Event(Event.CHANGE));
 	
+	albumCover.source = nocoverImg;
 	artistName.text = "Searching for stream..";
 	songName.text = "";
 	nowSearching = true;
 	mse.addEventListener(Event.COMPLETE, onSongLinks);
 	mse.findMP3(playQueue[playPos] as Song);
-	
 	//findSongAndPlay(playQueue[playPos] as Song);
 }
 
@@ -307,10 +341,24 @@ public function findNextSong():void{
 	if(nowSearching) return;
 	if(playQueue == null || playQueue.length < 2) return;
 	
-	playPos++;
-	(songList.dataProvider as ArrayCollection).refresh();
-	if(playPos < 0 || playPos >= playQueue.length) playPos = 0;
-	findSongAndPlay(playQueue[playPos] as Song);
+	nowSearching = true;
+	if( playerShuffle ){
+		playPos = Math.round( playQueue.length * Math.random() );
+	}else{
+		playPos++;
+	}
+	
+	// notify about index change
+	this.dispatchEvent(new Event(Event.CHANGE));
+	
+	if(playPos < 0 || playPos >= playQueue.length){
+		if(playerRepeat){
+			playPos = 0;
+			findSongAndPlay(playQueue[playPos] as Song);
+		}
+	}else{
+		findSongAndPlay(playQueue[playPos] as Song);
+	}
 }
 
 public function findPrevSong():void{
@@ -318,11 +366,22 @@ public function findPrevSong():void{
 	if(nowSearching) return;
 	if(playQueue == null || playQueue.length < 2) return;
 	
-	playPos--;
-	(songList.dataProvider as ArrayCollection).refresh();
-	if(playPos < 0) playPos = playQueue.length-1;
 	nowSearching = true;
-	findSongAndPlay(playQueue[playPos] as Song);
+	
+	if( playerShuffle ){
+		playPos = Math.round( playQueue.length * Math.random() );
+	}else{
+		playPos--;
+	}
+
+	// notify about index change
+	this.dispatchEvent(new Event(Event.CHANGE));
+	
+	if(playPos < 0){
+		playPos = -1;
+	}else{
+		findSongAndPlay(playQueue[playPos] as Song);
+	}
 }
 
 public function findSongAndPlay(song:Song):void{	
@@ -342,10 +401,16 @@ public function findSongAndPlay(song:Song):void{
 		// if song there, just play it
 		if(inqueue){ 
 			playPos = i;
-			(songList.dataProvider as ArrayCollection).refresh();
+			
+			// notify about index change
+			this.dispatchEvent(new Event(Event.CHANGE));
+			
+			albumCover.source = nocoverImg;
 			artistName.text = "Searching for stream..";
 			songName.text = "";
+			
 			nowSearching = true;
+			
 			mse.addEventListener(Event.COMPLETE, onSongLinks);
 			mse.findMP3(song);
 			return;
@@ -364,6 +429,7 @@ public function findSongAndPlay(song:Song):void{
 				songList.dataProvider = new ArrayCollection(playQueue);
 			case PLAYLIST_IGNORE:
 			default:
+				albumCover.source = nocoverImg;
 				artistName.text = "Searching for stream..";
 				songName.text = "";
 				nowSearching = true;
@@ -397,6 +463,7 @@ private function playSong(song:PlayrTrack):void{
 	player.stop();
 	player.playlist = pl;
 	player.play();
+	player.volume = playerVolume/100;
 }
 
 /******************************************************/
@@ -471,3 +538,22 @@ private function toggleFullMode():void{
 	}
 }
 
+private function toggleRepeat():void{
+	playerRepeat = !playerRepeat;
+	
+	if(playerRepeat){
+		repeatGlow.alpha = 1;
+	}else{
+		repeatGlow.alpha = 0;
+	}
+}
+
+private function toggleShuffle():void{
+	playerShuffle = !playerShuffle;
+	
+	if(playerShuffle){
+		shuffleGlow.alpha = 1;
+	}else{
+		shuffleGlow.alpha = 0;
+	}
+}

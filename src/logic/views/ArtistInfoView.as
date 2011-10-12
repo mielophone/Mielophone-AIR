@@ -18,7 +18,7 @@ private var loadedArtist:String;
 
 public function doWork():void{
 	artistImage.source = FlexGlobals.topLevelApplication.currentArtist.image;
-	artistDesc.text = FlexGlobals.topLevelApplication.currentArtist.description_short;
+	artistDesc.text = CUtils.convertHTMLEntities( CUtils.stripTags(FlexGlobals.topLevelApplication.currentArtist.description_short) );
 	artistName.text = FlexGlobals.topLevelApplication.currentArtist.name;
 	
 	mse = FlexGlobals.topLevelApplication.mse;

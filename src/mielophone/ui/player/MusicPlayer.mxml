@@ -80,12 +80,20 @@
 			<s:Spacer width="30" />
 			
 			<!-- repeat random -->
-			<s:Image source="@Embed('/assets/player/repeat.png')" 
+			<s:Image source="@Embed('/assets/player/repeat.png')" id="repeatButton" 
 					 buttonMode="true" useHandCursor="true" 
-					 alpha="0.5" />
-			<s:Image source="@Embed('/assets/player/shuffle.png')" 
-					 buttonMode="true" useHandCursor="true"
-					 alpha="0.5" />
+					 click="{toggleRepeat()}">
+				<s:filters>
+					<s:GlowFilter inner="true" blurX="200" blurY="200" color="#afdf72" strength="8" id="repeatGlow" alpha="0" />
+				</s:filters>
+			</s:Image>
+			<s:Image source="@Embed('/assets/player/shuffle.png')" id="shuffleButton" 
+					 buttonMode="true" useHandCursor="true" 
+					 click="{toggleShuffle()}">
+				<s:filters>
+					<s:GlowFilter inner="true" blurX="200" blurY="200" color="#afdf72" strength="8" id="shuffleGlow" alpha="0" />
+				</s:filters>
+			</s:Image>
 			
 			<s:Spacer width="30" />
 			
@@ -106,7 +114,7 @@
 		
 		<s:Spacer height="10" />
 		
-		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
+		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll" id="songScroll">
 			<s:DataGroup width="100%" height="100%" id="songList" itemRenderer="mielophone.ui.itemrenderers.FullMiniSongItem">
 				<s:layout>
 					<s:VerticalLayout gap="0" paddingRight="5" />

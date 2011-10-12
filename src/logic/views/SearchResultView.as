@@ -2,6 +2,7 @@
 import com.codezen.mse.MusicSearchEngine;
 import com.greensock.TweenLite;
 
+import flash.events.ErrorEvent;
 import flash.events.Event;
 
 import mielophone.ui.views.ArtistSearchView;

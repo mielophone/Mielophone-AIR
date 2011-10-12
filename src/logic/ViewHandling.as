@@ -187,6 +187,7 @@ private function onViewWork(e:Event):void{
 		TweenLite.to(viewOld, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
 			TweenLite.to(viewOld, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
 				viewOld.visible = false;
+				viewOld.horizontalCenter = 0;
 			}});
 		}});
 	}else{
@@ -212,6 +213,7 @@ private function onViewWork(e:Event):void{
 				view.percentHeight = view.percentWidth = 100;
 				// hide old view
 				oldView.visible = false;
+				oldView.horizontalCenter = 0;
 			}});
 		}});
 	}

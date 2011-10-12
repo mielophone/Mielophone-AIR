@@ -31,7 +31,10 @@ public function doWork():void{
 }
 
 private function onAlbumError(e:ErrorEvent):void{
+	mse.removeEventListener(ErrorEvent.ERROR, onAlbumError);
+	
 	Alert.show(e.text, "Error finding album!");
+	
 	this.dispatchEvent(new ErrorEvent(ErrorEvent.ERROR, true, false, "Album error"));
 }
 

@@ -125,6 +125,8 @@ public function initPlayer():void{
 		playerVolume = playerSettings.data.volume;
 		player.volume = playerVolume/100;
 		volumeSlider.value = playerVolume;
+	}else{
+		playerVolume = 100;
 	}
 	// behavior
 	if( playerSettings.data.behavior != null ){
@@ -339,7 +341,7 @@ public function playSongByNum(num:int):void{
 public function findNextSong():void{
 	trace('next song');
 	if(nowSearching) return;
-	if(playQueue == null || playQueue.length < 2) return;
+	if(playQueue == null || playQueue.length < 1) return;
 	
 	nowSearching = true;
 	if( playerShuffle ){
@@ -364,7 +366,7 @@ public function findNextSong():void{
 public function findPrevSong():void{
 	trace('prev song');
 	if(nowSearching) return;
-	if(playQueue == null || playQueue.length < 2) return;
+	if(playQueue == null || playQueue.length < 1) return;
 	
 	nowSearching = true;
 	
@@ -419,8 +421,14 @@ public function findSongAndPlay(song:Song):void{
 		switch(playerBehavior)
 		{
 			case PLAYLIST_APPEND:
+				var startPlay:Boolean;
+				if(playQueue == null || playQueue.length < 1){
+					playPos = -1;
+					startPlay = true;
+				}
 				playQueue.push(song);
 				songList.dataProvider = new ArrayCollection(playQueue);
+				if(startPlay) findNextSong();
 				break;
 			
 			case PLAYLIST_CLEAR:
@@ -470,11 +478,18 @@ private function playSong(song:PlayrTrack):void{
 /**					ALBUM PLAYBACK					 **/
 /******************************************************/
 public function playCurrentAlbum():void{
+	var startPlay:Boolean;
+	
 	switch(playerBehavior)
 	{
 		case PLAYLIST_APPEND:
+			if(playQueue == null || playQueue.length < 1){
+				playPos = -1;
+				startPlay = true;
+			}
 			playQueue = playQueue.concat(FlexGlobals.topLevelApplication.currentAlbum.songs);
 			songList.dataProvider = new ArrayCollection(playQueue);
+			if(startPlay) findNextSong();
 			break;
 		
 		case PLAYLIST_CLEAR:

@@ -23,7 +23,7 @@
 				if(data == null) return;
 				if( this.itemIndex == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
 					bg = 0xa0d3a0;
-				}else if( int(data.number) % 2 == 0 ){
+				}else if( this.itemIndex % 2 == 0 ){
 					bg = 0xc3cdd8;
 				}else{
 					bg = 0xe1e6ec;

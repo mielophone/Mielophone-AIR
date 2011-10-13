@@ -12,9 +12,14 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:Image verticalCenter="-10" horizontalCenter="0" 
-			 width="100" height="100" smooth="true"
-			 source="@Embed('/assets/home/market.png')"/>
+	<s:Group verticalCenter="-10" horizontalCenter="0">
+		<s:Image width="100" height="100" smooth="true"
+				 source="@Embed('/assets/home/market.png')"/>
+		<s:Label color="#FFFFFF" height="40" 
+				 fontSize="52" fontWeight="bold"
+				 verticalCenter="10" horizontalCenter="42"
+				 id="newPlugins" />
+	</s:Group>
 	
 	<s:Label bottom="10" left="10" id="smallText"
 			 color="#FFFFFF" fontSize="16"

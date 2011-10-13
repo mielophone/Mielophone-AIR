@@ -83,9 +83,6 @@ private var playerRepeat:Boolean;
 private var playerShuffle:Boolean;
 public var playPos:int;
 
-// mp3s list
-public var mp3sList:Array;
-
 // Scrobbler 
 private var scrobbler:LastfmScrobbler;
 private var scrobblerSettings:SharedObject;
@@ -317,7 +314,7 @@ private function onVolumeSlider(e:Event):void{
 	
 	playerSettings.data.volume = playerVolume;
 	playerSettings.flush();
-		
+	
 	player.volume = volumeSlider.value/100;
 }
 
@@ -375,7 +372,7 @@ public function findPrevSong():void{
 	}else{
 		playPos--;
 	}
-
+	
 	// notify about index change
 	this.dispatchEvent(new Event(Event.CHANGE));
 	
@@ -387,64 +384,59 @@ public function findPrevSong():void{
 }
 
 public function findSongAndPlay(song:Song):void{	
-	if(mp3sList != null){ // if mp3 list is already found
-		nowSearching = false;
-		playSong(mp3sList[song.number] as PlayrTrack);
-	}else{ // if there's no mp3 list
-		// check is song is already in queue
-		var i:int, inqueue:Boolean;
-		for(i = 0; i < playQueue.length; i++){
-			if(playQueue[i] == song){
-				trace('match');
-				inqueue = true;
-				break;
-			}
+	// check is song is already in queue
+	var i:int, inqueue:Boolean;
+	for(i = 0; i < playQueue.length; i++){
+		if(playQueue[i] == song){
+			trace('match');
+			inqueue = true;
+			break;
 		}
-		// if song there, just play it
-		if(inqueue){ 
-			playPos = i;
-			
-			// notify about index change
-			this.dispatchEvent(new Event(Event.CHANGE));
-			
+	}
+	// if song there, just play it
+	if(inqueue){ 
+		playPos = i;
+		
+		// notify about index change
+		this.dispatchEvent(new Event(Event.CHANGE));
+		
+		albumCover.source = nocoverImg;
+		artistName.text = "Searching for stream..";
+		songName.text = "";
+		
+		nowSearching = true;
+		
+		mse.addEventListener(Event.COMPLETE, onSongLinks);
+		mse.findMP3(song);
+		return;
+	}
+	
+	switch(playerBehavior)
+	{
+		case PLAYLIST_APPEND:
+			var startPlay:Boolean;
+			if(playQueue == null || playQueue.length < 1){
+				playPos = -1;
+				startPlay = true;
+			}
+			playQueue.push(song);
+			songList.dataProvider = new ArrayCollection(playQueue);
+			if(startPlay) findNextSong();
+			break;
+		
+		case PLAYLIST_CLEAR:
+			playQueue = [song];
+			playPos = -1;
+			songList.dataProvider = new ArrayCollection(playQueue);
+		case PLAYLIST_IGNORE:
+		default:
 			albumCover.source = nocoverImg;
 			artistName.text = "Searching for stream..";
 			songName.text = "";
-			
 			nowSearching = true;
-			
 			mse.addEventListener(Event.COMPLETE, onSongLinks);
 			mse.findMP3(song);
-			return;
-		}
-		
-		switch(playerBehavior)
-		{
-			case PLAYLIST_APPEND:
-				var startPlay:Boolean;
-				if(playQueue == null || playQueue.length < 1){
-					playPos = -1;
-					startPlay = true;
-				}
-				playQueue.push(song);
-				songList.dataProvider = new ArrayCollection(playQueue);
-				if(startPlay) findNextSong();
-				break;
-			
-			case PLAYLIST_CLEAR:
-				playQueue = [song];
-				playPos = -1;
-				songList.dataProvider = new ArrayCollection(playQueue);
-			case PLAYLIST_IGNORE:
-			default:
-				albumCover.source = nocoverImg;
-				artistName.text = "Searching for stream..";
-				songName.text = "";
-				nowSearching = true;
-				mse.addEventListener(Event.COMPLETE, onSongLinks);
-				mse.findMP3(song);
-				break;
-		}
+			break;
 	}
 }
 

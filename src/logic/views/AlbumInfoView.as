@@ -19,8 +19,6 @@ private var mse:MusicSearchEngine;
 public function doWork():void{	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
-	FlexGlobals.topLevelApplication.musicPlayer.mp3sList = null;
-	
 	artistName.text = FlexGlobals.topLevelApplication.currentAlbum.artist.name; 
 	albumName.text = FlexGlobals.topLevelApplication.currentAlbum.name;
 	albumImage.source = FlexGlobals.topLevelApplication.currentAlbum.image;

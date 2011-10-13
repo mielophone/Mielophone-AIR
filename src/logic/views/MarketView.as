@@ -37,6 +37,10 @@ private var downloadPath:String;
 private var downloadFile:String;
 
 public function doWork():void{
+	this.dispatchEvent(new Event(Event.COMPLETE));
+}
+
+public function fetchPlugins():void{
 	var urlReq:URLRequest = new URLRequest(MARKET_URL);
 	var urlLoader:URLLoader = new URLLoader();
 	urlLoader.addEventListener(Event.COMPLETE, onMarketData);
@@ -49,6 +53,8 @@ private function onMarketData(e:Event):void{
 	plugins = [];
 	// get installed plugins
 	var installedPlugins:Array = FlexGlobals.topLevelApplication.mse.getActivePlugins();
+	
+	var newPluginsCount:int = 0;
 	
 	// parse xml
 	var xml:XML = new XML(e.target.data);
@@ -63,12 +69,13 @@ private function onMarketData(e:Event):void{
 			}
 		}
 		// append
-		plugins.push({name: plugin.@name, author: plugin.@author, url: plugin.@url, installed:isInstalled});
+		plugins.push({name: plugin.@name, author: plugin.@author, description: plugin.@description, url: plugin.@url, installed:isInstalled});
+		if(!isInstalled) newPluginsCount++;
 	}
 	
-	pluginList.dataProvider = new ArrayCollection(plugins);
+	if(newPluginsCount > 0) FlexGlobals.topLevelApplication.homeView.marketButton.newPlugins.text = newPluginsCount;
 	
-	this.dispatchEvent(new Event(Event.COMPLETE));
+	pluginList.dataProvider = new ArrayCollection(plugins);
 }
 
 public function installPlugin(plugin:Object):void{

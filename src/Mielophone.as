@@ -24,4 +24,7 @@ private function onMseInit(e:Event):void{
 	
 	// init settings
 	settingsView.initSettings();
+	
+	// get plugins
+	marketView.fetchPlugins();
 }

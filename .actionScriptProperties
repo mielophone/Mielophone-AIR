@@ -25,9 +25,7 @@
   <buildTargets>
     <buildTarget buildTargetName="default">
       <airSettings airCertificatePath="/Users/yamalight/Projects/certs/cert.p12" airTimestamp="true" version="1">
-        <airExcludes>
-          <pathEntry path="plugins/VkontaktePlugin.swf"/>
-        </airExcludes>
+        <airExcludes/>
       </airSettings>
       <actionScriptSettings version="1"/>
     </buildTarget>

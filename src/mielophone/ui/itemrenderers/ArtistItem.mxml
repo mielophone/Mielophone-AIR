@@ -3,7 +3,7 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				autoDrawBackground="false" buttonMode="true" useHandCursor="true"
-				width="120"
+				width="100"
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
 				dataChange="itemrenderer1_dataChangeHandler(event)"
 				click="itemrenderer1_clickHandler(event)">

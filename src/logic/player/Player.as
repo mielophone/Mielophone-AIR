@@ -210,8 +210,8 @@ private function onSeek(e:Event):void{
 
 
 private function onTrackEnd(e:PlayrEvent):void{
-	timeMax.text = "--:--";
-	timeCurrent.text = "--:--";
+	timeMax.text = "";
+	timeCurrent.text = "";
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 	findNextSong();
 }
@@ -223,8 +223,8 @@ private function onPlayerState(e:PlayrEvent):void{
 			break;
 		case PlayrStates.STOPPED:
 		case PlayrStates.WAITING:
-			timeMax.text = "--:--";
-			timeCurrent.text = "--:--";
+			timeMax.text = "";
+			timeCurrent.text = "";
 			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 		case PlayrStates.PAUSED:
 			playBtn.source = playImg;

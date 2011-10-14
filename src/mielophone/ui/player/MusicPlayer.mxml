@@ -112,7 +112,12 @@
 			<s:Label color="#FFFFFF" text="" id="timeMax" />
 		</s:HGroup>
 		
-		<s:Spacer height="10" />
+		<s:Spacer height="5" />
+		
+		<s:HGroup width="100%" horizontalAlign="center" verticalAlign="middle">
+			<s:Image source="@Embed('/assets/player/clear.png')" toolTip="Clear playlist"
+					 buttonMode="true" useHandCursor="true" click="{clearPlaylist()}"/>
+		</s:HGroup>
 		
 		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll" id="songScroll">
 			<s:DataGroup width="100%" height="100%" id="songList" itemRenderer="mielophone.ui.itemrenderers.FullMiniSongItem">

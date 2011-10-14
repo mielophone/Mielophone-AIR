@@ -580,3 +580,7 @@ private function toggleShuffle():void{
 		shuffleGlow.alpha = 0;
 	}
 }
+
+private function clearPlaylist():void{
+	setQueue([]);	
+}

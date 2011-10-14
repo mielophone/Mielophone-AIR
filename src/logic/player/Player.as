@@ -1,5 +1,6 @@
 
 import com.codezen.mse.MusicSearchEngine;
+import com.codezen.mse.models.Album;
 import com.codezen.mse.models.Song;
 import com.codezen.mse.playr.PlaylistManager;
 import com.codezen.mse.playr.Playr;
@@ -494,6 +495,21 @@ public function playCurrentAlbum():void{
 			findNextSong();
 			break;
 	}
+}
+
+public function playAlbum(album:Album):void{
+	FlexGlobals.topLevelApplication.currentAlbum = album;
+	
+	mse.addEventListener(Event.COMPLETE, onAlbumTracks);
+	mse.getAlbumTracks(album);
+}
+
+private function onAlbumTracks(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onAlbumTracks);
+	
+	FlexGlobals.topLevelApplication.currentAlbum.songs = mse.album.songs;
+	
+	playCurrentAlbum();
 }
 
 public function setQueue(ac:Array):void{

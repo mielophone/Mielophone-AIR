@@ -1,5 +1,6 @@
 
 import com.codezen.mse.MusicSearchEngine;
+import com.codezen.mse.models.Album;
 import com.codezen.mse.models.Song;
 import com.codezen.mse.playr.PlaylistManager;
 import com.codezen.mse.playr.Playr;
@@ -210,8 +211,8 @@ private function onSeek(e:Event):void{
 
 
 private function onTrackEnd(e:PlayrEvent):void{
-	timeMax.text = "--:--";
-	timeCurrent.text = "--:--";
+	timeMax.text = "";
+	timeCurrent.text = "";
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 	findNextSong();
 }
@@ -223,8 +224,8 @@ private function onPlayerState(e:PlayrEvent):void{
 			break;
 		case PlayrStates.STOPPED:
 		case PlayrStates.WAITING:
-			timeMax.text = "--:--";
-			timeCurrent.text = "--:--";
+			timeMax.text = "";
+			timeCurrent.text = "";
 			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 		case PlayrStates.PAUSED:
 			playBtn.source = playImg;
@@ -496,6 +497,21 @@ public function playCurrentAlbum():void{
 	}
 }
 
+public function playAlbum(album:Album):void{
+	FlexGlobals.topLevelApplication.currentAlbum = album;
+	
+	mse.addEventListener(Event.COMPLETE, onAlbumTracks);
+	mse.getAlbumTracks(album);
+}
+
+private function onAlbumTracks(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onAlbumTracks);
+	
+	FlexGlobals.topLevelApplication.currentAlbum.songs = mse.album.songs;
+	
+	playCurrentAlbum();
+}
+
 public function setQueue(ac:Array):void{
 	playQueue = ac.concat();
 	playPos = -1;
@@ -563,4 +579,8 @@ private function toggleShuffle():void{
 	}else{
 		shuffleGlow.alpha = 0;
 	}
+}
+
+private function clearPlaylist():void{
+	setQueue([]);	
 }

@@ -99,7 +99,7 @@ public function installPlugin(plugin:Object):void{
 		
 		trace(downloadFile);
 		
-		file = File.desktopDirectory.resolvePath( File.applicationDirectory.resolvePath("plugins/").nativePath+downloadFile );
+		file = File.desktopDirectory.resolvePath( File.applicationStorageDirectory.resolvePath("plugins/").nativePath+downloadFile );
 		trace(file.nativePath);
 		request = new URLRequest(url);
 		fileStream.openAsync(file, FileMode.WRITE);

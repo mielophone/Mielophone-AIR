@@ -15,6 +15,7 @@
 			import mx.core.FlexGlobals;
 			import mx.events.FlexEvent;
 			import mx.utils.ObjectProxy;
+			import mx.utils.ObjectUtil;
 			
 			[Bindable]
 			[Embed(source="/assets/images/nocover.png")]
@@ -82,8 +83,15 @@
 			
 			private function itemrenderer1_clickHandler(event:MouseEvent):void
 			{
+				if( event.target.parent.id == "playAlbum") return;
+				
 				FlexGlobals.topLevelApplication.currentAlbum = data as Album;
 				FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.albumInfoView);
+			}
+			
+			private function image1_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.musicPlayer.playAlbum(data as Album);
 			}
 			
 		]]>
@@ -96,6 +104,14 @@
 	<s:Group width="120" height="120">
 		<s:BitmapImage width="120" height="120" id="img" source="{nocoverImg}" mask="{roundedMask}" maskType="clip" 
 					   smooth="true" smoothingQuality="high"/>
+		
+		<s:Ellipse width="18" height="18" right="0" top="0">
+			<s:fill><s:SolidColor color="#FFFFFF" /></s:fill>
+			<s:stroke><s:SolidColorStroke color="#333333" /></s:stroke>
+		</s:Ellipse>
+		<s:Image source="@Embed('/assets/images/music.png')" toolTip="Play album" 
+				 buttonMode="true" useHandCursor="true" right="2" top="2" id="playAlbum"
+				 click="image1_clickHandler(event)"/>
 		
 		<s:Label text="{new ObjectProxy(data).date}" maxDisplayedLines="1" fontSize="14" alpha="0.8"
 				 id="dateText" bottom="0" right="0" backgroundColor="#000000" color="#FFFFFF" 

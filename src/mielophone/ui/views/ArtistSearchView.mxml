@@ -33,7 +33,7 @@
 		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
 			<s:DataGroup width="100%" height="100%" id="artistList" itemRenderer="mielophone.ui.itemrenderers.ArtistItem">
 				<s:layout>
-					<s:TileLayout paddingTop="5" paddingLeft="2" paddingRight="2" columnWidth="130" columnAlign="justifyUsingGap" />
+					<s:TileLayout paddingTop="5" paddingLeft="2" paddingRight="2" columnWidth="110" columnAlign="justifyUsingGap" />
 				</s:layout>
 			</s:DataGroup>
 		</s:Scroller>

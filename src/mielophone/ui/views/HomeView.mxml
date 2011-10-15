@@ -32,7 +32,9 @@
 	</s:HGroup>
 	
 	<s:HGroup>
-		<home:LastFMButton />
+		<home:VideoButton />
+		<home:TagsButton />
+		<home:GenresButton />
 	</s:HGroup>
 	
 </s:Group>

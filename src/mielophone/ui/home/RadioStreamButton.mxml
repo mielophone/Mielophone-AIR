@@ -14,10 +14,10 @@
 	
 	<s:Image verticalCenter="-10" horizontalCenter="0" 
 			 width="100" height="100" smooth="true"
-			 source="@Embed('/assets/home/genres.png')"/>
+			 source="@Embed('/assets/home/radio.png')"/>
 	
 	<s:Label bottom="10" left="10" id="smallText"
 			 color="#FFFFFF" fontSize="16"
-			 text="Genres"/>
+			 text="Radio"/>
 	
 </s:Group>

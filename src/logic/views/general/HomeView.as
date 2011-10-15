@@ -47,7 +47,7 @@ private function onTagsClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.tagView);
 }
 
-private function onGenresClick(e:Event):void{
+private function onRadioStreamClick(e:Event):void{
 	
 }
 

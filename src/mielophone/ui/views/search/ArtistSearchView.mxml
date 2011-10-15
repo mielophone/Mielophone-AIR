@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
 		 width="400" height="300">
 	
-	<fx:Script source="../../../logic/views/ArtistSearchView.as" />
+	<fx:Script source="../../../../logic/views/search/ArtistSearchView.as" />
 	
 	<!-- background fill -->
 	<s:Rect left="0" right="0" top="0" bottom="0" >

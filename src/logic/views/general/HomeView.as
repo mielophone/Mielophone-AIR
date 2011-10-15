@@ -5,7 +5,7 @@ import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.ui.Keyboard;
 
-import mielophone.ui.views.ArtistSearchView;
+import mielophone.ui.views.search.ArtistSearchView;
 
 import mx.core.FlexGlobals;
 
@@ -37,6 +37,18 @@ private function onSupportClick(e:Event):void{
 	FlexGlobals.topLevelApplication.supportOverlay.alpha = 0;
 	FlexGlobals.topLevelApplication.supportOverlay.visible = true;
 	TweenLite.to(FlexGlobals.topLevelApplication.supportOverlay, 0.5, {alpha:1});
+}
+
+private function onVideoClick(e:Event):void{
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.videoView);
+}
+
+private function onTagsClick(e:Event):void{
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.tagView);
+}
+
+private function onRadioStreamClick(e:Event):void{
+	
 }
 
 private function onSearchKey(e:KeyboardEvent):void{

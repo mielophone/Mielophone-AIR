@@ -4,7 +4,7 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
 		 xmlns:home="mielophone.ui.home.*">
 	
-	<fx:Script source="../../../logic/views/HomeView.as" />
+	<fx:Script source="../../../../logic/views/general/HomeView.as" />
 	
 	<s:layout>
 		<s:VerticalLayout paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10" gap="6"/>
@@ -29,6 +29,12 @@
 		<home:AlbumButton click="{onAlbumClick(event)}" />
 		<home:SongButton click="{onSongClick(event)}" />
 		<home:SupportButton click="{onSupportClick(event)}" />
+	</s:HGroup>
+	
+	<s:HGroup>
+		<home:VideoButton click="{onVideoClick(event)}" />
+		<home:TagsButton click="{onTagsClick(event)}" />
+		<home:RadioStreamButton click="{onRadioStreamClick(event)}" alpha="0.5" />
 	</s:HGroup>
 	
 </s:Group>

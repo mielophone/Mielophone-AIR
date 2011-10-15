@@ -9,7 +9,7 @@
 					   skinClass="mielophone.ui.skins.MielophoneApplication"
 					   applicationComplete="{onAppicationComplete()}"
 					   mouseMove="{onAppMouseMove(event)}"
-					   width="800" height="600">
+					   width="800" height="600" xmlns:search="mielophone.ui.views.search.*" xmlns:info="mielophone.ui.views.info.*" xmlns:general="mielophone.ui.views.general.*">
 	
 	<fx:Script source="Mielophone.as" />
 	<fx:Script source="logic/Autoupdate.as" />
@@ -17,36 +17,52 @@
 	<fx:Script source="logic/ViewHandling.as" />
 	
 	<!-- MAIN VIEW -->
-	<views:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />
+	<general:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />
+	
+	
 	
 	<!--- HELPING VIEWS -->
 	<!-- SUPPORT OVERLAY -->
-	<views:SupportOverlay width="100%" height="100%" id="supportOverlay" visible="false" />
+	<general:SupportOverlay width="100%" height="100%" id="supportOverlay" visible="false" />
 	
 	<!-- SETTINGS VIEW -->
-	<views:SettingsView width="100%" height="100%" id="settingsView" visible="false" />
+	<general:SettingsView width="100%" height="100%" id="settingsView" visible="false" />
 	
 	<!-- MARKET VIEW -->
-	<views:MarketView width="100%" height="100%" id="marketView" visible="false" />
+	<general:MarketView width="100%" height="100%" id="marketView" visible="false" />
+	
+	
+	
 	
 	<!--- MAIN INFO VIEW -->
 	<!-- GLOBAL SEARCH RESULTS VIEW -->
-	<views:SearchResultsView width="100%" height="100%" id="searchResView" visible="false" />
+	<search:SearchResultsView width="100%" height="100%" id="searchResView" visible="false" />
 	
 	<!-- ARTIST SEARCH VIEW -->
-	<views:ArtistSearchView width="100%" height="100%" id="artistView" visible="false" />
+	<search:ArtistSearchView width="100%" height="100%" id="artistView" visible="false" />
 	
 	<!-- ALBUM SEARCH VIEW -->
-	<views:AlbumSearchView width="100%" height="100%" id="albumView" visible="false" />
+	<search:AlbumSearchView width="100%" height="100%" id="albumView" visible="false" />
 	
 	<!-- SONG SEARCH VIEW -->
-	<views:SongSearchView width="100%" height="100%" id="songView" visible="false" />
+	<search:SongSearchView width="100%" height="100%" id="songView" visible="false" />
 	
+	<!-- VIDEO SEARCH VIEW -->
+	<search:VideoSearchView width="100%" height="100%" id="videoView" visible="false" />
+	
+	<!-- TAG SEARCH VIEW -->
+	<search:TagSearchView width="100%" height="100%" id="tagView" visible="false" />
+	
+	
+	<!--- INFO VIEWS -->
 	<!-- ARTIST INFO VIEW -->
-	<views:ArtistInfoView width="100%" height="100%" id="artistInfoView" visible="false" />
+	<info:ArtistInfoView width="100%" height="100%" id="artistInfoView" visible="false" />
 	
 	<!-- ALBUM INFO VIEW -->
-	<views:AlbumInfoView width="100%" height="100%" id="albumInfoView" visible="false" />
+	<info:AlbumInfoView width="100%" height="100%" id="albumInfoView" visible="false" />
+	
+	
+	
 	
 	<!--- ELEMENTS PRESENT EVERYWHERE -->
 	<!-- ACTIVE LEFT BORDER -->

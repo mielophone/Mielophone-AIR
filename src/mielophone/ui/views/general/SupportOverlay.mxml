@@ -5,7 +5,7 @@
 		 width="400" height="300"
 		 click="{onClick(event)}">
 	
-	<fx:Script source="../../../logic/views/SupportOverlay.as" />
+	<fx:Script source="../../../../logic/views/general/SupportOverlay.as" />
 	
 	<!-- background fill -->
 	<s:Rect left="0" right="0" top="0" bottom="0" alpha="0.8">

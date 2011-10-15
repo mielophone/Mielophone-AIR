@@ -5,7 +5,7 @@ import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.ui.Keyboard;
 
-import mielophone.ui.views.ArtistSearchView;
+import mielophone.ui.views.search.ArtistSearchView;
 
 import mx.core.FlexGlobals;
 
@@ -39,7 +39,15 @@ private function onSupportClick(e:Event):void{
 	TweenLite.to(FlexGlobals.topLevelApplication.supportOverlay, 0.5, {alpha:1});
 }
 
-private function onLastFMClick(e:Event):void{
+private function onVideoClick(e:Event):void{
+	
+}
+
+private function onTagsClick(e:Event):void{
+	
+}
+
+private function onGenresClick(e:Event):void{
 	
 }
 

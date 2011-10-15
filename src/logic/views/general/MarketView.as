@@ -15,7 +15,7 @@ import flash.net.URLStream;
 import flash.ui.Keyboard;
 import flash.utils.ByteArray;
 
-import mielophone.ui.views.ArtistSearchView;
+import mielophone.ui.views.search.ArtistSearchView;
 
 import mx.collections.ArrayCollection;
 import mx.controls.Alert;

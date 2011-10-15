@@ -10,7 +10,7 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.ui.Keyboard;
 
-import mielophone.ui.views.SongSearchView;
+import mielophone.ui.views.search.SongSearchView;
 
 import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;

@@ -5,7 +5,7 @@ import com.greensock.TweenLite;
 import flash.events.ErrorEvent;
 import flash.events.Event;
 
-import mielophone.ui.views.ArtistSearchView;
+import mielophone.ui.views.search.ArtistSearchView;
 
 import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;

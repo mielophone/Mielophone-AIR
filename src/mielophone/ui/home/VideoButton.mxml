@@ -8,7 +8,7 @@
 	<!-- background -->
 	<s:Rect width="100%" height="100%">
 		<s:fill>
-			<s:SolidColor color="0x4ab69e" />
+			<s:SolidColor color="0xFFFFFF" />
 		</s:fill>
 	</s:Rect>
 	

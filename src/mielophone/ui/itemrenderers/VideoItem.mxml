@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false" buttonMode="true" useHandCursor="true"
+				width="120"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
+				dataChange="itemrenderer1_dataChangeHandler(event)"
+				click="itemrenderer1_clickHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.codezen.mse.models.Album;
+			import com.codezen.mse.models.VideoObject;
+			import com.codezen.mse.services.MusicBrainz;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectProxy;
+			import mx.utils.ObjectUtil;
+			
+			[Bindable]
+			[Embed(source="/assets/images/nocover.png")]
+			private var nocoverImg:Class;
+			
+			// mask
+			[Bindable]
+			public var roundedMask:Sprite;
+			
+			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
+				img.source = nocoverImg;
+				if(data == null) return;
+				
+				preloadImage();
+			}
+			
+			private function preloadImage():void{
+				var imageLoader:Loader = new Loader();
+				var theURL:String = data.thumbURL;
+				var imageRequest:URLRequest = new URLRequest(theURL);
+				
+				imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onImageContent);
+				imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onError);
+				imageLoader.load(imageRequest);
+			}
+			
+			private function onImageContent(e:Event):void{
+				var imageLoader:LoaderInfo = e.target as LoaderInfo;
+				if( imageLoader.content == null ) return;
+				if( imageLoader.content.width > 10 && imageLoader.content.height > 10 )
+					img.source = imageLoader.content;
+				
+				imageLoader.removeEventListener(Event.COMPLETE, onImageContent);
+				imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+				imageLoader = null;
+			}
+			
+			private function onError(e:Event):void{
+				var imageLoader:LoaderInfo = e.target as LoaderInfo;
+				imageLoader.removeEventListener(Event.COMPLETE, onImageContent);
+				imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+				imageLoader = null;
+			}
+			
+			private function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			{
+				roundedMask = new Sprite();
+				var cornerRadius:uint = 10;
+				roundedMask.graphics.clear();
+				roundedMask.graphics.beginFill(0xFF0000);
+				roundedMask.graphics.drawRoundRect(0, 0, 120, 90, cornerRadius, cornerRadius);
+				roundedMask.graphics.endFill();
+			}
+			
+			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.videoView.playVideo(data as VideoObject);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:layout>
+		<s:VerticalLayout gap="5" horizontalAlign="center" verticalAlign="top" />
+	</s:layout>
+	<!-- TODO: add image when there's no image -->
+	<s:BitmapImage width="120" height="90" id="img" source="{nocoverImg}" mask="{roundedMask}" maskType="clip" 
+					   smooth="true" smoothingQuality="high"/>
+	<s:Label width="100%" text="{new ObjectProxy(data).title}" textAlign="center" maxDisplayedLines="3" fontSize="16" />
+	
+</s:ItemRenderer>

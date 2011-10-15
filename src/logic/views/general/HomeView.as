@@ -40,7 +40,7 @@ private function onSupportClick(e:Event):void{
 }
 
 private function onVideoClick(e:Event):void{
-	
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.videoView);
 }
 
 private function onTagsClick(e:Event):void{

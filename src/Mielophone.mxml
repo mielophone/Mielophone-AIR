@@ -42,6 +42,10 @@
 	<!-- SONG SEARCH VIEW -->
 	<search:SongSearchView width="100%" height="100%" id="songView" visible="false" />
 	
+	<!-- VIDEO SEARCH VIEW -->
+	<search:VideoSearchView width="100%" height="100%" id="videoView" visible="false" />
+	
+	<!--- INFO VIEWS -->
 	<!-- ARTIST INFO VIEW -->
 	<info:ArtistInfoView width="100%" height="100%" id="artistInfoView" visible="false" />
 	

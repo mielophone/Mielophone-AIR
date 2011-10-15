@@ -59,4 +59,22 @@ private function onSearch(e:Event):void{
 	artistList.dataProvider = new ArrayCollection(mse.artists);
 }
 
+// ----- search by tag ------
+public function findArtistsByTag(tag:String):void{
+	if(mse == null)
+		mse = FlexGlobals.topLevelApplication.mse;
+	
+	FlexGlobals.topLevelApplication.loadingOn();
+	
+	mse.addEventListener(Event.COMPLETE, onTagArtists);
+	mse.getArtistByTag(tag);
+}
+
+private function onTagArtists(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onTagArtists);
+	
+	artistList.dataProvider = new ArrayCollection(mse.artists);
+	
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.artistView);
+}
 

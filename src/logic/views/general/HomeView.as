@@ -44,7 +44,7 @@ private function onVideoClick(e:Event):void{
 }
 
 private function onTagsClick(e:Event):void{
-	
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.tagView);
 }
 
 private function onGenresClick(e:Event):void{

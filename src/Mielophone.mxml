@@ -19,6 +19,8 @@
 	<!-- MAIN VIEW -->
 	<general:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />
 	
+	
+	
 	<!--- HELPING VIEWS -->
 	<!-- SUPPORT OVERLAY -->
 	<general:SupportOverlay width="100%" height="100%" id="supportOverlay" visible="false" />
@@ -28,6 +30,9 @@
 	
 	<!-- MARKET VIEW -->
 	<general:MarketView width="100%" height="100%" id="marketView" visible="false" />
+	
+	
+	
 	
 	<!--- MAIN INFO VIEW -->
 	<!-- GLOBAL SEARCH RESULTS VIEW -->
@@ -45,12 +50,19 @@
 	<!-- VIDEO SEARCH VIEW -->
 	<search:VideoSearchView width="100%" height="100%" id="videoView" visible="false" />
 	
+	<!-- TAG SEARCH VIEW -->
+	<search:TagSearchView width="100%" height="100%" id="tagView" visible="false" />
+	
+	
 	<!--- INFO VIEWS -->
 	<!-- ARTIST INFO VIEW -->
 	<info:ArtistInfoView width="100%" height="100%" id="artistInfoView" visible="false" />
 	
 	<!-- ALBUM INFO VIEW -->
 	<info:AlbumInfoView width="100%" height="100%" id="albumInfoView" visible="false" />
+	
+	
+	
 	
 	<!--- ELEMENTS PRESENT EVERYWHERE -->
 	<!-- ACTIVE LEFT BORDER -->

@@ -31,4 +31,8 @@
 		<home:SupportButton click="{onSupportClick(event)}" />
 	</s:HGroup>
 	
+	<s:HGroup>
+		<home:LastFMButton />
+	</s:HGroup>
+	
 </s:Group>

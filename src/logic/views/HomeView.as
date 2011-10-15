@@ -39,6 +39,10 @@ private function onSupportClick(e:Event):void{
 	TweenLite.to(FlexGlobals.topLevelApplication.supportOverlay, 0.5, {alpha:1});
 }
 
+private function onLastFMClick(e:Event):void{
+	
+}
+
 private function onSearchKey(e:KeyboardEvent):void{
 	if(e.keyCode == Keyboard.ENTER && searchInput.text.length > 1){
 		FlexGlobals.topLevelApplication.searchResView.query = searchInput.text;

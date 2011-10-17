@@ -21,6 +21,7 @@ import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.net.SharedObject;
+import flash.net.URLRequest;
 import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
@@ -83,6 +84,9 @@ private var playerVolume:int;
 private var playerRepeat:Boolean;
 private var playerShuffle:Boolean;
 public var playPos:int;
+
+// tweaks
+private var lastPositionMilliseconds:Number;
 
 // Scrobbler 
 private var scrobbler:LastfmScrobbler;
@@ -201,6 +205,25 @@ public function setScrobblingAuth(login:String, pass:String):void{
 	if(login.length > 0 && pass.length > 0) initScrobbler();
 }
 
+public function togglePlayPause():void{
+	player.togglePlayPause();
+}
+
+public function stopPlayback():void{
+	player.stop();
+}
+
+public function playNext():void{
+	findNextSong();
+}
+
+public function deleteSongFromPlaylist(index:int):void{
+	playQueue.splice(index,1);
+	if(playPos == index) playPos = -1;
+	
+	songList.dataProvider = new ArrayCollection(playQueue);
+}
+
 /******************************************************/
 /**					PLAYER EVENTS					 **/
 /******************************************************/
@@ -241,6 +264,16 @@ private function onProgress(e:PlayrEvent):void{
 		songName.text = CUtils.convertHTMLEntities(player.title);
 		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	}
+	
+	// check if playback is stuck
+	if(lastPositionMilliseconds == player.currentMiliseconds && player.currentMiliseconds != 0 && player.playrState != PlayrStates.BUFFERING){
+		player.scrobbleTo(0);
+		player.stop();
+		onTrackEnd(null);
+		return;
+	}
+	
+	lastPositionMilliseconds = player.currentMiliseconds;
 	timeSlider.position = player.currentSeconds;
 	
 	// scrobble track on 70%
@@ -299,7 +332,7 @@ private function onCoverError(e:Event):void{
 /**				PLAYER BUTTONS HANDLERS			 	 **/
 /******************************************************/
 private function playBtn_clickHandler(event:Event):void{
-	player.togglePlayPause();
+	togglePlayPause();
 }
 
 private function next_btn_clickHandler(event:MouseEvent):void{
@@ -456,6 +489,10 @@ private function onSongLinks(e:Event):void{
 }
 
 private function playSong(song:PlayrTrack):void{
+	// kill radio if it's playing
+	FlexGlobals.topLevelApplication.radioView.killRadio();
+	
+	// create playlist for song
 	var pl:PlaylistManager = new PlaylistManager();
 	pl.addTrack(song);
 	

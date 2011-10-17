@@ -48,7 +48,7 @@ private function onTagsClick(e:Event):void{
 }
 
 private function onRadioStreamClick(e:Event):void{
-	
+	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.radioView);
 }
 
 private function onSearchKey(e:KeyboardEvent):void{

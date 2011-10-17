@@ -70,7 +70,7 @@ private function onSearch(e:Event):void{
 		song.name = pl.title;
 		song.artist = new Artist();
 		song.artist.name = pl.artist;
-		song.duration = pl.totalSeconds;
+		song.duration = pl.totalSeconds * 1000;
 		song.durationText = pl.totalTime;
 		song.number = num++;
 		_songs.push(song);

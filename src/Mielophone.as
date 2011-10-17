@@ -2,6 +2,8 @@
 import com.codezen.mse.MusicSearchEngine;
 
 import flash.events.Event;
+import flash.media.Sound;
+import flash.net.URLRequest;
 
 
 private function onAppicationComplete():void{
@@ -17,6 +19,9 @@ private function onAppicationComplete():void{
 	
 	// init player
 	musicPlayer.initPlayer();
+	
+	// init radio
+	radioView.initRadio();
 }
 
 private function onMseInit(e:Event):void{

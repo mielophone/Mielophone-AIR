@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="300">
+	
+	<fx:Script source="../../../../logic/views/info/RadioView.as" />
+	
+	<!-- background fill -->
+	<s:Rect left="0" right="0" top="0" bottom="0" >
+		<s:fill>
+			<s:LinearGradient rotation="90">
+				<s:GradientEntry color="#DDDDDD" />
+				<s:GradientEntry color="#FFFFFF" />
+			</s:LinearGradient>
+		</s:fill>
+	</s:Rect>
+	
+	<s:VGroup width="100%" height="100%" horizontalAlign="center" variableRowHeight="true" id="searchUI">
+		
+		<s:Line height="1">
+			<s:stroke>
+				<s:SolidColorStroke color="#000000" weight="1" alpha="0.8" />
+			</s:stroke>
+		</s:Line>
+		
+		<s:HGroup width="100%" variableColumnWidth="true" verticalAlign="middle"
+				  paddingLeft="10" paddingRight="20">
+			<s:DropDownList width="300" id="categories" dataProvider="{categoriesCollection}" labelField="title"
+							change="{onCategoryChange(event)}"/>
+			
+			<s:Spacer width="100%" />
+			
+			<s:BorderContainer backgroundColor="#000000" cornerRadius="5" height="32">
+				<s:layout>
+					<s:HorizontalLayout gap="1" verticalAlign="middle" variableColumnWidth="true" paddingRight="5" />
+				</s:layout>
+				
+				<s:Image source="{playImg}" id="playRadio"
+						 buttonMode="true" useHandCursor="true" 
+						 click="{toggleRadio()}"/>
+				<s:Label id="currentRadio" text="Radio is off" 
+						 color="#FFFFFF" maxDisplayedLines="1"
+						 width="100%"/>
+			</s:BorderContainer>
+		</s:HGroup>
+		
+		<!-- search input -->
+		<!--<s:TextInput width="99%" height="24" prompt="Search for tag.." 
+					 fontSize="18" id="searchInput"
+					 keyUp="{onSearchKeyUp(event)}" />-->
+		
+		<!-- result list -->
+		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
+			<s:DataGroup width="100%" height="100%" id="radioList" itemRenderer="mielophone.ui.itemrenderers.RadioItem">
+				<s:layout>
+					<s:VerticalLayout paddingTop="5" paddingLeft="5" paddingRight="5" gap="0" />
+				</s:layout>
+			</s:DataGroup>
+		</s:Scroller>
+		
+	</s:VGroup>
+	
+</s:Group>

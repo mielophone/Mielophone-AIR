@@ -34,7 +34,7 @@
 	<s:HGroup>
 		<home:VideoButton click="{onVideoClick(event)}" />
 		<home:TagsButton click="{onTagsClick(event)}" />
-		<home:RadioStreamButton click="{onRadioStreamClick(event)}" alpha="0.5" />
+		<home:RadioStreamButton click="{onRadioStreamClick(event)}" />
 	</s:HGroup>
 	
 </s:Group>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				width="100%" height="32"
+				dataChange="itemrenderer1_dataChangeHandler(event)"
+				click="itemrenderer1_clickHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.codezen.mse.models.Song;
+			
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+			import mx.utils.ObjectProxy;
+			
+			[Bindable]
+			private var bg:uint = 0xFFFFFF;
+			
+			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
+				if(data == null) return;
+				if( this.itemIndex % 2 == 0 ){
+					bg = 0xc3cdd8;
+				}else{
+					bg = 0xe1e6ec;
+				}
+			}
+			
+			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
+				//trace(this.itemIndex);
+				FlexGlobals.topLevelApplication.radioView.playRadioURL(data.url, data.title);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="{bg}" />
+		</s:fill>
+	</s:Rect>
+	
+	<s:HGroup width="100%" height="100%" gap="2" verticalAlign="middle" paddingLeft="10" paddingRight="10">
+		<s:Label text="{this.itemIndex}." fontSize="14" color="#858a92" />		
+		<s:Label width="100%" text="{new ObjectProxy(data).title}" maxDisplayedLines="1" 
+				 fontSize="16" color="#3e444f" fontWeight="bold" />
+	</s:HGroup>
+	
+</s:ItemRenderer>

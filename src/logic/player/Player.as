@@ -21,6 +21,7 @@ import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.events.TimerEvent;
 import flash.net.SharedObject;
+import flash.net.URLRequest;
 import flash.utils.Timer;
 
 import mx.collections.ArrayCollection;
@@ -199,6 +200,10 @@ public function setScrobblingAuth(login:String, pass:String):void{
 	scrobblerSettings.flush();
 	
 	if(login.length > 0 && pass.length > 0) initScrobbler();
+}
+
+public function stopPlayback():void{
+	player.stop();
 }
 
 /******************************************************/
@@ -456,6 +461,10 @@ private function onSongLinks(e:Event):void{
 }
 
 private function playSong(song:PlayrTrack):void{
+	// kill radio if it's playing
+	FlexGlobals.topLevelApplication.radioView.killRadio();
+	
+	// create playlist for song
 	var pl:PlaylistManager = new PlaylistManager();
 	pl.addTrack(song);
 	

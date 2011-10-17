@@ -4,6 +4,8 @@ import flash.desktop.NativeApplication;
 import flash.desktop.SystemTrayIcon;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.display.NativeMenu;
+import flash.display.NativeMenuItem;
 import flash.display.NativeWindowDisplayState;
 import flash.events.Event;
 import flash.events.MouseEvent;
@@ -33,6 +35,7 @@ private function initDock():void{
 		sysTrayIcon = NativeApplication.nativeApplication.icon as SystemTrayIcon;
 		sysTrayIcon.tooltip = "Mielophone";
 		sysTrayIcon.addEventListener(MouseEvent.CLICK, undock);
+		sysTrayIcon.menu = createIconMenu();
 	}
 	// add dock handling
 	this.addEventListener(NativeWindowDisplayStateEvent.DISPLAY_STATE_CHANGE, onMinimize);
@@ -45,13 +48,6 @@ private function onMinimize(e:NativeWindowDisplayStateEvent):void{
 	if(e.afterDisplayState == NativeWindowDisplayState.MINIMIZED){
 		dock();
 	}
-}
-
-/**
- * Exit app
- **/
-private function doExit(e:Event):void{
-	this.exit();
 }
 
 /**
@@ -69,8 +65,52 @@ private function dock(event:Event = null):void{
 /**
  * Undock from tray
  **/		
-protected function undock(event:Event = null):void{
+private function undock(event:Event = null):void{
 	this.nativeWindow.visible = true;
 	this.nativeWindow.restore();
 	this.nativeApplication.icon.bitmaps = [];
+}
+
+
+/**
+ * Exit app
+ **/
+private function doExit(e:Event):void{
+	this.exit();
+}
+private function playPause(e:Event):void{
+	musicPlayer.togglePlayPause();
+}
+private function playNext(e:Event):void{
+	musicPlayer.playNext();
+}
+
+/**
+ * Create icon tray or dock
+ **/
+private function createIconMenu():NativeMenu{
+	var iconMenu:NativeMenu = new NativeMenu();
+	// playstop
+	/*var playstopCommand:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("Play/Stop"));
+	//playstopCommand.addEventListener(Event.SELECT,null);// playMusic);
+	// next
+	var playNextCommand:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("Next"));
+	//playNextCommand.addEventListener(Event.SELECT,null);// skipMusic);
+	// separator
+	var separatorA:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("A", true));*/
+	// win exit
+	if(NativeApplication.supportsSystemTrayIcon){
+		var playstopCommand:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("Play/Pause"));
+		playstopCommand.addEventListener(Event.SELECT,playPause);
+		
+		var playNextCommand:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("Next"));
+		playNextCommand.addEventListener(Event.SELECT,playNext);
+		
+		// separator
+		var separatorA:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("A", true));
+		
+		var exitCommand:NativeMenuItem = iconMenu.addItem(new NativeMenuItem("Exit"));
+		exitCommand.addEventListener(Event.SELECT, doExit);
+	}
+	return iconMenu;
 }

@@ -205,8 +205,23 @@ public function setScrobblingAuth(login:String, pass:String):void{
 	if(login.length > 0 && pass.length > 0) initScrobbler();
 }
 
+public function togglePlayPause():void{
+	player.togglePlayPause();
+}
+
 public function stopPlayback():void{
 	player.stop();
+}
+
+public function playNext():void{
+	findNextSong();
+}
+
+public function deleteSongFromPlaylist(index:int):void{
+	playQueue.splice(index,1);
+	if(playPos == index) playPos = -1;
+	
+	songList.dataProvider = new ArrayCollection(playQueue);
 }
 
 /******************************************************/
@@ -317,7 +332,7 @@ private function onCoverError(e:Event):void{
 /**				PLAYER BUTTONS HANDLERS			 	 **/
 /******************************************************/
 private function playBtn_clickHandler(event:Event):void{
-	player.togglePlayPause();
+	togglePlayPause();
 }
 
 private function next_btn_clickHandler(event:MouseEvent):void{

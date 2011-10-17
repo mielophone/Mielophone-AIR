@@ -3,10 +3,11 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				width="100%" height="32"
+				buttonMode="true" useHandCursor="true"
+				creationComplete="itemrenderer1_creationCompleteHandler(event)"
 				dataChange="itemrenderer1_dataChangeHandler(event)"
 				click="itemrenderer1_clickHandler(event)"
-				creationComplete="itemrenderer1_creationCompleteHandler(event)"
-				buttonMode="true" useHandCursor="true">
+				rightClick="itemrenderer1_rightClickHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
@@ -37,7 +38,7 @@
 				FlexGlobals.topLevelApplication.musicPlayer.playSongByNum(this.itemIndex);
 			}
 			
-			protected function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
+			private function itemrenderer1_creationCompleteHandler(event:FlexEvent):void
 			{
 				FlexGlobals.topLevelApplication.musicPlayer.addEventListener(Event.CHANGE, onIndexChange);
 			}
@@ -46,6 +47,21 @@
 				itemrenderer1_dataChangeHandler(null);
 			}
 			
+			private function itemrenderer1_rightClickHandler(event:MouseEvent):void
+			{
+				var menu:NativeMenu = new NativeMenu();
+				
+				var del:NativeMenuItem = new NativeMenuItem("Delete");
+				del.addEventListener(Event.SELECT, deleteSong);  
+				menu.addItem(del);
+				
+				var p:Point = localToGlobal(new Point(mouseX, mouseY));
+				menu.display(stage, p.x, p.y);
+			}
+			
+			private function deleteSong(e:Event):void{
+				FlexGlobals.topLevelApplication.musicPlayer.deleteSongFromPlaylist(this.itemIndex);
+			}
 		]]>
 	</fx:Script>
 	

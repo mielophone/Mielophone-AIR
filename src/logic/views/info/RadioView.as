@@ -105,9 +105,11 @@ private function toggleRadio():void{
 		playRadio.source = pauseImg;
 		currentRadio.text = currentRadioTitle;
 	}else if(!isPlaying){
-		radioSound.close();
-		radioSound = null;
-		radioChannel.stop();
+		try{
+			radioSound.close();
+			radioSound = null;
+			radioChannel.stop();
+		}catch(e:Error){}
 		
 		playRadio.source = playImg;
 		currentRadio.text = "Radio is off";
@@ -120,9 +122,11 @@ public function playRadioURL(url:String, title:String):void{
 	
 	// stop radion if it's playing
 	if(isPlaying){
-		radioSound.close();
-		radioSound = null;
-		radioChannel.stop();
+		try{
+			radioSound.close();
+			radioSound = null;
+			radioChannel.stop();
+		}catch(e:Error){}
 	}
 	
 	// load new stream
@@ -138,9 +142,11 @@ public function playRadioURL(url:String, title:String):void{
 
 public function killRadio():void{
 	if(isPlaying){
-		radioSound.close();
-		radioSound = null;
-		radioChannel.stop();
+		try{
+			radioSound.close();
+			radioSound = null;
+			radioChannel.stop();
+		}catch(e:Error){}
 		
 		playRadio.source = playImg;
 		currentRadio.text = "Radio is off";

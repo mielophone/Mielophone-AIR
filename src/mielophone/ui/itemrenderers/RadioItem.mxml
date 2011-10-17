@@ -43,7 +43,7 @@
 	</s:Rect>
 	
 	<s:HGroup width="100%" height="100%" gap="2" verticalAlign="middle" paddingLeft="10" paddingRight="10">
-		<s:Label text="{this.itemIndex}." fontSize="14" color="#858a92" />		
+		<s:Label text="{this.itemIndex+1}." fontSize="14" color="#858a92" />		
 		<s:Label width="100%" text="{new ObjectProxy(data).title}" maxDisplayedLines="1" 
 				 fontSize="16" color="#3e444f" fontWeight="bold" />
 	</s:HGroup>

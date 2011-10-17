@@ -15,6 +15,7 @@
 	<fx:Script source="logic/Autoupdate.as" />
 	<fx:Script source="logic/Vars.as" />
 	<fx:Script source="logic/ViewHandling.as" />
+	<fx:Script source="logic/ui/SystemTray.as" />
 	
 	<!-- MAIN VIEW -->
 	<general:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />

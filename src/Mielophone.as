@@ -10,6 +10,9 @@ private function onAppicationComplete():void{
 	// check update
 	initAutoupdate();
 	
+	// init docking
+	initDock();
+	
 	// create search engine
 	mse = new MusicSearchEngine();
 	mse.addEventListener(Event.INIT, onMseInit);

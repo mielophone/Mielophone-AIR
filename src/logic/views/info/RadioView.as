@@ -96,7 +96,7 @@ private function onCategoryChange(e:Event):void{
 	radioList.dataProvider = new ArrayCollection(categories.selectedItem.stations);
 }
 
-private function toggleRadio():void{
+public function toggleRadio():void{
 	isPlaying = !isPlaying;
 	
 	if(isPlaying && currentRadioURL != null){

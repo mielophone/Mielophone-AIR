@@ -85,6 +85,9 @@ private var playerRepeat:Boolean;
 private var playerShuffle:Boolean;
 public var playPos:int;
 
+// tweaks
+private var lastPositionMilliseconds:Number;
+
 // Scrobbler 
 private var scrobbler:LastfmScrobbler;
 private var scrobblerSettings:SharedObject;
@@ -228,11 +231,14 @@ private function onPlayerState(e:PlayrEvent):void{
 			playBtn.source = pauseImg;
 			break;
 		case PlayrStates.STOPPED:
+			trace('stopped player');
 		case PlayrStates.WAITING:
+			trace('waiting player');
 			timeMax.text = "";
 			timeCurrent.text = "";
 			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 		case PlayrStates.PAUSED:
+			trace('paused player');
 			playBtn.source = playImg;
 			break;
 	}
@@ -246,6 +252,16 @@ private function onProgress(e:PlayrEvent):void{
 		songName.text = CUtils.convertHTMLEntities(player.title);
 		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	}
+	
+	if(lastPositionMilliseconds == player.currentMiliseconds && player.currentMiliseconds != 0 && player.playrState != PlayrStates.BUFFERING){
+		trace('stuck!');
+		player.scrobbleTo(0);
+		player.stop();
+		onTrackEnd(null);
+		return;
+	}
+	
+	lastPositionMilliseconds = player.currentMiliseconds;
 	timeSlider.position = player.currentSeconds;
 	
 	// scrobble track on 70%

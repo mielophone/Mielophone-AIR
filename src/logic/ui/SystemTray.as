@@ -80,6 +80,7 @@ private function doExit(e:Event):void{
 }
 private function playPause(e:Event):void{
 	musicPlayer.togglePlayPause();
+	radioView.toggleRadio();
 }
 private function playNext(e:Event):void{
 	musicPlayer.playNext();

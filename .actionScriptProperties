@@ -25,7 +25,10 @@
   <buildTargets>
     <buildTarget buildTargetName="default">
       <airSettings airCertificatePath="/Users/yamalight/Projects/certs/cert.p12" airTimestamp="true" version="1">
-        <airExcludes/>
+        <airExcludes>
+          <pathEntry path="assets/player"/>
+          <pathEntry path="assets/home"/>
+        </airExcludes>
       </airSettings>
       <actionScriptSettings version="1"/>
     </buildTarget>

@@ -13,6 +13,9 @@ private function onAppicationComplete():void{
 	// init docking
 	initDock();
 	
+	// init ui plugins
+	initUIExtensions();
+	
 	// create search engine
 	mse = new MusicSearchEngine();
 	mse.addEventListener(Event.INIT, onMseInit);

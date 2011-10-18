@@ -44,13 +44,10 @@
 						 text=""
 						 width="100%" maxDisplayedLines="1" id="artistName" />
 				
-				<s:HGroup width="100%" visible="false">
-					<s:Button label="Download" chromeColor="#36679f" color="#FFFFFF"  
-							  icon="@Embed('/assets/player/download.png')" iconPlacement="right"
-							  useHandCursor="true" alpha="0.5" />
-					<s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 
+				<s:HGroup width="100%" visible="true" id="playerButtons">
+					<!--<s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 
 							  icon="@Embed('/assets/player/favourite.png')" iconPlacement="right"
-							  useHandCursor="true" alpha="0.5" />
+							  useHandCursor="true" alpha="0.5" visible="false" />-->
 				</s:HGroup>
 			</s:VGroup>
 		</s:HGroup>

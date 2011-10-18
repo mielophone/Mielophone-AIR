@@ -16,6 +16,7 @@
 	<fx:Script source="logic/Vars.as" />
 	<fx:Script source="logic/ViewHandling.as" />
 	<fx:Script source="logic/ui/SystemTray.as" />
+	<fx:Script source="logic/ui/UIExtensions.as" />
 	
 	<!-- MAIN VIEW -->
 	<general:HomeView verticalCenter="0" horizontalCenter="0" id="homeView" />

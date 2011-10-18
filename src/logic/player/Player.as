@@ -224,6 +224,10 @@ public function deleteSongFromPlaylist(index:int):void{
 	songList.dataProvider = new ArrayCollection(playQueue);
 }
 
+public function getCurrentTrack():PlayrTrack{
+	return player.playlist.getCurrentTrack();
+}
+
 /******************************************************/
 /**					PLAYER EVENTS					 **/
 /******************************************************/

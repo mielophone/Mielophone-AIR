@@ -111,7 +111,7 @@ package mielophone.extensions
 		private function onPluginLoaded(e:Event):void{
 			loader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onPluginLoaded);
 			
-			var className:Class = loader.contentLoaderInfo.applicationDomain.getDefinition("MUIPlugin") as Class;
+			var className:Class = loader.contentLoaderInfo.applicationDomain.getDefinition("MUIExtension") as Class;
 			var classInstance:IMUIExtension = new className();
 			_plugins.push(classInstance);
 			

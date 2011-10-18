@@ -45,6 +45,11 @@ public function initRadio():void{
 }
 
 public function doWork():void{
+	if(categoriesCollection != null){
+		this.dispatchEvent(new Event(Event.COMPLETE));
+		return;
+	}
+	
 	var urlRequest:URLRequest = new URLRequest("http://mielophone.github.com/stations.xml");
 	
 	var urlLoader:URLLoader = new URLLoader();

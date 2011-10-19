@@ -102,6 +102,24 @@ private function onCategoryChange(e:Event):void{
 	radioList.dataProvider = new ArrayCollection(categories.selectedItem.stations);
 }
 
+private function openRadioByURL():void{
+	streamURL.visible = true;
+	openURL.visible = false;
+}
+
+private function onStreamURLKeyUp(e:KeyboardEvent):void{
+	if(e.keyCode == Keyboard.ESCAPE){
+		streamURL.visible = false;
+		openURL.visible = true;
+		streamURL.text = '';
+	}else if(e.keyCode == Keyboard.ENTER && streamURL.text.length > 2){
+		playRadioURL(streamURL.text, "Radio from URL");
+		streamURL.visible = false;
+		openURL.visible = true;
+		streamURL.text = '';
+	}
+}
+
 public function toggleRadio():void{
 	isPlaying = !isPlaying;
 	

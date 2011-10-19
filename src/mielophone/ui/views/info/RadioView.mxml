@@ -34,6 +34,14 @@
 			
 			<s:Spacer width="100%" />
 			
+			<s:Group width="200">
+				<s:Button id="openURL" chromeColor="#000000" color="#FFFFFF" 
+						  label="Open URL" click="{openRadioByURL()}" />
+				<s:TextInput id="streamURL" prompt="Enter radio URL.."
+							 width="200" visible="false" 
+							 keyUp="{onStreamURLKeyUp(event)}"/>
+			</s:Group>
+			
 			<s:BorderContainer backgroundColor="#000000" cornerRadius="5" height="32">
 				<s:layout>
 					<s:HorizontalLayout gap="1" verticalAlign="middle" variableColumnWidth="true" paddingRight="5" />

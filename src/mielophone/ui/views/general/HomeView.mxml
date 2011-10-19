@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 xmlns:home="mielophone.ui.home.*">
+		 xmlns:home="mielophone.ui.home.*" xmlns:controls="mielophone.ui.controls.*">
 	
 	<fx:Script source="../../../../logic/views/general/HomeView.as" />
 	

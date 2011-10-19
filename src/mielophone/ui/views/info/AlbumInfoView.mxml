@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:controls="mielophone.ui.controls.*"
 		 width="400" height="300">
 	
 	<fx:Script source="../../../../logic/views/info/AlbumInfoView.as" />
@@ -27,22 +28,23 @@
 	</s:Rect>
 	
 	<!-- header -->
-	<s:HGroup width="100%" height="50" verticalAlign="middle" variableColumnWidth="true"
-			  paddingRight="30">
-		<s:Image height="50" width="50" id="albumImage" />
-		
-		<s:VGroup width="100%">
-			<s:Label fontWeight="bold" fontSize="18" id="albumName" />
-			<s:Label id="artistName"
-					 buttonMode="true" useHandCursor="true"
-					 click="{openAritst()}"/>
-		</s:VGroup>
-		
-		<s:Image source="@Embed('/assets/images/music.png')" toolTip="Play all" 
-				 buttonMode="true" useHandCursor="true" click="{playAll()}"/>
-	</s:HGroup>
+	<controls:NavigationBar width="100%">
+		<controls:innerContent>
+			<s:Image height="32" width="32" id="albumImage" />
+			
+			<s:VGroup width="100%">
+				<s:Label fontWeight="bold" fontSize="16" id="albumName" color="#FFFFFF" />
+				<s:Label id="artistName" color="#FFFFFF" 
+						 buttonMode="true" useHandCursor="true"
+						 click="{openAritst()}"/>
+			</s:VGroup>
+			
+			<s:Image source="@Embed('/assets/images/music.png')" toolTip="Play all" 
+					 buttonMode="true" useHandCursor="true" click="{playAll()}"/>
+		</controls:innerContent>
+	</controls:NavigationBar>
 	
-	<s:Scroller width="100%" top="50" bottom="0" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">
+	<s:Scroller width="100%" top="36" bottom="0" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">
 		<s:DataGroup id="songsList" itemRenderer="mielophone.ui.itemrenderers.SongItem">
 			<s:layout>
 				<s:VerticalLayout gap="5" />

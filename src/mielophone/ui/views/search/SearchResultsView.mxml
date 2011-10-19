@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:controls="mielophone.ui.controls.*"
 		 width="400" height="300">
 	
 	<fx:Script source="../../../../logic/views/search/SearchResultView.as" />
@@ -18,6 +19,12 @@
 	
 	<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
 		<s:VGroup>
+			<controls:NavigationBar width="100%">
+				<controls:innerContent>
+					<s:Label text="Search results" width="100%" color="#FFFFFF" 
+							 fontSize="24" fontWeight="bold"/>
+				</controls:innerContent>
+			</controls:NavigationBar>
 			
 			<s:Group width="100%">
 				<!-- background fill -->

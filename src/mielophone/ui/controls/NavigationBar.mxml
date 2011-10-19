@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="400" height="36">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			import mx.core.IVisualElement;
+			
+			private var _content:Array;
+			
+			[ArrayElementType("mx.core.IVisualElement")]
+			public function set innerContent(value:Array):void {
+				_content = value;
+			}
+			
+			override protected function createChildren():void {
+				super.createChildren();
+				if( _content == null ) return;
+				_content.reverse();
+				var i:int;
+				for (i = 0; i < _content.length; i++) {   
+					var elt:IVisualElement = _content[i];
+					content.addElementAt(elt,2);
+				}
+			}
+			
+			private function homeBtn_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.navigateBack(true);
+			}
+			
+			private function image1_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.navigateBack();
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<!-- background fill -->
+	<s:Rect left="0" right="0" top="0" bottom="0" >
+		<s:fill>
+			<s:LinearGradient rotation="-90">
+				<s:GradientEntry color="#4a4a4a" />
+				<s:GradientEntry color="#333333" />
+			</s:LinearGradient>
+		</s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="#432d5b" weight="1" />
+		</s:stroke>
+		<s:filters>
+			<s:DropShadowFilter angle="0" color="#432d5b" blurX="16" blurY="16" distance="4" />
+		</s:filters>
+	</s:Rect>
+	
+	<s:HGroup width="100%" height="100%" verticalAlign="middle"
+			  paddingLeft="10" paddingRight="10" id="content">
+		<s:Image source="@Embed('/assets/home/home.png')" 
+				 smooth="true" width="24" height="24" id="homeBtn" 
+				 buttonMode="true" useHandCursor="true"
+				 click="homeBtn_clickHandler(event)"/>
+		
+		<s:Line height="80%" alpha="0.5"><s:stroke><s:SolidColorStroke color="#FFFFFF" /></s:stroke></s:Line>
+		
+		<s:Line height="80%" alpha="0.5"><s:stroke><s:SolidColorStroke color="#FFFFFF" /></s:stroke></s:Line>
+		
+		<s:Image source="@Embed('/assets/home/back.png')"  
+				 smooth="true" width="24" height="24" 
+				 buttonMode="true" useHandCursor="true"
+				 click="image1_clickHandler(event)"/>
+	</s:HGroup>
+	
+</s:Group>

@@ -18,11 +18,7 @@ import spark.components.Group;
 /******************************************************/
 /**						VARS						 **/
 /******************************************************/
-// back button activator
-private var isBackActive:Boolean = false;
 // display timers
-// back button 
-private var backTimer:Timer;
 // player
 private var playerTimer:Timer;
 // current view
@@ -36,9 +32,6 @@ private var viewHistory:Array;
 private function initViewHelpers():void{
 	viewHistory = [];
 	currentView = "homeView";
-	
-	backTimer = new Timer(500, 1);
-	backTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onBackTimer);
 	
 	playerTimer = new Timer(1000, 1);
 	playerTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onPlayerTimer);
@@ -56,9 +49,7 @@ private function onPlayerTimer(e:Event):void{
 /**				BACK BUTTON HANDLING			 	 **/
 /******************************************************/
 private function onAppMouseMove(e:MouseEvent):void{	
-	if( e.stageX < 20 ){
-		if( isBackActive )	backTimer.start();
-	}else if( e.stageX > this.stage.stageWidth - 25 ){
+	if( e.stageX > this.stage.stageWidth - 25 ){
 		// detect if user is using scroll
 		if(e.target.id == "track" || e.target.id == "thumb"){
 			playerTimer.stop();
@@ -70,29 +61,17 @@ private function onAppMouseMove(e:MouseEvent):void{
 		// player stop
 		playerTimer.stop();
 		playerTimer.reset();
-		
-		// back stop
-		if( !isBackActive ) return;
-		backTimer.stop();
-		backTimer.reset();
-		if(backButton.left != -36){
-			TweenLite.to(backButton, 0.3, {left:-36});
-		}
 	}
 }
 
-private function onBackTimer(e:Event):void{
-	TweenLite.to(backButton, 0.3, {left:0});	
-}
-
-private function onBackButtonClick(e:Event):void{
+public function navigateBack(home:Boolean = false):void{
 	if( viewHistory.length == 0 ) return;
 	
 	// new view var
 	var newView:String;
 	
 	// if home button pressed - go home
-	if( e.target.parent.id == "homeBtn" ){
+	if( home ){
 		// pop and hide all old views
 		while(viewHistory.length > 1){
 			newView = viewHistory.pop();
@@ -102,15 +81,6 @@ private function onBackButtonClick(e:Event):void{
 	
 	// get new view string
 	newView = viewHistory.pop();
-	// if new is home 
-	if( newView == "homeView" ){
-		isBackActive = false;
-	}
-	
-	// hide button
-	backTimer.stop();
-	backTimer.reset();
-	TweenLite.to(backButton, 0.3, {left:-36});
 	
 	// get current view
 	var view:Group = this[currentView];
@@ -156,8 +126,6 @@ private function onViewError(e:ErrorEvent):void{
 private function onViewWork(e:Event):void{
 	e.target.removeEventListener(Event.COMPLETE, onViewWork);
 	
-	// activate back btn
-	isBackActive = true;
 	// remove loading indicator 
 	loadingOff();
 	// get view

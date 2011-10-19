@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:controls="mielophone.ui.controls.*"
 		 width="400" height="300">
 	
 	<fx:Script source="../../../../logic/views/general/MarketView.as" />
@@ -16,9 +17,17 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
+	<controls:NavigationBar width="100%">
+		<controls:innerContent>
+			<s:Label text="Market" width="100%" color="#FFFFFF" 
+					 fontSize="24" fontWeight="bold"/>
+		</controls:innerContent>
+	</controls:NavigationBar>
+	
+	<s:Scroller width="100%" top="36" bottom="0" skinClass="com.codezen.skins.scroll.SmallScroll">
 		<s:VGroup width="100%" height="100%" paddingLeft="10" paddingRight="10" paddingTop="10">
-			<s:Label fontSize="24" text="Plugins Market" fontWeight="bold" />
+			
+			<!-- <s:Label fontSize="24" text="Plugins Market" fontWeight="bold" /> -->
 			<s:Spacer height="5" />
 			<s:DataGroup width="100%" id="pluginList" itemRenderer="mielophone.ui.itemrenderers.PluginItem">
 				<s:layout>

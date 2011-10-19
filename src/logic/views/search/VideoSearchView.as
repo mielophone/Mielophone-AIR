@@ -64,7 +64,6 @@ private function onSearch(e:Event):void{
 
 public function playVideo(v:VideoObject):void{	
 	// hide search UI
-	FlexGlobals.topLevelApplication.backButton.visible =
 	FlexGlobals.topLevelApplication.musicPlayer.visible =
 	searchUI.visible = false;
 	
@@ -84,7 +83,6 @@ private function closeVideo():void{
 	
 	videoCloseButton.visible = false;
 	
-	FlexGlobals.topLevelApplication.backButton.visible =
 	FlexGlobals.topLevelApplication.musicPlayer.visible =
 	searchUI.visible = true;
 }

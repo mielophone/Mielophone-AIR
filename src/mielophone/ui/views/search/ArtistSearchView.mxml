@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:controls="mielophone.ui.controls.*"
 		 width="400" height="300">
 	
 	<fx:Script source="../../../../logic/views/search/ArtistSearchView.as" />
@@ -18,16 +19,15 @@
 	
 	<s:VGroup width="100%" height="100%" horizontalAlign="center" variableRowHeight="true">
 		
-		<s:Line height="1">
-			<s:stroke>
-				<s:SolidColorStroke color="#000000" weight="1" alpha="0.8" />
-			</s:stroke>
-		</s:Line>
+		<controls:NavigationBar width="100%">
+			<controls:innerContent>
+				<!-- search input -->
+				<s:TextInput width="100%" height="24" prompt="Search for artist.." 
+							 fontSize="18" id="searchInput"
+							 keyUp="{onSearchKeyUp(event)}" />
+			</controls:innerContent>
+		</controls:NavigationBar>
 		
-		<!-- search input -->
-		<s:TextInput width="99%" height="24" prompt="Search for artist.." 
-					 fontSize="18" id="searchInput"
-					 keyUp="{onSearchKeyUp(event)}" />
 		
 		<!-- result list -->
 		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">

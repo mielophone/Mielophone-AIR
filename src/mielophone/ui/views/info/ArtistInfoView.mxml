@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
-		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:controls="mielophone.ui.controls.*"
 		 width="400" height="300">
 	
 	<fx:Script source="../../../../logic/views/info/ArtistInfoView.as" />
@@ -16,29 +17,33 @@
 		</s:fill>
 	</s:Rect>
 	
+	<!-- header -->
+	<controls:NavigationBar width="100%">
+		<controls:innerContent>
+			<s:Label width="100%" id="artistName" 
+					 fontSize="18" fontWeight="bold" color="#FFFFFF"/>
+		</controls:innerContent>
+	</controls:NavigationBar>
+	
 	<!-- image and description -->
-	<s:HGroup width="100%" height="100" verticalAlign="top">
+	<s:HGroup width="100%" top="36" height="100" verticalAlign="top">
 		<s:Image width="150" height="100" verticalAlign="top" id="artistImage" 
 				 smooth="true" smoothingQuality="high"/>
-		<s:VGroup width="100%" height="100%" variableRowHeight="true">
-			<s:Label width="100%" id="artistName" paddingTop="10" paddingLeft="5" paddingRight="5" 
-					 fontSize="16" fontWeight="bold"/>
-			<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
-				<s:Group>
-					<s:Label width="100%" id="artistDesc" paddingLeft="5" paddingRight="5" />
-				</s:Group>
-			</s:Scroller>
-		</s:VGroup>
+		<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
+			<s:Group>
+				<s:Label width="100%" id="artistDesc" paddingLeft="5" paddingRight="5" paddingTop="10" />
+			</s:Group>
+		</s:Scroller>
 	</s:HGroup>
 	
 	<!-- separator line -->
-	<s:Line width="100%" top="102">
+	<s:Line width="100%" top="138">
 		<s:stroke>
 			<s:SolidColorStroke color="#000000" alpha="0.4" />
 		</s:stroke>
 	</s:Line>
 	
-	<s:Scroller width="100%" bottom="0" top="105" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">		
+	<s:Scroller width="100%" bottom="0" top="140" horizontalScrollPolicy="off" skinClass="com.codezen.skins.scroll.SmallScroll">		
 		<s:DataGroup id="albumsList" itemRenderer="mielophone.ui.itemrenderers.AlbumItem">
 			<s:layout>
 				<s:TileLayout paddingTop="5" paddingLeft="2" paddingRight="2" columnWidth="130" rowHeight="200" columnAlign="justifyUsingGap"/>

@@ -89,6 +89,12 @@ package mielophone.extensions
 		// load plugin from path
 		private function loadPluginsFromPath():void{
 			var path:String = _loadQueue[ _loadQueue.length - counter ];
+			
+			if(path == null){
+				checkInit();
+				return;
+			}
+				
 			urlReq = new URLRequest(path);			
 			urlLoad = new URLLoader();
 			urlLoad.dataFormat = URLLoaderDataFormat.BINARY;

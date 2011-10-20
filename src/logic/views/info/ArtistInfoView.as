@@ -37,6 +37,10 @@ private function onArtistInfo(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onArtistInfo);
 	artistDesc.text = CUtils.convertHTMLEntities( CUtils.stripTags(FlexGlobals.topLevelApplication.currentArtist.description_short) );//description) );
 	
+	similarList.dataProvider = new ArrayCollection(mse.artistInfo.similar);
+	tagsList.dataProvider = new ArrayCollection(mse.artistInfo.tags);
+	fullDescription.text = CUtils.convertHTMLEntities( CUtils.stripTags(FlexGlobals.topLevelApplication.currentArtist.description) );//description) );
+	
 	mse.addEventListener(Event.COMPLETE, onArtistAlbums);
 	mse.getArtistAlbums(FlexGlobals.topLevelApplication.currentArtist);
 }
@@ -49,3 +53,7 @@ private function onArtistAlbums(e:Event):void{
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }
 
+private function toggleInfo():void{
+	albumsListScroller.visible = !albumsListScroller.visible;
+	artistInfoScroller.visible = !artistInfoScroller.visible; 
+}

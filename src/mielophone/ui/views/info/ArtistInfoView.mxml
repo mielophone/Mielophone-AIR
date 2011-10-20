@@ -22,6 +22,8 @@
 		<controls:innerContent>
 			<s:Label width="100%" id="artistName" 
 					 fontSize="18" fontWeight="bold" color="#FFFFFF"/>
+			<s:Image source="@Embed('/assets/images/info.png')" 
+					 buttonMode="true" useHandCursor="true"/>
 		</controls:innerContent>
 	</controls:NavigationBar>
 	

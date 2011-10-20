@@ -240,7 +240,10 @@ private function onSeek(e:Event):void{
 private function onTrackEnd(e:PlayrEvent):void{
 	timeMax.text = "";
 	timeCurrent.text = "";
+	
+	FlexGlobals.topLevelApplication.setTrayTooltip();
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
+	
 	findNextSong();
 }
 
@@ -253,6 +256,8 @@ private function onPlayerState(e:PlayrEvent):void{
 		case PlayrStates.WAITING:
 			timeMax.text = "";
 			timeCurrent.text = "";
+			
+			FlexGlobals.topLevelApplication.setTrayTooltip();
 			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 		case PlayrStates.PAUSED:
 			playBtn.source = playImg;
@@ -266,6 +271,7 @@ private function onProgress(e:PlayrEvent):void{
 		timeMax.text = player.totalTime;
 		artistName.text = CUtils.convertHTMLEntities(player.artist); 
 		songName.text = CUtils.convertHTMLEntities(player.title);
+		FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text) );
 		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	}
 	
@@ -307,6 +313,7 @@ private function onSong(e:PlayrEvent):void{
 	artistName.text = CUtils.convertHTMLEntities(player.artist); 
 	songName.text = CUtils.convertHTMLEntities(player.title);
 	
+	FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text) );
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	
 	// get cover

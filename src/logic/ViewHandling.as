@@ -25,6 +25,8 @@ private var playerTimer:Timer;
 private var currentView:String;
 // views array
 private var viewHistory:Array;
+// 
+public var animationEnabled:Boolean = true;
 
 /******************************************************/
 /**					INITIALIZATION					 **/
@@ -93,11 +95,15 @@ public function navigateBack(home:Boolean = false):void{
 	this[newView].visible = true;
 	
 	// animate move-out
-	TweenLite.to(view, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
-		TweenLite.to(view, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
-			view.visible = false;
+	if(animationEnabled){
+		TweenLite.to(view, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
+			TweenLite.to(view, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
+				view.visible = false;
+			}});
 		}});
-	}});
+	}else{
+		view.visible = false;
+	}
 	
 	currentView = newView;
 }
@@ -130,6 +136,12 @@ private function onViewWork(e:Event):void{
 	loadingOff();
 	// get view
 	var view:Group = e.target as Group;
+	
+	// if view is already active - do nothing;
+	if(currentView == view.id)
+		return;
+	
+	// check if it's reverse
 	var reverse:Boolean = this.getElementIndex(view) < this.getElementIndex(this[currentView]);
 	
 	if(reverse){
@@ -152,12 +164,17 @@ private function onViewWork(e:Event):void{
 		trace(view.horizontalCenter, view.id, view.visible);
 		
 		// animate move-out
-		TweenLite.to(viewOld, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
-			TweenLite.to(viewOld, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
-				viewOld.visible = false;
-				viewOld.horizontalCenter = 0;
+		if(animationEnabled){
+			TweenLite.to(viewOld, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
+				TweenLite.to(viewOld, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
+					viewOld.visible = false;
+					viewOld.horizontalCenter = 0;
+				}});
 			}});
-		}});
+		}else{
+			viewOld.visible = false;
+			viewOld.horizontalCenter = 0;
+		}
 	}else{
 		// save last view
 		viewHistory.push(currentView);
@@ -174,16 +191,26 @@ private function onViewWork(e:Event):void{
 		var oldView:Group = this[viewHistory[viewHistory.length-1]] as Group;
 		
 		// animate move-in
-		TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
-			TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
-				// set new params
-				view.x = view.y = 0;
-				view.percentHeight = view.percentWidth = 100;
-				// hide old view
-				oldView.visible = false;
-				oldView.horizontalCenter = 0;
+		if(animationEnabled){
+			TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
+				TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
+					// set new params
+					view.x = view.y = 0;
+					view.percentHeight = view.percentWidth = 100;
+					// hide old view
+					oldView.visible = false;
+					oldView.horizontalCenter = 0;
+				}});
 			}});
-		}});
+		}else{
+			view.horizontalCenter = 0;
+			// set new params
+			view.x = view.y = 0;
+			view.percentHeight = view.percentWidth = 100;
+			// hide old view
+			oldView.visible = false;
+			oldView.horizontalCenter = 0;
+		}
 	}
 	
 	// set new current view

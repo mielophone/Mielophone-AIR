@@ -20,6 +20,11 @@ private var trayIcon:Class;
 private var sysTrayIcon:SystemTrayIcon;
 //private var dockIcon:DockIcon;
 
+public function setTrayTooltip(tip:String = "Mielophone"):void{
+	if(sysTrayIcon != null)
+		sysTrayIcon.tooltip = tip;
+}
+
 /**
  * Initialize system tray or dock icon
  * add event listeners

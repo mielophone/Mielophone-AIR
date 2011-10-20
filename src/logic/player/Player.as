@@ -224,6 +224,12 @@ public function deleteSongFromPlaylist(index:int):void{
 	songList.dataProvider = new ArrayCollection(playQueue);
 }
 
+public function addSongToPlaylist(s:Song):void{
+	playQueue.push(s);
+	
+	songList.dataProvider = new ArrayCollection(playQueue);
+}
+
 public function getCurrentTrack():PlayrTrack{
 	return player.playlist.getCurrentTrack();
 }
@@ -240,7 +246,10 @@ private function onSeek(e:Event):void{
 private function onTrackEnd(e:PlayrEvent):void{
 	timeMax.text = "";
 	timeCurrent.text = "";
+	
+	FlexGlobals.topLevelApplication.setTrayTooltip();
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
+	
 	findNextSong();
 }
 
@@ -253,6 +262,8 @@ private function onPlayerState(e:PlayrEvent):void{
 		case PlayrStates.WAITING:
 			timeMax.text = "";
 			timeCurrent.text = "";
+			
+			FlexGlobals.topLevelApplication.setTrayTooltip();
 			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
 		case PlayrStates.PAUSED:
 			playBtn.source = playImg;
@@ -266,6 +277,7 @@ private function onProgress(e:PlayrEvent):void{
 		timeMax.text = player.totalTime;
 		artistName.text = CUtils.convertHTMLEntities(player.artist); 
 		songName.text = CUtils.convertHTMLEntities(player.title);
+		FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text) );
 		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	}
 	
@@ -307,6 +319,7 @@ private function onSong(e:PlayrEvent):void{
 	artistName.text = CUtils.convertHTMLEntities(player.artist); 
 	songName.text = CUtils.convertHTMLEntities(player.title);
 	
+	FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text) );
 	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
 	
 	// get cover
@@ -554,8 +567,21 @@ private function onAlbumTracks(e:Event):void{
 }
 
 public function setQueue(ac:Array):void{
-	playQueue = ac.concat();
-	playPos = -1;
+	switch(playerBehavior)
+	{
+		case PLAYLIST_APPEND:
+			if(playQueue == null || playQueue.length < 1){
+				playPos = -1;
+			}
+			playQueue = playQueue.concat(ac);
+			break;
+		
+		case PLAYLIST_CLEAR:
+		case PLAYLIST_IGNORE:
+			playQueue = ac.concat();
+			playPos = -1;
+			break;
+	}
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
 }
@@ -623,5 +649,6 @@ private function toggleShuffle():void{
 }
 
 private function clearPlaylist():void{
-	setQueue([]);	
+	playQueue = [];
+	songList.dataProvider = new ArrayCollection(playQueue);
 }

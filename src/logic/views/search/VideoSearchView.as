@@ -27,7 +27,9 @@ private function getTopVideos():void{
 		return;
 	}
 	
-	mse = FlexGlobals.topLevelApplication.mse;
+	if(mse == null)
+		mse = FlexGlobals.topLevelApplication.mse;
+	
 	mse.addEventListener(Event.COMPLETE, onVideos);
 	mse.getTopVideos();
 }
@@ -85,4 +87,24 @@ private function closeVideo():void{
 	
 	FlexGlobals.topLevelApplication.musicPlayer.visible =
 	searchUI.visible = true;
+}
+
+public function findVideo(query:String):void{
+	if(mse == null)
+		mse = FlexGlobals.topLevelApplication.mse;
+	
+	mse.addEventListener(Event.COMPLETE, onVideoSearch);
+	mse.findVideo(query);
+	
+	FlexGlobals.topLevelApplication.loadingOn();
+}
+
+private function onVideoSearch(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onVideoSearch);
+	
+	FlexGlobals.topLevelApplication.loadingOff();
+	
+	videoList.dataProvider = new ArrayCollection(mse.videos);
+	
+	FlexGlobals.topLevelApplication.changeView(this);
 }

@@ -27,6 +27,7 @@ private function onResults(e:Event):void{
 	artistList.dataProvider = new ArrayCollection(mse.artists.slice(0,5));
 	albumList.dataProvider = new ArrayCollection(mse.albums.slice(0,5));
 	songList.dataProvider = new ArrayCollection(mse.songs.slice(0,7));
+	tagsList.dataProvider = new ArrayCollection(mse.tags.slice(0,7));
 	
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }

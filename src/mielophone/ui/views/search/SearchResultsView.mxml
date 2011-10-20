@@ -18,7 +18,7 @@
 	</s:Rect>
 	
 	<s:Scroller width="100%" height="100%" skinClass="com.codezen.skins.scroll.SmallScroll">
-		<s:VGroup>
+		<s:VGroup paddingTop="0">
 			<controls:NavigationBar width="100%">
 				<controls:innerContent>
 					<s:Label text="Search results" width="100%" color="#FFFFFF" 
@@ -86,6 +86,27 @@
 					<s:DataGroup width="100%" itemRenderer="mielophone.ui.itemrenderers.FullSongItem" id="songList">
 						<s:layout>
 							<s:VerticalLayout gap="5" />
+						</s:layout>
+					</s:DataGroup>
+				</s:VGroup>
+			</s:Group>
+			
+			<s:Group width="100%">
+				<!-- background fill -->
+				<s:Rect left="0" right="0" top="0" bottom="0" >
+					<s:fill>
+						<s:LinearGradient rotation="90">
+							<s:GradientEntry color="#DDDDDD" />
+							<s:GradientEntry color="#FFFFFF" />
+						</s:LinearGradient>
+					</s:fill>
+				</s:Rect>
+				
+				<s:VGroup width="100%" height="100%" paddingLeft="10" paddingRight="10" paddingTop="10" paddingBottom="10">
+					<s:Label text="Top hits for tags" fontSize="18" />
+					<s:DataGroup width="100%" itemRenderer="mielophone.ui.itemrenderers.TagItem" id="tagsList">
+						<s:layout>
+							<s:TileLayout verticalGap="5" horizontalGap="5" requestedColumnCount="3" columnAlign="justifyUsingGap" />
 						</s:layout>
 					</s:DataGroup>
 				</s:VGroup>

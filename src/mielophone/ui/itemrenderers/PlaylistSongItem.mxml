@@ -55,12 +55,23 @@
 				del.addEventListener(Event.SELECT, deleteSong);  
 				menu.addItem(del);
 				
+				var s:NativeMenuItem  = new NativeMenuItem("s", true);  
+				menu.addItem(s);
+				
+				var video:NativeMenuItem = new NativeMenuItem("Find video");
+				video.addEventListener(Event.SELECT, findVideo);  
+				menu.addItem(video);
+				
 				var p:Point = localToGlobal(new Point(mouseX, mouseY));
 				menu.display(stage, p.x, p.y);
 			}
 			
 			private function deleteSong(e:Event):void{
 				FlexGlobals.topLevelApplication.musicPlayer.deleteSongFromPlaylist(this.itemIndex);
+			}
+			
+			private function findVideo(e:Event):void{
+				FlexGlobals.topLevelApplication.videoView.findVideo(data.artist.name + " " + data.name);
 			}
 		]]>
 	</fx:Script>

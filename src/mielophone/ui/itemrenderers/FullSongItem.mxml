@@ -3,9 +3,10 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				width="100%" height="32"
+				buttonMode="true" useHandCursor="true"
 				dataChange="itemrenderer1_dataChangeHandler(event)"
 				click="itemrenderer1_clickHandler(event)"
-				buttonMode="true" useHandCursor="true">
+				rightClick="itemrenderer1_rightClickHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
@@ -32,6 +33,34 @@
 				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
 				//trace(this.itemIndex);
 				FlexGlobals.topLevelApplication.musicPlayer.findSongAndPlay(data as Song);
+			}
+			
+			private function itemrenderer1_rightClickHandler(event:MouseEvent):void
+			{
+				var menu:NativeMenu = new NativeMenu();
+				
+				var play:NativeMenuItem = new NativeMenuItem("Play");
+				play.addEventListener(Event.SELECT, itemrenderer1_clickHandler);  
+				menu.addItem(play);
+				
+				var add:NativeMenuItem = new NativeMenuItem("Add to playlist");
+				add.addEventListener(Event.SELECT, addToPlaylist);  
+				menu.addItem(add);
+				
+				var video:NativeMenuItem = new NativeMenuItem("Find video");
+				video.addEventListener(Event.SELECT, findVideo);  
+				menu.addItem(video);
+				
+				var p:Point = localToGlobal(new Point(mouseX, mouseY));
+				menu.display(stage, p.x, p.y);
+			}
+			
+			private function findVideo(e:Event):void{
+				FlexGlobals.topLevelApplication.videoView.findVideo(data.artist.name + " " + data.name);
+			}
+			
+			private function addToPlaylist(e:Event):void{
+				FlexGlobals.topLevelApplication.musicPlayer.addSongToPlaylist(data as Song);
 			}
 			
 		]]>

@@ -224,6 +224,12 @@ public function deleteSongFromPlaylist(index:int):void{
 	songList.dataProvider = new ArrayCollection(playQueue);
 }
 
+public function addSongToPlaylist(s:Song):void{
+	playQueue.push(s);
+	
+	songList.dataProvider = new ArrayCollection(playQueue);
+}
+
 public function getCurrentTrack():PlayrTrack{
 	return player.playlist.getCurrentTrack();
 }

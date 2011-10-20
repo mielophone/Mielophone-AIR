@@ -102,3 +102,9 @@ private function onTagSongs(e:Event):void{
 	
 	FlexGlobals.topLevelApplication.changeView(this);
 }
+
+private function playAll():void{
+	var src:Array = (songList.dataProvider as ArrayCollection).source;
+	
+	FlexGlobals.topLevelApplication.musicPlayer.setQueue(src);
+}

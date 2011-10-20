@@ -567,8 +567,21 @@ private function onAlbumTracks(e:Event):void{
 }
 
 public function setQueue(ac:Array):void{
-	playQueue = ac.concat();
-	playPos = -1;
+	switch(playerBehavior)
+	{
+		case PLAYLIST_APPEND:
+			if(playQueue == null || playQueue.length < 1){
+				playPos = -1;
+			}
+			playQueue = playQueue.concat(ac);
+			break;
+		
+		case PLAYLIST_CLEAR:
+		case PLAYLIST_IGNORE:
+			playQueue = ac.concat();
+			playPos = -1;
+			break;
+	}
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
 }
@@ -636,5 +649,6 @@ private function toggleShuffle():void{
 }
 
 private function clearPlaylist():void{
-	setQueue([]);	
+	playQueue = [];
+	songList.dataProvider = new ArrayCollection(playQueue);
 }

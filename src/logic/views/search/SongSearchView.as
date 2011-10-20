@@ -14,6 +14,7 @@ import mielophone.ui.views.search.SongSearchView;
 
 import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;
+import mx.utils.ObjectUtil;
 
 private var mse:MusicSearchEngine;
 private var topSongs:ArrayCollection;
@@ -28,7 +29,9 @@ private function getTopSongs():void{
 		return;
 	}
 	
-	mse = FlexGlobals.topLevelApplication.mse;
+	if(mse == null)
+		mse = FlexGlobals.topLevelApplication.mse;
+	
 	mse.addEventListener(Event.COMPLETE, onSongs);
 	mse.getTopTracks();
 }
@@ -78,4 +81,24 @@ private function onSearch(e:Event):void{
 	
 	//FlexGlobals.topLevelApplication.musicPlayer.setQueue(_songs);
 	songList.dataProvider = new ArrayCollection( _songs );
+}
+
+public function findSongsByTag(tag:String):void{
+	if(mse == null)
+		mse = FlexGlobals.topLevelApplication.mse;
+	
+	FlexGlobals.topLevelApplication.loadingOn();
+	
+	mse.addEventListener(Event.COMPLETE, onTagSongs);
+	mse.findSongsByTag(tag);
+}
+
+private function onTagSongs(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onTagSongs);
+	
+	songList.dataProvider = new ArrayCollection(mse.songs);
+	
+	FlexGlobals.topLevelApplication.loadingOff();
+	
+	FlexGlobals.topLevelApplication.changeView(this);
 }

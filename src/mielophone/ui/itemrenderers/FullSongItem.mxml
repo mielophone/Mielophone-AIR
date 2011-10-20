@@ -20,7 +20,7 @@
 			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				if(data == null) return;
-				if( int(data.number) % 2 == 0 ){
+				if( int(this.itemIndex) % 2 == 0 ){
 					bg = 0xc3cdd8;
 				}else{
 					bg = 0xe1e6ec;

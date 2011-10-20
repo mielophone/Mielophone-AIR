@@ -5,7 +5,8 @@
 				autoDrawBackground="false"
 				buttonMode="true" useHandCursor="true"
 				minHeight="32"
-				click="itemrenderer1_clickHandler(event)">
+				click="itemrenderer1_clickHandler(event)"
+				rightClick="itemrenderer1_rightClickHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
@@ -20,6 +21,26 @@
 				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
 				//trace(this.itemIndex);
 				FlexGlobals.topLevelApplication.artistView.findArtistsByTag(data.name);
+			}
+			
+			private function itemrenderer1_rightClickHandler(event:MouseEvent):void
+			{
+				var menu:NativeMenu = new NativeMenu();
+				
+				var art:NativeMenuItem = new NativeMenuItem("Get top artists");
+				art.addEventListener(Event.SELECT, itemrenderer1_clickHandler);  
+				menu.addItem(art);
+				
+				var sng:NativeMenuItem = new NativeMenuItem("Get top songs");
+				sng.addEventListener(Event.SELECT, getTopSongs);  
+				menu.addItem(sng);
+				
+				var p:Point = localToGlobal(new Point(mouseX, mouseY));
+				menu.display(stage, p.x, p.y);
+			}
+			
+			private function getTopSongs(e:Event):void{
+				FlexGlobals.topLevelApplication.songView.findSongsByTag(data.name);
 			}
 			
 		]]>

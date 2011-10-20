@@ -3,6 +3,7 @@ import com.codezen.mse.MusicSearchEngine;
 import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
+import flash.events.ErrorEvent;
 import flash.events.Event;
 import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
@@ -26,6 +27,10 @@ public function doWork():void{
 	if(loadedArtist != FlexGlobals.topLevelApplication.currentArtist.name){
 		loadedArtist = FlexGlobals.topLevelApplication.currentArtist.name;
 		
+		// reset old info
+		artistDesc.text = fullDescription.text = ""; 
+		similarList.dataProvider = tagsList.dataProvider = new ArrayCollection();
+		
 		mse.addEventListener(Event.COMPLETE, onArtistInfo);
 		mse.getArtistInfo(FlexGlobals.topLevelApplication.currentArtist);
 	}else{
@@ -42,16 +47,28 @@ private function onArtistInfo(e:Event):void{
 	fullDescription.text = CUtils.convertHTMLEntities( CUtils.stripTags(FlexGlobals.topLevelApplication.currentArtist.description) );//description) );
 	
 	mse.addEventListener(Event.COMPLETE, onArtistAlbums);
+	mse.addEventListener(ErrorEvent.ERROR, onNoAlbums);
 	mse.getArtistAlbums(FlexGlobals.topLevelApplication.currentArtist);
 }
 
 private function onArtistAlbums(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onArtistAlbums);
+	mse.removeEventListener(ErrorEvent.ERROR, onNoAlbums);
 	
 	albumsList.dataProvider = new ArrayCollection(mse.albums);
 	
 	this.dispatchEvent(new Event(Event.COMPLETE));
 }
+
+private function onNoAlbums(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onArtistAlbums);
+	mse.removeEventListener(ErrorEvent.ERROR, onNoAlbums);
+	
+	albumsList.dataProvider = new ArrayCollection();
+	
+	this.dispatchEvent(new Event(Event.COMPLETE));
+}
+							
 
 private function toggleInfo():void{
 	albumsListScroller.visible = !albumsListScroller.visible;

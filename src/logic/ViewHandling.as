@@ -130,6 +130,12 @@ private function onViewWork(e:Event):void{
 	loadingOff();
 	// get view
 	var view:Group = e.target as Group;
+	
+	// if view is already active - do nothing;
+	if(currentView == view.id)
+		return;
+	
+	// check if it's reverse
 	var reverse:Boolean = this.getElementIndex(view) < this.getElementIndex(this[currentView]);
 	
 	if(reverse){

@@ -48,6 +48,12 @@
 		
 		<s:Spacer height="20"/>
 		
+		<s:CheckBox label="Enable animations" selected="true" id="enableAnimations"
+					color="#FFFFFF"
+					change="{onEnableAnimationChange(event)}"/>
+		
+		<s:Spacer height="20"/>
+		
 		<!-- last.fm -->
 		<s:Label color="#FFFFFF" text="Last.FM Scrobbling" fontSize="14" />
 		<s:HGroup verticalAlign="middle">

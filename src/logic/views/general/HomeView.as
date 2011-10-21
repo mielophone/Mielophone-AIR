@@ -33,12 +33,6 @@ private function onMarketClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.marketView);
 }
 
-private function onSupportClick(e:Event):void{
-	FlexGlobals.topLevelApplication.supportOverlay.alpha = 0;
-	FlexGlobals.topLevelApplication.supportOverlay.visible = true;
-	TweenLite.to(FlexGlobals.topLevelApplication.supportOverlay, 0.5, {alpha:1});
-}
-
 private function onVideoClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.videoView);
 }

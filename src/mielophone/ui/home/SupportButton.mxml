@@ -2,23 +2,70 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		 xmlns:s="library://ns.adobe.com/flex/spark" 
 		 xmlns:mx="library://ns.adobe.com/flex/mx" 
-		 width="285" height="135"
-		 buttonMode="true" useHandCursor="true">
+		 width="285" height="135">
 	
-	<!-- bg image -->
-	<s:Image source="@Embed('/assets/home/support-bg.png')" smooth="true" />
-	
-	<!-- background for text -->
-	<s:Rect width="100%" bottom="0" height="35">
+	<!-- background for text bottom="0" height="35" -->
+	<s:Rect width="100%" height="100%">
 		<s:fill>
-			<s:SolidColor color="0xd29e16" />
+			<s:SolidColor color="0x432d5b" />
 		</s:fill>
 	</s:Rect>
 	
-	<s:Image width="24" height="24" left="10" bottom="10" alpha="0.8"
-			 source="@Embed('/assets/home/support.png')" />
+	<!-- -->
+	<s:HGroup left="40" verticalCenter="-10" gap="40">
+		<s:VGroup gap="7">
+			<s:Label text="Website" fontSize="14" color="#FFFFFF" 
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('http://mielophone.github.com'))}" />
+			
+			<s:Label text="Source code" fontSize="14" color="#FFFFFF"
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('https://github.com/mielophone/Mielophone'))}" />
+			
+			<s:Label text="Report bug" fontSize="14" color="#FFFFFF" 
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('https://github.com/mielophone/Mielophone/issues'))}" />
+			
+			<s:Label text="Donate" fontWeight="bold" fontSize="14" color="#FFFFFF" 
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('http://mielophone.github.com/#donate'))}" />
+		</s:VGroup>
+		<s:VGroup gap="7">
+			<s:Label text="Twitter" fontSize="14" color="#FFFFFF" 
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('http://twitter.com/mielophone'))}" />
+			
+			<s:Label text="Facebook" fontSize="14" color="#FFFFFF" 
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('http://www.facebook.com/mielophone'))}" />
+			
+			<s:Label text="Tumblr" fontSize="14" color="#FFFFFF"
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('http://mielophone.tumblr.com'))}" />
+			
+			<s:Label text="Youtube" fontSize="14" color="#FFFFFF" 
+					 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+					 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+					 buttonMode="true" useHandCursor="true"
+					 click="{navigateToURL(new URLRequest('http://www.youtube.com/user/mielophoneapp'))}" />
+		</s:VGroup>
+	</s:HGroup>
 	
-	<s:Label bottom="10" left="40" id="smallText"
+	<s:Label bottom="10" left="10" id="smallText"
 			 color="#FFFFFF" fontSize="16"
 			 text="Support"/>
 	

@@ -31,6 +31,7 @@ import mx.events.FlexEvent;
 import mx.utils.ObjectUtil;
 
 import spark.components.Group;
+import spark.utils.TextFlowUtil;
 
 /******************************************************/
 /**						IMAGES						 **/
@@ -67,7 +68,6 @@ public static const PLAYLIST_APPEND:String = "AppendPlaylist";
 /**						VARS						 **/
 /******************************************************/
 // UI Stuff
-private var hideTimer:Timer;
 private var isFullMode:Boolean;
 
 // MSE
@@ -98,10 +98,7 @@ private var trackScrobbled:Boolean;
 /******************************************************/
 /**					INIT STUFF					 	**/
 /******************************************************/
-public function initPlayer():void{
-	hideTimer = new Timer(500, 1);
-	hideTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onHideTimer);
-	
+public function initPlayer():void{	
 	playerRepeat = playerShuffle = false;
 	isFullMode = false;
 	playQueue = [];
@@ -275,10 +272,14 @@ private function onProgress(e:PlayrEvent):void{
 	if(timeSlider.maximum != player.totalSeconds){
 		timeSlider.maximum = player.totalSeconds;
 		timeMax.text = player.totalTime;
-		artistName.text = CUtils.convertHTMLEntities(player.artist); 
-		songName.text = CUtils.convertHTMLEntities(player.title);
-		FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text) );
-		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
+		
+		var artist:String = CUtils.convertHTMLEntities(player.artist);
+		var song:String = CUtils.convertHTMLEntities(player.title);
+		
+		nowPlayingText.textFlow = TextFlowUtil.importFromString("<span fontWeight='bold'>"+song+"</span>&nbsp;<span fontSize='12'> by "+artist+"</span>");
+		
+		FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+artist+" - "+song );
+		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artist+" - "+song;
 	}
 	
 	// check if playback is stuck
@@ -294,7 +295,7 @@ private function onProgress(e:PlayrEvent):void{
 	
 	// scrobble track on 70%
 	if( scrobbler != null && scrobbler.isInitialized && !trackScrobbled && player.currentSeconds > (player.totalSeconds * 0.7) ){
-		scrobbler.doScrobble(artistName.text, songName.text, new Date().time.toString());
+		scrobbler.doScrobble(player.artist, player.title, new Date().time.toString());
 		trackScrobbled = true;
 	}
 	
@@ -316,25 +317,28 @@ private function onStreamProgress(e:PlayrEvent):void{
 private function onSong(e:PlayrEvent):void{	
 	timeSlider.maximum = player.totalSeconds;
 	timeMax.text = player.totalTime;
-	artistName.text = CUtils.convertHTMLEntities(player.artist); 
-	songName.text = CUtils.convertHTMLEntities(player.title);
 	
-	FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text) );
-	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+CUtils.convertHTMLEntities(artistName.text)+" - "+CUtils.convertHTMLEntities(songName.text);
+	var artist:String = CUtils.convertHTMLEntities(player.artist);
+	var song:String = CUtils.convertHTMLEntities(player.title);
+	
+	nowPlayingText.textFlow = TextFlowUtil.importFromString("<span fontWeight='bold'>"+song+"</span>&nbsp;<span fontSize='12'> by "+artist+"</span>");
+	
+	FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+artist+" - "+song );
+	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artist+" - "+song;
 	
 	// get cover
 	mse.addEventListener(Event.COMPLETE, onTrackCover);
 	mse.addEventListener(ErrorEvent.ERROR, onCoverError);
-	mse.getTrackInfo(artistName.text, songName.text);
+	mse.getTrackInfo(artist, song);
 }
 
 private function onTrackCover(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onTrackCover);
 	
 	if(mse.songInfo.album.image != null && mse.songInfo.album.image.length > 0){
-		albumCover.source = mse.songInfo.album.image;
+		//albumCover.source = mse.songInfo.album.image;
 	}else{
-		albumCover.source = nocoverImg;
+		//albumCover.source = nocoverImg;
 	}
 }
 
@@ -343,7 +347,7 @@ private function onCoverError(e:Event):void{
 	
 	trace('album search error');
 	
-	albumCover.source = nocoverImg;
+	//albumCover.source = nocoverImg;
 }
 /******************************************************/
 /**				PLAYER BUTTONS HANDLERS			 	 **/
@@ -377,9 +381,8 @@ public function playSongByNum(num:int):void{
 	// notify about index change
 	this.dispatchEvent(new Event(Event.CHANGE));
 	
-	albumCover.source = nocoverImg;
-	artistName.text = "Searching for stream..";
-	songName.text = "";
+	//albumCover.source = nocoverImg;
+	nowPlayingText.text = "Searching for stream..";
 	nowSearching = true;
 	mse.addEventListener(Event.COMPLETE, onSongLinks);
 	mse.findMP3(playQueue[playPos] as Song);
@@ -451,9 +454,8 @@ public function findSongAndPlay(song:Song):void{
 		// notify about index change
 		this.dispatchEvent(new Event(Event.CHANGE));
 		
-		albumCover.source = nocoverImg;
-		artistName.text = "Searching for stream..";
-		songName.text = "";
+		//albumCover.source = nocoverImg;
+		nowPlayingText.text = "Searching for stream..";
 		
 		nowSearching = true;
 		
@@ -481,9 +483,8 @@ public function findSongAndPlay(song:Song):void{
 			songList.dataProvider = new ArrayCollection(playQueue);
 		case PLAYLIST_IGNORE:
 		default:
-			albumCover.source = nocoverImg;
-			artistName.text = "Searching for stream..";
-			songName.text = "";
+			//albumCover.source = nocoverImg;
+			nowPlayingText.text = "Searching for stream..";
 			nowSearching = true;
 			mse.addEventListener(Event.COMPLETE, onSongLinks);
 			mse.findMP3(song);
@@ -589,26 +590,9 @@ public function setQueue(ac:Array):void{
 /******************************************************/
 /**					UI STUFF					 **/
 /******************************************************/
-private function onHideTimer(e:Event):void{
-	if( !isFullMode )
-		TweenLite.to(this, 0.4, {right:-300});
-}
-
-private function onMouseOut(e:MouseEvent):void{
-	hideTimer.start();
-}
-
-private function onMouseMove(e:MouseEvent):void{
-	hideTimer.stop();
-	hideTimer.reset();
-}
-
 private function toggleFullMode():void{
 	isFullMode = !isFullMode;
 	if(isFullMode){
-		hideTimer.stop();
-		hideTimer.reset();
-		
 		// enable full mode
 		toggleFullBtn.source = normalImg;
 		

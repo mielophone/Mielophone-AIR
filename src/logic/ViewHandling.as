@@ -18,9 +18,6 @@ import spark.components.Group;
 /******************************************************/
 /**						VARS						 **/
 /******************************************************/
-// display timers
-// player
-private var playerTimer:Timer;
 // current view
 private var currentView:String;
 // views array
@@ -34,37 +31,11 @@ public var animationEnabled:Boolean = true;
 private function initViewHelpers():void{
 	viewHistory = [];
 	currentView = "homeView";
-	
-	playerTimer = new Timer(1000, 1);
-	playerTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onPlayerTimer);
-}
-
-/******************************************************/
-/**					PLAYER HANDLING			 		 **/
-/******************************************************/
-
-private function onPlayerTimer(e:Event):void{
-	TweenLite.to(musicPlayer, 0.3, {right:0});	
 }
 
 /******************************************************/
 /**				BACK BUTTON HANDLING			 	 **/
 /******************************************************/
-private function onAppMouseMove(e:MouseEvent):void{	
-	if( e.stageX > this.stage.stageWidth - 25 ){
-		// detect if user is using scroll
-		if(e.target.id == "track" || e.target.id == "thumb"){
-			playerTimer.stop();
-			playerTimer.reset();
-		}else{
-			playerTimer.start();
-		}
-	}else{
-		// player stop
-		playerTimer.stop();
-		playerTimer.reset();
-	}
-}
 
 public function navigateBack(home:Boolean = false):void{
 	if( viewHistory.length == 0 ) return;

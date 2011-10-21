@@ -6,10 +6,12 @@
 					   xmlns:loader="com.codezen.component.loader.*" 
 					   xmlns:home="mielophone.ui.home.*"
 					   xmlns:player="mielophone.ui.player.*" 
+					   xmlns:search="mielophone.ui.views.search.*" 
+					   xmlns:info="mielophone.ui.views.info.*" 
+					   xmlns:general="mielophone.ui.views.general.*"
 					   skinClass="mielophone.ui.skins.MielophoneApplication"
 					   applicationComplete="{onAppicationComplete()}"
-					   mouseMove="{onAppMouseMove(event)}"
-					   width="800" height="600" xmlns:search="mielophone.ui.views.search.*" xmlns:info="mielophone.ui.views.info.*" xmlns:general="mielophone.ui.views.general.*">
+					   width="800" height="600">
 	
 	<fx:Script source="Mielophone.as" />
 	<fx:Script source="logic/Autoupdate.as" />
@@ -64,10 +66,7 @@
 	<info:RadioView width="100%" height="100%" id="radioView" visible="false" />
 	
 	
-	<!--- ELEMENTS PRESENT EVERYWHERE -->	
-	<!-- MUSIC PLAYER -->
-	<player:MusicPlayer height="100%" right="-300" id="musicPlayer" />
-	
+	<!--- ELEMENTS PRESENT EVERYWHERE -->		
 	<!-- LOADER horizontalCenter="0" verticalCenter="0" width="64" height="64" -->
 	<loader:LoadingIndicator width="100%" height="100%"
 							 isLoading="false" visible="false" id="loadingIndicator" 

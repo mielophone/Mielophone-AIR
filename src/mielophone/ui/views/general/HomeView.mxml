@@ -32,9 +32,9 @@
 	</s:HGroup>
 	
 	<s:HGroup>
+		<home:SupportButton />
 		<home:TagsButton click="{onTagsClick(event)}" />
 		<home:RadioStreamButton click="{onRadioStreamClick(event)}" />
-		<home:SupportButton />
 	</s:HGroup>
 	
 </s:Group>

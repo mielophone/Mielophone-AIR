@@ -44,11 +44,23 @@ public function fetchPlugins():void{
 	var urlReq:URLRequest = new URLRequest(MARKET_URL);
 	var urlLoader:URLLoader = new URLLoader();
 	urlLoader.addEventListener(Event.COMPLETE, onMarketData);
+	urlLoader.addEventListener(IOErrorEvent.IO_ERROR, onMarketError);
 	urlLoader.load(urlReq);
+}
+
+private function onMarketError(e:Event):void{
+	e.target.removeEventListener(Event.COMPLETE, onMarketData);
+	e.target.removeEventListener(IOErrorEvent.IO_ERROR, onMarketError);
+	
+	statusText.text = "Sorry! Market is currently unavailable, try later!";
 }
 
 private function onMarketData(e:Event):void{
 	e.target.removeEventListener(Event.COMPLETE, onMarketData);
+	e.target.removeEventListener(IOErrorEvent.IO_ERROR, onMarketError);
+	
+	statusText.text = "";
+	
 	// new plugins
 	plugins = [];
 	// get installed plugins

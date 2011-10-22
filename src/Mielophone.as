@@ -5,8 +5,14 @@ import flash.events.Event;
 import flash.media.Sound;
 import flash.net.URLRequest;
 
+import mielophone.ui.player.MusicPlayer;
+import mielophone.ui.skins.MielophoneApplication;
+
+public var musicPlayer:MusicPlayer;
 
 private function onAppicationComplete():void{
+	musicPlayer = (this.skin as MielophoneApplication).musicPlayer;
+	
 	// check update
 	initAutoupdate();
 	
@@ -15,6 +21,9 @@ private function onAppicationComplete():void{
 	
 	// init ui plugins
 	initUIExtensions();
+	
+	// init hotkeys
+	initHotkeys();
 	
 	// create search engine
 	mse = new MusicSearchEngine();

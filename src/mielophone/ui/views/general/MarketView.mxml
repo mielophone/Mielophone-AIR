@@ -27,8 +27,7 @@
 	<s:Scroller width="100%" top="36" bottom="0" skinClass="com.codezen.skins.scroll.SmallScroll">
 		<s:VGroup width="100%" height="100%" paddingLeft="10" paddingRight="10" paddingTop="10">
 			
-			<!-- <s:Label fontSize="24" text="Plugins Market" fontWeight="bold" /> -->
-			<s:Spacer height="5" />
+			<s:Label fontSize="14" id="statusText" fontWeight="bold" />
 			<s:DataGroup width="100%" id="pluginList" itemRenderer="mielophone.ui.itemrenderers.PluginItem">
 				<s:layout>
 					<s:VerticalLayout gap="0" />

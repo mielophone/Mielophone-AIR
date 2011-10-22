@@ -33,7 +33,7 @@ spark.skins.spark.WindowedApplicationSkin.</p>
 
 -->
 <s:SparkSkin xmlns:fx="http://ns.adobe.com/mxml/2009" xmlns:s="library://ns.adobe.com/flex/spark" 
-			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009" alpha.disabledGroup="0.5" >
+			 xmlns:fb="http://ns.adobe.com/flashbuilder/2009" alpha.disabledGroup="0.5" xmlns:player="mielophone.ui.player.*" xmlns:loader="com.codezen.component.loader.*" >
 	<fx:Metadata>[HostComponent("spark.components.WindowedApplication")]</fx:Metadata>
 	
 	<fx:Script fb:purpose="styling">
@@ -94,6 +94,15 @@ spark.skins.spark.WindowedApplicationSkin.</p>
 		<!-- content -->
 		<!--- @copy spark.components.SkinnableContainer#contentGroup -->
 		<s:Group id="contentGroup" width="100%" height="100%" minHeight="0" minWidth="0"/>
+		
+		<!-- MUSIC PLAYER -->
+		<player:MusicPlayer width="100%" id="musicPlayer" />
 	</s:Group>
+	
+	<!--- ELEMENTS PRESENT EVERYWHERE -->		
+	<!-- LOADER horizontalCenter="0" verticalCenter="0" width="64" height="64" -->
+	<loader:LoadingIndicator width="100%" height="100%"
+							 isLoading="false" visible="false" id="loadingIndicator" 
+							 colorOverlay="#FFFFFF" backgroundColor="#000000" backgroundAlpha="0.5" borderColor="#000000" />
 	
 </s:SparkSkin>

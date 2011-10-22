@@ -28,11 +28,11 @@
 	<s:HGroup>
 		<home:AlbumButton click="{onAlbumClick(event)}" />
 		<home:SongButton click="{onSongClick(event)}" />
-		<home:SupportButton click="{onSupportClick(event)}" />
+		<home:VideoButton click="{onVideoClick(event)}" />
 	</s:HGroup>
 	
 	<s:HGroup>
-		<home:VideoButton click="{onVideoClick(event)}" />
+		<home:SupportButton />
 		<home:TagsButton click="{onTagsClick(event)}" />
 		<home:RadioStreamButton click="{onRadioStreamClick(event)}" />
 	</s:HGroup>

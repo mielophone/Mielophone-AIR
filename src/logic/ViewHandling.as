@@ -10,6 +10,8 @@ import flash.events.TimerEvent;
 import flash.ui.Mouse;
 import flash.utils.Timer;
 
+import mielophone.ui.skins.MielophoneApplication;
+
 import mx.messaging.messages.ErrorMessage;
 import mx.utils.ObjectUtil;
 
@@ -18,9 +20,6 @@ import spark.components.Group;
 /******************************************************/
 /**						VARS						 **/
 /******************************************************/
-// display timers
-// player
-private var playerTimer:Timer;
 // current view
 private var currentView:String;
 // views array
@@ -34,37 +33,11 @@ public var animationEnabled:Boolean = true;
 private function initViewHelpers():void{
 	viewHistory = [];
 	currentView = "homeView";
-	
-	playerTimer = new Timer(1000, 1);
-	playerTimer.addEventListener(TimerEvent.TIMER_COMPLETE, onPlayerTimer);
-}
-
-/******************************************************/
-/**					PLAYER HANDLING			 		 **/
-/******************************************************/
-
-private function onPlayerTimer(e:Event):void{
-	TweenLite.to(musicPlayer, 0.3, {right:0});	
 }
 
 /******************************************************/
 /**				BACK BUTTON HANDLING			 	 **/
 /******************************************************/
-private function onAppMouseMove(e:MouseEvent):void{	
-	if( e.stageX > this.stage.stageWidth - 25 ){
-		// detect if user is using scroll
-		if(e.target.id == "track" || e.target.id == "thumb"){
-			playerTimer.stop();
-			playerTimer.reset();
-		}else{
-			playerTimer.start();
-		}
-	}else{
-		// player stop
-		playerTimer.stop();
-		playerTimer.reset();
-	}
-}
 
 public function navigateBack(home:Boolean = false):void{
 	if( viewHistory.length == 0 ) return;
@@ -88,7 +61,7 @@ public function navigateBack(home:Boolean = false):void{
 	var view:Group = this[currentView];
 	// reset size and position to absolute 
 	view.horizontalCenter = view.verticalCenter = 0;
-	view.height = stage.stageHeight; 
+	view.height = stage.stageHeight-64; 
 	view.width = nativeWindow.width;
 	
 	// show new view
@@ -152,7 +125,7 @@ private function onViewWork(e:Event):void{
 		var viewOld:Group = this[currentView];
 		// reset size and position to absolute 
 		viewOld.horizontalCenter = viewOld.verticalCenter = 0;
-		viewOld.height = stage.stageHeight; 
+		viewOld.height = stage.stageHeight-64; 
 		viewOld.width = nativeWindow.width;
 		
 		// show new view
@@ -193,7 +166,7 @@ private function onViewWork(e:Event):void{
 		// animate move-in
 		if(animationEnabled){
 			TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
-				TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight, onComplete:function():void{
+				TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight-64, onComplete:function():void{
 					// set new params
 					view.x = view.y = 0;
 					view.percentHeight = view.percentWidth = 100;
@@ -221,9 +194,9 @@ private function onViewWork(e:Event):void{
 /**					LOADING INDICATION				 **/
 /******************************************************/
 public function loadingOn():void{
-	loadingIndicator.visible = loadingIndicator.isLoading = true;
+	(this.skin as MielophoneApplication).loadingIndicator.visible = (this.skin as MielophoneApplication).loadingIndicator.isLoading = true;
 }
 
 public function loadingOff():void{
-	loadingIndicator.visible = loadingIndicator.isLoading = false;
+	(this.skin as MielophoneApplication).loadingIndicator.visible = (this.skin as MielophoneApplication).loadingIndicator.isLoading = false;
 }

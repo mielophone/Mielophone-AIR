@@ -1,5 +1,6 @@
 
 import com.codezen.mse.MusicSearchEngine;
+import com.codezen.mse.models.Album;
 import com.codezen.util.CUtils;
 import com.greensock.TweenLite;
 
@@ -16,6 +17,9 @@ import mx.utils.ObjectUtil;
 private var mse:MusicSearchEngine;
 
 private var loadedArtist:String;
+
+private var albumCounter:int;
+private var albumQueue:Array;
 
 public function doWork():void{
 	artistImage.source = FlexGlobals.topLevelApplication.currentArtist.image;
@@ -73,4 +77,46 @@ private function onNoAlbums(e:Event):void{
 private function toggleInfo():void{
 	albumsListScroller.visible = !albumsListScroller.visible;
 	artistInfoScroller.visible = !artistInfoScroller.visible; 
+}
+
+private function playAll():void{
+	albumCounter = albumsList.dataProvider.length;
+	albumQueue = [];
+	
+	FlexGlobals.topLevelApplication.loadingOn();
+	
+	mse.addEventListener(ErrorEvent.ERROR, onError);
+	
+	getNextAlbumSongs();
+}
+
+private function getNextAlbumSongs():void{
+	albumCounter--;
+	if(albumCounter < 0){
+		// cleanup
+		mse.removeEventListener(Event.COMPLETE, onAlbumTracks);
+		mse.removeEventListener(ErrorEvent.ERROR, onError);
+		
+		// hide loader
+		FlexGlobals.topLevelApplication.loadingOff();
+		
+		// set new queue
+		FlexGlobals.topLevelApplication.musicPlayer.setQueue(albumQueue);
+		return;
+	}
+	
+	mse.addEventListener(Event.COMPLETE, onAlbumTracks);
+	mse.getAlbumTracks(albumsList.dataProvider[albumCounter] as Album);
+}
+
+private function onAlbumTracks(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onAlbumTracks);
+	
+	albumQueue = albumQueue.concat( mse.album.songs );
+	
+	getNextAlbumSongs();
+}
+
+private function onError(e:Event):void{
+	getNextAlbumSongs();
 }

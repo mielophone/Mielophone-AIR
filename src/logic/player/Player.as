@@ -206,6 +206,14 @@ public function togglePlayPause():void{
 	player.togglePlayPause();
 }
 
+public function pausePlayback():void{
+	player.pause();
+}
+
+public function resumePlayback():void{
+	player.play();
+}
+
 public function stopPlayback():void{
 	player.stop();
 }

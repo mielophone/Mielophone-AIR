@@ -15,6 +15,7 @@
 	
 	<fx:Script source="Mielophone.as" />
 	<fx:Script source="logic/Autoupdate.as" />
+	<fx:Script source="logic/Hotkeys.as" />
 	<fx:Script source="logic/Vars.as" />
 	<fx:Script source="logic/ViewHandling.as" />
 	<fx:Script source="logic/ui/SystemTray.as" />

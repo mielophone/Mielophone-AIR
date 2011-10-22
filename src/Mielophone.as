@@ -22,6 +22,9 @@ private function onAppicationComplete():void{
 	// init ui plugins
 	initUIExtensions();
 	
+	// init hotkeys
+	initHotkeys();
+	
 	// create search engine
 	mse = new MusicSearchEngine();
 	mse.addEventListener(Event.INIT, onMseInit);

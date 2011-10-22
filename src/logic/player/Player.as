@@ -594,7 +594,7 @@ private function toggleFullMode():void{
 	isFullMode = !isFullMode;
 	if(isFullMode){
 		// enable full mode
-		toggleFullBtn.source = normalImg;
+		//toggleFullBtn.source = normalImg;
 		
 		this.x = stage.stageWidth - this.width;
 		var grp:Group = this;
@@ -604,7 +604,7 @@ private function toggleFullMode():void{
 		//TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width:w});
 	}else{
 		// revert to normal
-		toggleFullBtn.source = fullImg;
+		//toggleFullBtn.source = fullImg;
 		
 		this.x = 0;
 		this.right = 0;

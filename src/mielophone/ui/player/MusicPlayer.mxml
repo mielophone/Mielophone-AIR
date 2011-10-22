@@ -24,12 +24,12 @@
 	</s:Rect>
 	
 	<!-- playlist -->
-	<s:Group width="300" height="300" left="120" top="-300" visible="false"
+	<s:Group height="300" left="120" right="130" top="-295" visible="false"
 			 id="playlistGroup" rollOut="{event.target.visible = false;}">
 		<!-- background fill -->
 		<s:Rect width="100%" height="100%" radiusX="4" radiusY="4" >
 			<s:fill>
-				<s:LinearGradient rotation="-90">
+				<s:LinearGradient rotation="90">
 					<s:GradientEntry color="#1A1917" />
 					<s:GradientEntry color="#3c3b39" />
 				</s:LinearGradient>
@@ -109,7 +109,7 @@
 			<!-- album image -->
 			<!-- <s:Image width="24" height="24" source="{nocoverImg}" 
 			smooth="true" smoothingQuality="high" id="albumCover" /> -->
-			<!-- track info and buttons -->
+			<!-- track info -->
 			<s:RichText fontSize="14" color="#FFFFFF" 
 						text="Nothing is playing" paddingLeft="30" paddingRight="30"
 						width="100%" maxDisplayedLines="1" id="nowPlayingText" 
@@ -135,8 +135,8 @@
 			<s:Image source="@Embed('/assets/player/volume.png')" />
 		</s:VGroup>
 		
-		<s:Image source="{fullImg}" id="toggleFullBtn" click="{toggleFullMode()}"
-				 buttonMode="true" useHandCursor="true"/>
+		<!-- <s:Image source="{fullImg}" id="toggleFullBtn" click="{toggleFullMode()}"
+				 buttonMode="true" useHandCursor="true"/> -->
 		
 		<s:HGroup visible="true" id="playerButtons">
 			<!-- <s:Button label="Playlist" chromeColor="#5d575b" color="#FFFFFF" 

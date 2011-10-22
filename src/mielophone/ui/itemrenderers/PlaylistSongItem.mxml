@@ -3,6 +3,7 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				width="100%" height="32"
+				rollOverColor="#383E42"
 				buttonMode="true" useHandCursor="true"
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
 				dataChange="itemrenderer1_dataChangeHandler(event)"
@@ -23,12 +24,17 @@
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				if(data == null) return;
 				if( this.itemIndex == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
-					bg = 0xa0d3a0;
-				}else if( this.itemIndex % 2 == 0 ){
+					bgRect.visible = true;
+					bg = 0x5C6167;
+				}else{
+					bgRect.visible = false;
+				}
+				
+				/*else if( this.itemIndex % 2 == 0 ){
 					bg = 0xc3cdd8;
 				}else{
 					bg = 0xe1e6ec;
-				}
+				}*/
 			}
 			
 			private function itemrenderer1_clickHandler(event:MouseEvent):void
@@ -76,7 +82,7 @@
 		]]>
 	</fx:Script>
 	
-	<s:Rect width="100%" height="100%">
+	<s:Rect width="100%" height="100%" id="bgRect" visible="false">
 		<s:fill>
 			<s:SolidColor color="{bg}" />
 		</s:fill>
@@ -84,9 +90,8 @@
 	
 	<s:HGroup width="100%" height="100%" gap="2" verticalAlign="middle"
 			  paddingLeft="5" paddingRight="5">
-		<!-- <s:Label text="{new ObjectProxy(data).number}." fontSize="20" color="#888888" /> -->
 		<s:Label width="50%" text="{new ObjectProxy(data).name}" maxDisplayedLines="1" 
-				 fontSize="12" color="#3e444f" fontWeight="bold" />
+				 fontSize="12" color="#FFFFFF" fontWeight="bold" />
 		<s:Label width="50%" text="{new ObjectProxy(data).artist.name}" maxDisplayedLines="1" 
 				 fontSize="12" color="#8c919a" fontWeight="bold" />
 		<s:Label text="{new ObjectProxy(data).durationText}" fontSize="11" color="#858a92" />

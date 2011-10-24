@@ -187,9 +187,13 @@ public function playSongByNum(num:int):void{
 	
 	//albumCover.source = nocoverImg;
 	nowPlayingText.text = "Searching for stream..";
-	nowSearching = true;
-	mse.addEventListener(Event.COMPLETE, onSongLinks);
-	mse.findMP3(playQueue[playPos] as Song);
+	if(playQueue[playPos].track == null){
+		nowSearching = true;
+		mse.addEventListener(Event.COMPLETE, onSongLinks);
+		mse.findMP3(playQueue[playPos] as Song);
+	}else{
+		playSong(playQueue[playPos].track);
+	}
 	//findSongAndPlay(playQueue[playPos] as Song);
 }
 
@@ -261,10 +265,13 @@ public function findSongAndPlay(song:Song):void{
 		//albumCover.source = nocoverImg;
 		nowPlayingText.text = "Searching for stream..";
 		
-		nowSearching = true;
-		
-		mse.addEventListener(Event.COMPLETE, onSongLinks);
-		mse.findMP3(song);
+		if(song.track == null){
+			nowSearching = true;
+			mse.addEventListener(Event.COMPLETE, onSongLinks);
+			mse.findMP3(song);
+		}else{
+			playSong(song.track);
+		}
 		return;
 	}
 	
@@ -289,9 +296,13 @@ public function findSongAndPlay(song:Song):void{
 		default:
 			//albumCover.source = nocoverImg;
 			nowPlayingText.text = "Searching for stream..";
-			nowSearching = true;
-			mse.addEventListener(Event.COMPLETE, onSongLinks);
-			mse.findMP3(song);
+			if(song.track == null){
+				nowSearching = true;
+				mse.addEventListener(Event.COMPLETE, onSongLinks);
+				mse.findMP3(song);
+			}else{
+				playSong(song.track);
+			}
 			break;
 	}
 }
@@ -303,6 +314,7 @@ private function onSongLinks(e:Event):void{
 	
 	if( mse.mp3s.length == 0 ){
 		trace('nothing :(');
+		playQueue[playPos].number = -1;
 		findNextSong();
 		return;
 	}
@@ -311,6 +323,8 @@ private function onSongLinks(e:Event):void{
 }
 
 private function playSong(song:PlayrTrack):void{
+	nowSearching = false;
+	
 	// kill radio if it's playing
 	FlexGlobals.topLevelApplication.radioView.killRadio();
 	

@@ -76,6 +76,7 @@ private function onSearch(e:Event):void{
 		song.duration = pl.totalSeconds * 1000;
 		song.durationText = pl.totalTime;
 		song.number = num++;
+		song.track = pl;
 		_songs.push(song);
 	}
 	

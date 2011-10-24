@@ -5,7 +5,10 @@
 		 xmlns:advancedprogress="com.codezen.component.advancedprogress.*"
 		 width="300" height="64">
 	
+	<fx:Script source="../../../logic/player/Events.as" />
 	<fx:Script source="../../../logic/player/Player.as" />
+	<fx:Script source="../../../logic/player/UIActions.as" />
+	<fx:Script source="../../../logic/player/Vars.as" />
 	
 	<!-- background fill -->
 	<s:Rect left="0" right="0" top="0" bottom="0" >

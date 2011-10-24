@@ -314,7 +314,7 @@ private function onSongLinks(e:Event):void{
 	
 	if( mse.mp3s.length == 0 ){
 		trace('nothing :(');
-		playQueue[playPos].number = -1;
+		playQueue[playPos].number = -100;
 		findNextSong();
 		return;
 	}

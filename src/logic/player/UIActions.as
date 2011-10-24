@@ -2,8 +2,10 @@ import com.greensock.TweenLite;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.media.SoundTransform;
 
 import mx.collections.ArrayCollection;
+import mx.core.FlexGlobals;
 
 import spark.components.Group;
 
@@ -29,6 +31,11 @@ private function onVolumeSlider(e:Event):void{
 	playerSettings.flush();
 	
 	player.volume = volumeSlider.value/100;
+	
+	// radio volume
+	if(FlexGlobals.topLevelApplication.radioView.radioChannel){
+		FlexGlobals.topLevelApplication.radioView.radioChannel.soundTransform = new SoundTransform(volumeSlider.value/100);
+	}
 }
 
 /******************************************************/

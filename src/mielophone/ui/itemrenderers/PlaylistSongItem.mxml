@@ -23,7 +23,9 @@
 			
 			private function itemrenderer1_dataChangeHandler(event:FlexEvent):void{
 				if(data == null) return;
-				if( this.itemIndex == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
+				if( data.number == -100){
+					this.alpha = 0.5;
+				}else if( this.itemIndex == FlexGlobals.topLevelApplication.musicPlayer.playPos ){
 					bgRect.visible = true;
 					bg = 0x5C6167;
 				}else{

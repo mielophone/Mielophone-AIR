@@ -9,6 +9,7 @@ import flash.events.KeyboardEvent;
 import flash.events.MouseEvent;
 import flash.media.Sound;
 import flash.media.SoundChannel;
+import flash.media.SoundTransform;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
 import flash.ui.Keyboard;
@@ -34,8 +35,8 @@ private var pauseImg:Class;
 [Bindable]
 private var categoriesCollection:ArrayCollection;
 
+public var radioChannel:SoundChannel;
 private var radioSound:Sound;
-private var radioChannel:SoundChannel;
 private var currentRadioURL:String;
 private var currentRadioTitle:String;
 private var isPlaying:Boolean;

@@ -34,68 +34,6 @@ import spark.components.Group;
 import spark.utils.TextFlowUtil;
 
 /******************************************************/
-/**						IMAGES						 **/
-/******************************************************/
-[Bindable]
-[Embed(source="/assets/player/play.png")]
-private var playImg:Class;
-
-[Bindable]
-[Embed(source="/assets/player/pause.png")]
-private var pauseImg:Class;
-
-[Bindable]
-[Embed(source="/assets/images/nocover.png")]
-private var nocoverImg:Class;
-
-[Bindable]
-[Embed(source="/assets/player/playernormal.png")]
-private var normalImg:Class;
-
-[Bindable]
-[Embed(source="/assets/player/playerfull.png")]
-private var fullImg:Class;
-
-/******************************************************/
-/**					CONSTANTS						 **/
-/******************************************************/
-
-public static const PLAYLIST_IGNORE:String = "IgnorePlaylist";
-public static const PLAYLIST_CLEAR:String = "ClearPlaylist";
-public static const PLAYLIST_APPEND:String = "AppendPlaylist";
-
-/******************************************************/
-/**						VARS						 **/
-/******************************************************/
-// UI Stuff
-private var isFullMode:Boolean;
-
-// MSE
-private var mse:MusicSearchEngine;
-// TODO: move this to MSE as a state
-private var nowSearching:Boolean = false;
-
-// Player stuff
-private var playerSettings:SharedObject;
-private var playerBehavior:String;
-private var player:Playr;
-private var playQueue:Array;
-private var playerVolume:int;
-private var playerRepeat:Boolean;
-private var playerShuffle:Boolean;
-public var playPos:int;
-
-// tweaks
-private var lastPositionMilliseconds:Number;
-
-// Scrobbler 
-private var scrobbler:LastfmScrobbler;
-private var scrobblerSettings:SharedObject;
-private var scrobbleName:String;
-private var scrobblePass:String;
-private var trackScrobbled:Boolean;
-
-/******************************************************/
 /**					INIT STUFF					 	**/
 /******************************************************/
 public function initPlayer():void{	
@@ -240,148 +178,6 @@ public function getCurrentTrack():PlayrTrack{
 }
 
 /******************************************************/
-/**					PLAYER EVENTS					 **/
-/******************************************************/
-private function onSeek(e:Event):void{
-	var seekTime:Number = timeSlider.slider.value*1000;
-	player.scrobbleTo(seekTime);
-}
-
-
-private function onTrackEnd(e:PlayrEvent):void{
-	timeMax.text = "";
-	timeCurrent.text = "";
-	
-	FlexGlobals.topLevelApplication.setTrayTooltip();
-	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
-	
-	findNextSong();
-}
-
-private function onPlayerState(e:PlayrEvent):void{
-	switch(e.playrState){
-		case PlayrStates.PLAYING:
-			playBtn.source = pauseImg;
-			break;
-		case PlayrStates.STOPPED:
-		case PlayrStates.WAITING:
-			timeMax.text = "";
-			timeCurrent.text = "";
-			
-			FlexGlobals.topLevelApplication.setTrayTooltip();
-			FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone";
-		case PlayrStates.PAUSED:
-			playBtn.source = playImg;
-			break;
-	}
-}
-
-private function onProgress(e:PlayrEvent):void{
-	if(timeSlider.maximum != player.totalSeconds){
-		timeSlider.maximum = player.totalSeconds;
-		timeMax.text = player.totalTime;
-		
-		var artist:String = CUtils.convertHTMLEntities(player.artist);
-		var song:String = CUtils.convertHTMLEntities(player.title);
-		
-		nowPlayingText.textFlow = TextFlowUtil.importFromString("<span fontWeight='bold'>"+song+"</span>&nbsp;<span fontSize='12'> by "+artist+"</span>");
-		
-		FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+artist+" - "+song );
-		FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artist+" - "+song;
-	}
-	
-	// check if playback is stuck
-	if(lastPositionMilliseconds == player.currentMiliseconds && player.currentMiliseconds != 0 && player.playrState != PlayrStates.BUFFERING){
-		player.scrobbleTo(0);
-		player.stop();
-		onTrackEnd(null);
-		return;
-	}
-	
-	lastPositionMilliseconds = player.currentMiliseconds;
-	timeSlider.position = player.currentSeconds;
-	
-	// scrobble track on 70%
-	if( scrobbler != null && scrobbler.isInitialized && !trackScrobbled && player.currentSeconds > (player.totalSeconds * 0.7) ){
-		scrobbler.doScrobble(player.artist, player.title, new Date().time.toString());
-		trackScrobbled = true;
-	}
-	
-	// workaround for end event not dispatching
-	if(player.currentSeconds >= player.totalSeconds){
-		player.scrobbleTo(0);
-		player.stop();
-		onTrackEnd(null);
-		return;
-	}
-	
-	timeCurrent.text = player.currentTime;
-}
-
-private function onStreamProgress(e:PlayrEvent):void{
-	timeSlider.progress = e.progress;
-}
-
-private function onSong(e:PlayrEvent):void{	
-	timeSlider.maximum = player.totalSeconds;
-	timeMax.text = player.totalTime;
-	
-	var artist:String = CUtils.convertHTMLEntities(player.artist);
-	var song:String = CUtils.convertHTMLEntities(player.title);
-	
-	nowPlayingText.textFlow = TextFlowUtil.importFromString("<span fontWeight='bold'>"+song+"</span>&nbsp;<span fontSize='12'> by "+artist+"</span>");
-	
-	FlexGlobals.topLevelApplication.setTrayTooltip( "Mielophone: "+artist+" - "+song );
-	FlexGlobals.topLevelApplication.nativeWindow.title = "Mielophone: "+artist+" - "+song;
-	
-	// get cover
-	mse.addEventListener(Event.COMPLETE, onTrackCover);
-	mse.addEventListener(ErrorEvent.ERROR, onCoverError);
-	mse.getTrackInfo(artist, song);
-}
-
-private function onTrackCover(e:Event):void{
-	mse.removeEventListener(Event.COMPLETE, onTrackCover);
-	
-	if(mse.songInfo.album.image != null && mse.songInfo.album.image.length > 0){
-		//albumCover.source = mse.songInfo.album.image;
-	}else{
-		//albumCover.source = nocoverImg;
-	}
-}
-
-private function onCoverError(e:Event):void{
-	mse.removeEventListener(ErrorEvent.ERROR, onCoverError);
-	
-	trace('album search error');
-	
-	//albumCover.source = nocoverImg;
-}
-/******************************************************/
-/**				PLAYER BUTTONS HANDLERS			 	 **/
-/******************************************************/
-private function playBtn_clickHandler(event:Event):void{
-	togglePlayPause();
-}
-
-private function next_btn_clickHandler(event:MouseEvent):void{
-	findNextSong();
-}
-
-private function prev_btn_clickHandler(event:MouseEvent):void{
-	findPrevSong();
-}
-
-private function onVolumeSlider(e:Event):void{
-	playerVolume = volumeSlider.value;
-	
-	playerSettings.data.volume = playerVolume;
-	playerSettings.flush();
-	
-	player.volume = volumeSlider.value/100;
-}
-
-/******************************************************/
 /**					SEARCH AND PLAY				 	 **/
 /******************************************************/
 public function playSongByNum(num:int):void{
@@ -391,9 +187,13 @@ public function playSongByNum(num:int):void{
 	
 	//albumCover.source = nocoverImg;
 	nowPlayingText.text = "Searching for stream..";
-	nowSearching = true;
-	mse.addEventListener(Event.COMPLETE, onSongLinks);
-	mse.findMP3(playQueue[playPos] as Song);
+	if(playQueue[playPos].track == null){
+		nowSearching = true;
+		mse.addEventListener(Event.COMPLETE, onSongLinks);
+		mse.findMP3(playQueue[playPos] as Song);
+	}else{
+		playSong(playQueue[playPos].track);
+	}
 	//findSongAndPlay(playQueue[playPos] as Song);
 }
 
@@ -465,10 +265,13 @@ public function findSongAndPlay(song:Song):void{
 		//albumCover.source = nocoverImg;
 		nowPlayingText.text = "Searching for stream..";
 		
-		nowSearching = true;
-		
-		mse.addEventListener(Event.COMPLETE, onSongLinks);
-		mse.findMP3(song);
+		if(song.track == null){
+			nowSearching = true;
+			mse.addEventListener(Event.COMPLETE, onSongLinks);
+			mse.findMP3(song);
+		}else{
+			playSong(song.track);
+		}
 		return;
 	}
 	
@@ -493,9 +296,13 @@ public function findSongAndPlay(song:Song):void{
 		default:
 			//albumCover.source = nocoverImg;
 			nowPlayingText.text = "Searching for stream..";
-			nowSearching = true;
-			mse.addEventListener(Event.COMPLETE, onSongLinks);
-			mse.findMP3(song);
+			if(song.track == null){
+				nowSearching = true;
+				mse.addEventListener(Event.COMPLETE, onSongLinks);
+				mse.findMP3(song);
+			}else{
+				playSong(song.track);
+			}
 			break;
 	}
 }
@@ -507,6 +314,7 @@ private function onSongLinks(e:Event):void{
 	
 	if( mse.mp3s.length == 0 ){
 		trace('nothing :(');
+		playQueue[playPos].number = -100;
 		findNextSong();
 		return;
 	}
@@ -515,6 +323,8 @@ private function onSongLinks(e:Event):void{
 }
 
 private function playSong(song:PlayrTrack):void{
+	nowSearching = false;
+	
 	// kill radio if it's playing
 	FlexGlobals.topLevelApplication.radioView.killRadio();
 	
@@ -592,55 +402,5 @@ public function setQueue(ac:Array):void{
 			break;
 	}
 	
-	songList.dataProvider = new ArrayCollection(playQueue);
-}
-
-/******************************************************/
-/**					UI STUFF					 **/
-/******************************************************/
-private function toggleFullMode():void{
-	isFullMode = !isFullMode;
-	if(isFullMode){
-		// enable full mode
-		//toggleFullBtn.source = normalImg;
-		
-		this.x = stage.stageWidth - this.width;
-		var grp:Group = this;
-		TweenLite.to(this, 0.5, {x:0, width: stage.stageWidth, onComplete:function():void{
-			grp.percentWidth = 100;
-		}});
-		//TweenLite.to(FlexGlobals.topLevelApplication.nativeWindow, 0.5, {width:w});
-	}else{
-		// revert to normal
-		//toggleFullBtn.source = fullImg;
-		
-		this.x = 0;
-		this.right = 0;
-		TweenLite.to(this, 0.5, {width:300});
-	}
-}
-
-private function toggleRepeat():void{
-	playerRepeat = !playerRepeat;
-	
-	if(playerRepeat){
-		repeatGlow.alpha = 1;
-	}else{
-		repeatGlow.alpha = 0;
-	}
-}
-
-private function toggleShuffle():void{
-	playerShuffle = !playerShuffle;
-	
-	if(playerShuffle){
-		shuffleGlow.alpha = 1;
-	}else{
-		shuffleGlow.alpha = 0;
-	}
-}
-
-private function clearPlaylist():void{
-	playQueue = [];
 	songList.dataProvider = new ArrayCollection(playQueue);
 }

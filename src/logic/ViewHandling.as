@@ -26,6 +26,8 @@ private var currentView:String;
 private var viewHistory:Array;
 // 
 public var animationEnabled:Boolean = true;
+// animation state 
+private var isAnimating:Boolean;
 
 /******************************************************/
 /**					INITIALIZATION					 **/
@@ -33,6 +35,7 @@ public var animationEnabled:Boolean = true;
 private function initViewHelpers():void{
 	viewHistory = [];
 	currentView = "homeView";
+	isAnimating = false;
 }
 
 /******************************************************/
@@ -41,6 +44,7 @@ private function initViewHelpers():void{
 
 public function navigateBack(home:Boolean = false):void{
 	if( viewHistory.length == 0 ) return;
+	if( isAnimating ) return;
 	
 	// new view var
 	var newView:String;
@@ -64,14 +68,19 @@ public function navigateBack(home:Boolean = false):void{
 	view.height = stage.stageHeight-64; 
 	view.width = nativeWindow.width;
 	
+	// reset focus
+	this.setFocus();
+	
 	// show new view
 	this[newView].visible = true;
 	
 	// animate move-out
 	if(animationEnabled){
+		isAnimating = true;
 		TweenLite.to(view, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
 			TweenLite.to(view, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
 				view.visible = false;
+				isAnimating = false;
 			}});
 		}});
 	}else{
@@ -85,7 +94,9 @@ public function navigateBack(home:Boolean = false):void{
 /**					VIEW CHANGING					 **/
 /******************************************************/
 
-public function changeView(view:*):void{	
+public function changeView(view:*):void{
+	if( isAnimating ) return;
+	
 	// show loader
 	loadingOn();
 	
@@ -114,6 +125,9 @@ private function onViewWork(e:Event):void{
 	if(currentView == view.id)
 		return;
 	
+	// reset focus
+	this.setFocus();
+	
 	// check if it's reverse
 	var reverse:Boolean = this.getElementIndex(view) < this.getElementIndex(this[currentView]);
 	
@@ -138,10 +152,12 @@ private function onViewWork(e:Event):void{
 		
 		// animate move-out
 		if(animationEnabled){
+			isAnimating = true;
 			TweenLite.to(viewOld, 0.3, {width:nativeWindow.width-100, height:stage.height-100, onComplete:function():void{
 				TweenLite.to(viewOld, 0.5, {horizontalCenter:nativeWindow.width, onComplete:function():void{
 					viewOld.visible = false;
 					viewOld.horizontalCenter = 0;
+					isAnimating = false;
 				}});
 			}});
 		}else{
@@ -165,6 +181,7 @@ private function onViewWork(e:Event):void{
 		
 		// animate move-in
 		if(animationEnabled){
+			isAnimating = true;
 			TweenLite.to(view, 0.5, {horizontalCenter:0, onComplete:function():void{
 				TweenLite.to(view, 0.3, {width:stage.stageWidth, height:stage.stageHeight-64, onComplete:function():void{
 					// set new params
@@ -173,6 +190,8 @@ private function onViewWork(e:Event):void{
 					// hide old view
 					oldView.visible = false;
 					oldView.horizontalCenter = 0;
+					// animation flag
+					isAnimating = false;
 				}});
 			}});
 		}else{

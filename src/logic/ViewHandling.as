@@ -68,6 +68,9 @@ public function navigateBack(home:Boolean = false):void{
 	view.height = stage.stageHeight-64; 
 	view.width = nativeWindow.width;
 	
+	// reset focus
+	this.setFocus();
+	
 	// show new view
 	this[newView].visible = true;
 	
@@ -121,6 +124,9 @@ private function onViewWork(e:Event):void{
 	// if view is already active - do nothing;
 	if(currentView == view.id)
 		return;
+	
+	// reset focus
+	this.setFocus();
 	
 	// check if it's reverse
 	var reverse:Boolean = this.getElementIndex(view) < this.getElementIndex(this[currentView]);

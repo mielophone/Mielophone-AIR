@@ -2,6 +2,7 @@
 import flash.events.KeyboardEvent;
 import flash.ui.Keyboard;
 
+import mx.controls.TextInput;
 import mx.core.FlexGlobals;
 
 private function initHotkeys():void{
@@ -9,6 +10,10 @@ private function initHotkeys():void{
 }
 
 private function onKeyPress(e:KeyboardEvent):void{
+	// check if target is input field
+	// TODO: make it smart way, this is stupid -_-
+	if(e.target.visible && e.target.toString().indexOf("textDisplay") != -1) return;
+	
 	switch(e.keyCode){
 		// simple spacebar play-pause
 		case Keyboard.SPACE:

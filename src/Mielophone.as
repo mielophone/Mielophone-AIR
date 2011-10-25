@@ -2,8 +2,6 @@
 import com.codezen.mse.MusicSearchEngine;
 
 import flash.events.Event;
-import flash.media.Sound;
-import flash.net.URLRequest;
 
 import mielophone.ui.player.MusicPlayer;
 import mielophone.ui.skins.MielophoneApplication;

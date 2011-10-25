@@ -37,10 +37,6 @@ private function onVideoClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.videoView);
 }
 
-private function onTagsClick(e:Event):void{
-	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.tagView);
-}
-
 private function onRadioStreamClick(e:Event):void{
 	FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.radioView);
 }

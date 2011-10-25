@@ -26,9 +26,6 @@
     <buildTarget buildTargetName="default">
       <airSettings airCertificatePath="/Users/yamalight/Projects/certs/cert.p12" airTimestamp="true" version="1">
         <airExcludes>
-          <pathEntry path="Mielophone.swf"/>
-          <pathEntry path="Mielophone-app.xml"/>
-          <pathEntry path="assets/home"/>
           <pathEntry path="assets/player"/>
         </airExcludes>
       </airSettings>

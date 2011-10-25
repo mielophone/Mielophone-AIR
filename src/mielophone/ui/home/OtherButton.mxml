@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/mx" 
+		 width="140" height="135">
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.core.FlexGlobals;
+			
+			private function tag_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.tagView);
+			}
+			
+			private function mood_clickHandler(event:MouseEvent):void
+			{
+				FlexGlobals.topLevelApplication.changeView(FlexGlobals.topLevelApplication.moodView);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	
+	<!-- background -->
+	<s:Rect width="100%" height="100%">
+		<s:fill>
+			<s:SolidColor color="0x8fb023" />
+		</s:fill>
+	</s:Rect>
+	
+	<s:VGroup left="35" verticalCenter="-10" gap="14">
+		<s:Label text="Tags" fontSize="18" color="#FFFFFF" 
+				 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+				 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+				 buttonMode="true" useHandCursor="true"
+				 click="tag_clickHandler(event)" />
+		
+		<s:Label text="Moods" fontSize="18" color="#FFFFFF" 
+				 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
+				 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
+				 buttonMode="true" useHandCursor="true"
+				 click="mood_clickHandler(event)" />
+	</s:VGroup>
+	
+	<s:Label bottom="10" left="10" id="smallText"
+			 color="#FFFFFF" fontSize="16"
+			 text="Other"/>
+	
+</s:Group>

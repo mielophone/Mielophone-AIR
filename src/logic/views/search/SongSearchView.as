@@ -1,6 +1,7 @@
 
 import com.codezen.mse.MusicSearchEngine;
 import com.codezen.mse.models.Artist;
+import com.codezen.mse.models.Mood;
 import com.codezen.mse.models.Song;
 import com.codezen.mse.playr.PlayrTrack;
 import com.greensock.TweenLite;
@@ -96,6 +97,26 @@ public function findSongsByTag(tag:String):void{
 
 private function onTagSongs(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onTagSongs);
+	
+	songList.dataProvider = new ArrayCollection(mse.songs);
+	
+	FlexGlobals.topLevelApplication.loadingOff();
+	
+	FlexGlobals.topLevelApplication.changeView(this);
+}
+
+public function findSongsByMood(mood:Mood):void{
+	if(mse == null)
+		mse = FlexGlobals.topLevelApplication.mse;
+	
+	FlexGlobals.topLevelApplication.loadingOn();
+	
+	mse.addEventListener(Event.COMPLETE, onMoodSongs);
+	mse.findSongsByMood(mood);
+}
+
+private function onMoodSongs(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onMoodSongs);
 	
 	songList.dataProvider = new ArrayCollection(mse.songs);
 	

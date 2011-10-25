@@ -14,6 +14,9 @@ import mx.collections.ArrayCollection;
 import mx.core.FlexGlobals;
 import mx.utils.ObjectUtil;
 
+[Embed(source="/assets/images/nocover.png")]
+private var nocoverImg:Class;
+
 private var mse:MusicSearchEngine;
 
 private var loadedArtist:String;
@@ -36,6 +39,7 @@ public function doWork():void{
 		similarList.dataProvider = tagsList.dataProvider = new ArrayCollection();
 		
 		mse.addEventListener(Event.COMPLETE, onArtistInfo);
+		mse.addEventListener(ErrorEvent.ERROR, onNoArtistInfo);
 		mse.getArtistInfo(FlexGlobals.topLevelApplication.currentArtist);
 	}else{
 		this.dispatchEvent(new Event(Event.COMPLETE));
@@ -44,12 +48,27 @@ public function doWork():void{
 
 private function onArtistInfo(e:Event):void{
 	mse.removeEventListener(Event.COMPLETE, onArtistInfo);
+	mse.removeEventListener(ErrorEvent.ERROR, onNoArtistInfo);
 	artistDesc.text = CUtils.convertHTMLEntities( CUtils.stripTags(FlexGlobals.topLevelApplication.currentArtist.description_short) );//description) );
 	
 	similarList.dataProvider = new ArrayCollection(mse.artistInfo.similar);
 	tagsList.dataProvider = new ArrayCollection(mse.artistInfo.tags);
 	fullDescription.text = CUtils.convertHTMLEntities( CUtils.stripTags(FlexGlobals.topLevelApplication.currentArtist.description) );//description) );
 	
+	loadAlbums();
+}
+
+private function onNoArtistInfo(e:Event):void{
+	mse.removeEventListener(Event.COMPLETE, onArtistInfo);
+	mse.removeEventListener(ErrorEvent.ERROR, onNoArtistInfo);
+	
+	artistDesc.text = "No info available.";
+	artistImage.source = nocoverImg;
+	
+	loadAlbums();
+}
+
+private function loadAlbums():void{
 	mse.addEventListener(Event.COMPLETE, onArtistAlbums);
 	mse.addEventListener(ErrorEvent.ERROR, onNoAlbums);
 	mse.getArtistAlbums(FlexGlobals.topLevelApplication.currentArtist);

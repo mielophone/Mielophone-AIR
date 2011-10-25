@@ -33,7 +33,7 @@
 	
 	<s:HGroup>
 		<home:SupportButton />
-		<home:TagsButton click="{onTagsClick(event)}" />
+		<home:OtherButton />
 		<home:RadioStreamButton click="{onRadioStreamClick(event)}" />
 	</s:HGroup>
 	

@@ -40,6 +40,9 @@
 	<!-- GLOBAL SEARCH RESULTS VIEW -->
 	<search:SearchResultsView width="100%" height="100%" id="searchResView" visible="false" />
 	
+	<!-- MOOD SEARCH VIEW --> 
+	<search:MoodSearchView  width="100%" height="100%" id="moodView" visible="false" />
+	
 	<!-- TAG SEARCH VIEW -->
 	<search:TagSearchView width="100%" height="100%" id="tagView" visible="false" />
 	

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:ItemRenderer xmlns:fx="http://ns.adobe.com/mxml/2009" 
+				xmlns:s="library://ns.adobe.com/flex/spark" 
+				xmlns:mx="library://ns.adobe.com/flex/mx" 
+				autoDrawBackground="false"
+				buttonMode="true" useHandCursor="true"
+				minHeight="32"
+				click="itemrenderer1_clickHandler(event)"
+				rightClick="itemrenderer1_rightClickHandler(event)">
+	
+	<fx:Script>
+		<![CDATA[
+			import com.codezen.mse.models.Mood;
+			
+			import mx.core.FlexGlobals;
+			import mx.utils.ObjectProxy;
+			
+			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			{
+				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
+				//trace(this.itemIndex);
+				FlexGlobals.topLevelApplication.songView.findSongsByMood(data as Mood);
+			}
+			
+			private function itemrenderer1_rightClickHandler(event:MouseEvent):void
+			{
+				/*var menu:NativeMenu = new NativeMenu();
+				
+				var art:NativeMenuItem = new NativeMenuItem("Get top artists");
+				art.addEventListener(Event.SELECT, itemrenderer1_clickHandler);  
+				menu.addItem(art);
+				
+				var sng:NativeMenuItem = new NativeMenuItem("Get top songs");
+				sng.addEventListener(Event.SELECT, getTopSongs);  
+				menu.addItem(sng);
+				
+				var p:Point = localToGlobal(new Point(mouseX, mouseY));
+				menu.display(stage, p.x, p.y);*/
+			}
+			
+			private function getTopSongs(e:Event):void{
+				//FlexGlobals.topLevelApplication.songView.findSongsByTag(data.name);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<s:Label width="100%" height="100%" text="{new ObjectProxy(data).name}" 
+			 fontSize="18" color="#3e444f" fontWeight="bold" 
+			 verticalAlign="middle" textAlign="center"/>
+	
+</s:ItemRenderer>

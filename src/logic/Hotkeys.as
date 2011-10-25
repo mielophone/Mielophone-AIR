@@ -2,7 +2,6 @@
 import flash.events.KeyboardEvent;
 import flash.ui.Keyboard;
 
-import mx.controls.TextInput;
 import mx.core.FlexGlobals;
 
 private function initHotkeys():void{

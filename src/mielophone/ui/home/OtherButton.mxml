@@ -29,14 +29,14 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:VGroup left="40" verticalCenter="-10" gap="7">
-		<s:Label text="Tags" fontSize="14" color="#FFFFFF" 
+	<s:VGroup left="35" verticalCenter="-10" gap="14">
+		<s:Label text="Tags" fontSize="18" color="#FFFFFF" 
 				 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
 				 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
 				 buttonMode="true" useHandCursor="true"
 				 click="tag_clickHandler(event)" />
 		
-		<s:Label text="Moods" fontSize="14" color="#FFFFFF" 
+		<s:Label text="Moods" fontSize="18" color="#FFFFFF" 
 				 mouseOver="{event.target.setStyle('textDecoration', 'underline')}"
 				 mouseOut="{event.target.setStyle('textDecoration', 'none')}"
 				 buttonMode="true" useHandCursor="true"

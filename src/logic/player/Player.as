@@ -39,7 +39,6 @@ import spark.utils.TextFlowUtil;
 public function initPlayer():void{	
 	playerRepeat = playerShuffle = false;
 	isFullMode = false;
-	playQueue = [];
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -71,6 +70,13 @@ public function initPlayer():void{
 		FlexGlobals.topLevelApplication.settingsView.playlistBehavior.selectedIndex = playerSettings.data.behaviorIndex;
 	}else{
 		playerBehavior = PLAYLIST_IGNORE;
+	}
+	// playlist
+	if( playerSettings.data.playlist != null ){
+		playQueue = playerSettings.data.playlist;
+		songList.dataProvider = new ArrayCollection(playQueue);
+	}else{
+		playQueue = [];
 	}
 	
 	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
@@ -165,12 +171,16 @@ public function deleteSongFromPlaylist(index:int):void{
 	if(playPos == index) playPos = -1;
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
+	
+	storePlaylist();
 }
 
 public function addSongToPlaylist(s:Song):void{
 	playQueue.push(s);
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
+	
+	storePlaylist();
 }
 
 public function getCurrentTrack():PlayrTrack{
@@ -285,6 +295,7 @@ public function findSongAndPlay(song:Song):void{
 			}
 			playQueue.push(song);
 			songList.dataProvider = new ArrayCollection(playQueue);
+			storePlaylist();
 			if(startPlay) findNextSong();
 			break;
 		
@@ -292,6 +303,7 @@ public function findSongAndPlay(song:Song):void{
 			playQueue = [song];
 			playPos = -1;
 			songList.dataProvider = new ArrayCollection(playQueue);
+			storePlaylist();
 		case PLAYLIST_IGNORE:
 		default:
 			//albumCover.source = nocoverImg;
@@ -355,6 +367,7 @@ public function playCurrentAlbum():void{
 			}
 			playQueue = playQueue.concat(FlexGlobals.topLevelApplication.currentAlbum.songs);
 			songList.dataProvider = new ArrayCollection(playQueue);
+			storePlaylist();
 			if(startPlay) findNextSong();
 			break;
 		
@@ -365,6 +378,7 @@ public function playCurrentAlbum():void{
 			
 			songList.dataProvider = new ArrayCollection(playQueue);
 			
+			storePlaylist();
 			findNextSong();
 			break;
 	}
@@ -403,4 +417,6 @@ public function setQueue(ac:Array):void{
 	}
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
+	
+	storePlaylist();
 }

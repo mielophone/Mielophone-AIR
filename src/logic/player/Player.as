@@ -72,12 +72,12 @@ public function initPlayer():void{
 		playerBehavior = PLAYLIST_IGNORE;
 	}
 	// playlist
-	if( playerSettings.data.playlist != null ){
-		playQueue = playerSettings.data.playlist;
-		songList.dataProvider = new ArrayCollection(playQueue);
-	}else{
+	//if( playerSettings.data.playlist != null ){
+	//	playQueue = playerSettings.data.playlist;
+	//	songList.dataProvider = new ArrayCollection(playQueue);
+	//}else{
 		playQueue = [];
-	}
+	//}
 	
 	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
 	timeSlider.slider.dataTipFormatFunction = timeDataTip;

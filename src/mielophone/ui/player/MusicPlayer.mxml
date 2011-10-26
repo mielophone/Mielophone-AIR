@@ -51,9 +51,9 @@
 			<s:Image source="@Embed('/assets/player/clear.png')" toolTip="Clear playlist"
 					 buttonMode="true" useHandCursor="true" click="{clearPlaylist()}"/>
 			<s:Image source="@Embed('/assets/player/open.png')" toolTip="Open playlist"
-					 buttonMode="true" useHandCursor="true" click="{}"/>
+					 buttonMode="true" useHandCursor="true" click="{openPlaylist()}"/>
 			<s:Image source="@Embed('/assets/player/save.png')" toolTip="Save playlist"
-					 buttonMode="true" useHandCursor="true" click="{}"/>
+					 buttonMode="true" useHandCursor="true" click="{savePlaylist()}"/>
 		</s:HGroup>
 		
 		<s:Scroller left="3" right="0" top="20" bottom="3" skinClass="com.codezen.skins.scroll.SmallScroll" id="songScroll">

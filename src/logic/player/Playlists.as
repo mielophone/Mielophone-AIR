@@ -42,34 +42,34 @@ private function savePlaylist():void{
 	// remove string breaks
 	outputString = outputString.replace(/\n/gs, File.lineEnding);
 	// load prefs file from app dir
-	var prefsFile:File = File.documentsDirectory.resolvePath("playlist.mpl");
-	prefsFile.addEventListener(Event.SELECT, function():void{
+	var playlistFile:File = File.documentsDirectory.resolvePath("playlist.mpl");
+	playlistFile.addEventListener(Event.SELECT, function():void{
 		// create new reading stream
 		var stream:FileStream = new FileStream();
 		// create new file if not exist and open
-		stream.open(prefsFile, FileMode.WRITE);
+		stream.open(playlistFile, FileMode.WRITE);
 		// write settings
 		stream.writeUTFBytes(outputString);
 		// close file
 		stream.close();
 		// reset vars
-		prefsFile = null;
+		playlistFile = null;
 		stream = null;
 		plXML = null;
 	});
-	prefsFile.browseForSave("Save playlist");
+	playlistFile.browseForSave("Save playlist");
 }
 
 private function openPlaylist():void{
 	// load prefs file from app dir
-	var prefsFile:File = File.documentsDirectory.resolvePath("playlist.mpl");
-	prefsFile.addEventListener(Event.SELECT, function(e:Event):void{
+	var playlistFile:File = File.documentsDirectory.resolvePath("playlist.mpl");
+	playlistFile.addEventListener(Event.SELECT, function(e:Event):void{
 		// create new reading stream
 		var stream:FileStream = new FileStream();
 		// if file exists
-		if (prefsFile.exists) {
+		if (playlistFile.exists) {
 			// read file
-			stream.open(prefsFile, FileMode.READ);
+			stream.open(playlistFile, FileMode.READ);
 			// create xml from file
 			var prefsXML:XML = XML(stream.readUTFBytes(stream.bytesAvailable));
 			// close stream
@@ -96,8 +96,8 @@ private function openPlaylist():void{
 		}
 		
 		item = null;
-		prefsFile = null;
+		playlistFile = null;
 		stream = null;
 	});
-	prefsFile.browseForOpen("Open Playlist", [new FileFilter("Mielophone playlist", "mpl")]);
+	playlistFile.browseForOpen("Open Playlist", [new FileFilter("Mielophone playlist", "mpl")]);
 }

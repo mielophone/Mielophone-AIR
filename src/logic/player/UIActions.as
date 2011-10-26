@@ -82,8 +82,3 @@ private function toggleShuffle():void{
 		shuffleGlow.alpha = 0;
 	}
 }
-
-private function clearPlaylist():void{
-	playQueue = [];
-	songList.dataProvider = new ArrayCollection(playQueue);
-}

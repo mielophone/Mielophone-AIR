@@ -8,14 +8,22 @@
 				creationComplete="itemrenderer1_creationCompleteHandler(event)"
 				dataChange="itemrenderer1_dataChangeHandler(event)"
 				click="itemrenderer1_clickHandler(event)"
-				rightClick="itemrenderer1_rightClickHandler(event)">
+				rightClick="itemrenderer1_rightClickHandler(event)"
+				
+				mouseMove="itemrenderer1_dragStartHandler(event)"
+				dragEnter="itemrenderer1_dragEnterHandler(event)"
+				dragDrop="itemrenderer1_dragDropHandler(event)">
 	
 	<fx:Script>
 		<![CDATA[
 			import com.codezen.mse.models.Song;
 			
+			import mx.collections.ArrayCollection;
+			import mx.core.DragSource;
 			import mx.core.FlexGlobals;
+			import mx.events.DragEvent;
 			import mx.events.FlexEvent;
+			import mx.managers.DragManager;
 			import mx.utils.ObjectProxy;
 			
 			[Bindable]
@@ -81,6 +89,35 @@
 			private function findVideo(e:Event):void{
 				FlexGlobals.topLevelApplication.videoView.findVideo(data.artist.name + " " + data.name);
 			}
+			
+			private function itemrenderer1_dragStartHandler(event:MouseEvent):void
+			{
+				var dragInitiator:ItemRenderer = ItemRenderer(event.currentTarget);
+				var ds:DragSource = new DragSource();
+				ds.addData(dragInitiator, "item");               
+				
+				DragManager.doDrag(dragInitiator, ds, event);
+			}
+			
+			private function itemrenderer1_dragDropHandler(event:DragEvent):void
+			{
+				var newIndex:int = ItemRenderer(event.dragInitiator).itemIndex;
+				var oldIndex:int = this.itemIndex;
+				var otherSong:Song = (FlexGlobals.topLevelApplication.musicPlayer.songList.dataProvider as ArrayCollection).getItemAt(newIndex) as Song;
+				
+				(FlexGlobals.topLevelApplication.musicPlayer.songList.dataProvider as ArrayCollection).setItemAt(data as Song, newIndex);
+				(FlexGlobals.topLevelApplication.musicPlayer.songList.dataProvider as ArrayCollection).setItemAt(otherSong, oldIndex);
+				//(FlexGlobals.topLevelApplication.musicPlayer.songList.dataProvider as ArrayCollection).refresh();
+			}
+			
+			private function itemrenderer1_dragEnterHandler(event:DragEvent):void
+			{
+				if (event.dragSource.hasFormat("item"))
+				{
+					DragManager.acceptDragDrop(ItemRenderer(event.currentTarget));
+				}
+			}
+			
 		]]>
 	</fx:Script>
 	

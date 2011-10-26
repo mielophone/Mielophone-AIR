@@ -28,7 +28,7 @@
 				}
 			}
 			
-			private function itemrenderer1_clickHandler(event:MouseEvent):void
+			private function itemrenderer1_clickHandler(event:Event):void
 			{
 				//FlexGlobals.topLevelApplication._playPos = this.itemIndex;
 				//trace(this.itemIndex);

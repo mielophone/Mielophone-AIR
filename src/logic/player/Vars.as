@@ -54,6 +54,7 @@ private var playQueue:Array;
 private var playerVolume:int;
 private var playerRepeat:Boolean;
 private var playerShuffle:Boolean;
+private var nextRandomPos:int;
 public var playPos:int;
 
 // tweaks

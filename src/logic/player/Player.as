@@ -39,6 +39,9 @@ import spark.utils.TextFlowUtil;
 public function initPlayer():void{	
 	playerRepeat = playerShuffle = false;
 	isFullMode = false;
+	prefetchedNext = false;
+	
+	nextRandomPos = -1;
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -214,7 +217,8 @@ public function findNextSong():void{
 	
 	nowSearching = true;
 	if( playerShuffle ){
-		playPos = Math.round( playQueue.length * Math.random() );
+		playPos = nextRandomPos == -1 ? Math.round( playQueue.length * Math.random() ) : nextRandomPos;
+		nextRandomPos = -1;
 	}else{
 		playPos++;
 	}
@@ -344,7 +348,7 @@ private function playSong(song:PlayrTrack):void{
 	var pl:PlaylistManager = new PlaylistManager();
 	pl.addTrack(song);
 	
-	trackScrobbled = false;
+	prefetchedNext = trackScrobbled = false;
 	
 	player.stop();
 	player.playlist = pl;

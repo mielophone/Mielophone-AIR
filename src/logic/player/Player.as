@@ -400,11 +400,14 @@ private function onAlbumTracks(e:Event):void{
 }
 
 public function setQueue(ac:Array):void{
+	var startPlay:Boolean = false;
+	
 	switch(playerBehavior)
 	{
 		case PLAYLIST_APPEND:
 			if(playQueue == null || playQueue.length < 1){
 				playPos = -1;
+				startPlay = true;
 			}
 			playQueue = playQueue.concat(ac);
 			break;
@@ -413,10 +416,13 @@ public function setQueue(ac:Array):void{
 		case PLAYLIST_IGNORE:
 			playQueue = ac.concat();
 			playPos = -1;
+			startPlay = true;
 			break;
 	}
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
 	
 	storePlaylist();
+	
+	if(startPlay) findNextSong();
 }

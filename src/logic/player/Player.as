@@ -39,6 +39,10 @@ import spark.utils.TextFlowUtil;
 public function initPlayer():void{	
 	playerRepeat = playerShuffle = false;
 	isFullMode = false;
+	prefetchedNext = false;
+	fbSongPosted = false;
+	
+	nextRandomPos = -1;
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -214,7 +218,8 @@ public function findNextSong():void{
 	
 	nowSearching = true;
 	if( playerShuffle ){
-		playPos = Math.round( playQueue.length * Math.random() );
+		playPos = nextRandomPos == -1 ? Math.round( playQueue.length * Math.random() ) : nextRandomPos;
+		nextRandomPos = -1;
 	}else{
 		playPos++;
 	}
@@ -344,7 +349,7 @@ private function playSong(song:PlayrTrack):void{
 	var pl:PlaylistManager = new PlaylistManager();
 	pl.addTrack(song);
 	
-	trackScrobbled = false;
+	fbSongPosted = prefetchedNext = trackScrobbled = false;
 	
 	player.stop();
 	player.playlist = pl;
@@ -400,11 +405,14 @@ private function onAlbumTracks(e:Event):void{
 }
 
 public function setQueue(ac:Array):void{
+	var startPlay:Boolean = false;
+	
 	switch(playerBehavior)
 	{
 		case PLAYLIST_APPEND:
 			if(playQueue == null || playQueue.length < 1){
 				playPos = -1;
+				startPlay = true;
 			}
 			playQueue = playQueue.concat(ac);
 			break;
@@ -413,10 +421,13 @@ public function setQueue(ac:Array):void{
 		case PLAYLIST_IGNORE:
 			playQueue = ac.concat();
 			playPos = -1;
+			startPlay = true;
 			break;
 	}
 	
 	songList.dataProvider = new ArrayCollection(playQueue);
 	
 	storePlaylist();
+	
+	if(startPlay) findNextSong();
 }

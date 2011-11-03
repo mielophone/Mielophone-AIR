@@ -35,11 +35,12 @@ private var pauseImg:Class;
 [Bindable]
 private var categoriesCollection:ArrayCollection;
 
-public var radioChannel:SoundChannel;
+private var radioChannel:SoundChannel;
 private var radioSound:Sound;
 private var currentRadioURL:String;
 private var currentRadioTitle:String;
 private var isPlaying:Boolean;
+private var radioVolume:Number;
 
 public function initRadio():void{
 	isPlaying = false;
@@ -127,6 +128,7 @@ public function toggleRadio():void{
 	if(isPlaying && currentRadioURL != null){
 		radioSound = new Sound(new URLRequest(currentRadioURL));
 		radioChannel = radioSound.play();
+		radioChannel.soundTransform = new SoundTransform(radioVolume/100);
 		playRadio.source = pauseImg;
 		currentRadio.text = currentRadioTitle;
 	}else if(!isPlaying){
@@ -163,6 +165,7 @@ public function playRadioURL(url:String, title:String):void{
 	// play new stream
 	radioSound = new Sound(new URLRequest(currentRadioURL));
 	radioChannel = radioSound.play();
+	radioChannel.soundTransform = new SoundTransform(radioVolume/100);
 }
 
 public function killRadio():void{
@@ -177,5 +180,13 @@ public function killRadio():void{
 		currentRadio.text = "Radio is off";
 		
 		isPlaying = false;
+	}
+}
+
+public function setVolume(v:Number):void{
+	radioVolume = v;
+	
+	if(radioChannel){
+		radioChannel.soundTransform = new SoundTransform(radioVolume/100);
 	}
 }

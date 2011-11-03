@@ -20,21 +20,21 @@
 	<s:Spacer height="20" />
 	
 	<s:HGroup>
-		<home:ArtistButton click="{onArtistClick(event)}" />
-		<home:MarketButton id="marketButton" click="{onMarketClick(event)}"/>
-		<home:SettingsButton click="{onSettingsClick(event)}" />
+		<home:ArtistButton buttonMode="true" useHandCursor="true" click="{onArtistClick(event)}" />
+		<home:MarketButton buttonMode="true" useHandCursor="true" id="marketButton" click="{onMarketClick(event)}"/>
+		<home:SettingsButton buttonMode="true" useHandCursor="true" click="{onSettingsClick(event)}" />
 	</s:HGroup>
 	
 	<s:HGroup>
-		<home:AlbumButton click="{onAlbumClick(event)}" />
-		<home:SongButton click="{onSongClick(event)}" />
-		<home:VideoButton click="{onVideoClick(event)}" />
+		<home:AlbumButton buttonMode="true" useHandCursor="true" click="{onAlbumClick(event)}" />
+		<home:SongButton buttonMode="true" useHandCursor="true" click="{onSongClick(event)}" />
+		<home:VideoButton buttonMode="true" useHandCursor="true" click="{onVideoClick(event)}" />
 	</s:HGroup>
 	
 	<s:HGroup>
 		<home:SupportButton />
 		<home:OtherButton />
-		<home:RadioStreamButton click="{onRadioStreamClick(event)}" />
+		<home:RadioStreamButton buttonMode="true" useHandCursor="true" click="{onRadioStreamClick(event)}" />
 	</s:HGroup>
 	
 </s:Group>

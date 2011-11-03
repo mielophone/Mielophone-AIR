@@ -23,6 +23,9 @@ private function onAppicationComplete():void{
 	// init hotkeys
 	initHotkeys();
 	
+	// init facebook
+	initFacebook();
+	
 	// create search engine
 	mse = new MusicSearchEngine();
 	mse.addEventListener(Event.INIT, onMseInit);

@@ -54,6 +54,7 @@ private var playQueue:Array;
 private var playerVolume:int;
 private var playerRepeat:Boolean;
 private var playerShuffle:Boolean;
+private var nextRandomPos:int;
 public var playPos:int;
 
 // tweaks
@@ -65,3 +66,6 @@ private var scrobblerSettings:SharedObject;
 private var scrobbleName:String;
 private var scrobblePass:String;
 private var trackScrobbled:Boolean;
+
+// facebook stuff
+private var fbSongPosted:Boolean;

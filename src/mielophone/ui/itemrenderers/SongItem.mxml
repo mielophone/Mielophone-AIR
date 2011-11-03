@@ -3,6 +3,7 @@
 				xmlns:s="library://ns.adobe.com/flex/spark" 
 				xmlns:mx="library://ns.adobe.com/flex/mx" 
 				width="100%" height="32"
+				buttonMode="true" useHandCursor="true"
 				dataChange="itemrenderer1_dataChangeHandler(event)"
 				click="itemrenderer1_clickHandler(event)"
 				rightClick="itemrenderer1_rightClickHandler(event)">

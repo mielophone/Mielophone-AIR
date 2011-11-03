@@ -49,3 +49,7 @@ private function onEnableAnimationChange(e:Event):void{
 	generalSettings.data.animation = enableAnimations.selected;
 	generalSettings.flush();
 }
+
+private function onFacebookClick(e:Event):void{
+	FlexGlobals.topLevelApplication.connectFacebook();
+}

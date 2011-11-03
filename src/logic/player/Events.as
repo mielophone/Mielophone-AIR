@@ -71,10 +71,22 @@ private function onProgress(e:PlayrEvent):void{
 	lastPositionMilliseconds = player.currentMiliseconds;
 	timeSlider.position = player.currentSeconds;
 	
-	// scrobble track on 70%
-	if( scrobbler != null && scrobbler.isInitialized && !trackScrobbled && player.currentSeconds > (player.totalSeconds * 0.7) ){
-		scrobbler.doScrobble(player.artist, player.title, new Date().time.toString());
-		trackScrobbled = true;
+	// do stuff on 70% of track
+	if( player.currentSeconds > (player.totalSeconds * 0.7) ){
+		// scrobble track on 70%
+		if(scrobbler != null && scrobbler.isInitialized && !trackScrobbled){
+			scrobbler.doScrobble(player.artist, player.title, new Date().time.toString());
+			trackScrobbled = true;
+		}
+		
+		// search for next track url
+		if(!prefetchedNext) prefetchNextSong();
+		
+		// post to facebook
+		if(!fbSongPosted){
+			fbSongPosted = true;
+			FlexGlobals.topLevelApplication.postFbSong(player.artist, player.title);
+		}
 	}
 	
 	// workaround for end event not dispatching

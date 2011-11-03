@@ -8,6 +8,7 @@
 	<fx:Script source="../../../logic/player/Events.as" />
 	<fx:Script source="../../../logic/player/Player.as" />
 	<fx:Script source="../../../logic/player/Playlists.as" />
+	<fx:Script source="../../../logic/player/ProgressiveSearch.as" />
 	<fx:Script source="../../../logic/player/UIActions.as" />
 	<fx:Script source="../../../logic/player/Vars.as" />
 	

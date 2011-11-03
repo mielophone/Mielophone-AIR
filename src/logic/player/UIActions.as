@@ -33,9 +33,7 @@ private function onVolumeSlider(e:Event):void{
 	player.volume = volumeSlider.value/100;
 	
 	// radio volume
-	if(FlexGlobals.topLevelApplication.radioView.radioChannel){
-		FlexGlobals.topLevelApplication.radioView.radioChannel.soundTransform = new SoundTransform(volumeSlider.value/100);
-	}
+	FlexGlobals.topLevelApplication.radioView.setVolume(volumeSlider.value);
 }
 
 /******************************************************/

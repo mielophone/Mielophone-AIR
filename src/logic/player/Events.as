@@ -81,6 +81,12 @@ private function onProgress(e:PlayrEvent):void{
 		
 		// search for next track url
 		if(!prefetchedNext) prefetchNextSong();
+		
+		// post to facebook
+		if(!fbSongPosted){
+			fbSongPosted = true;
+			FlexGlobals.topLevelApplication.postFbSong(player.artist, player.title);
+		}
 	}
 	
 	// workaround for end event not dispatching

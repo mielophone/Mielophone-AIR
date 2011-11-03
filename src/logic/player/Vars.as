@@ -66,3 +66,6 @@ private var scrobblerSettings:SharedObject;
 private var scrobbleName:String;
 private var scrobblePass:String;
 private var trackScrobbled:Boolean;
+
+// facebook stuff
+private var fbSongPosted:Boolean;

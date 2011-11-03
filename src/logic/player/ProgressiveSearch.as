@@ -21,7 +21,7 @@ private function prefetchNextSong():void{
 	}
 	prefetchSong = playQueue[prefetchNum] as Song;
 	
-	if(prefetchSong.track == null){
+	if(prefetchSong != null && prefetchSong.track == null){
 		trace('searching for next song link');
 		trace(ObjectUtil.toString(prefetchSong));
 		nowSearching = true;

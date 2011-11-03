@@ -40,6 +40,7 @@ public function initPlayer():void{
 	playerRepeat = playerShuffle = false;
 	isFullMode = false;
 	prefetchedNext = false;
+	fbSongPosted = false;
 	
 	nextRandomPos = -1;
 	
@@ -348,7 +349,7 @@ private function playSong(song:PlayrTrack):void{
 	var pl:PlaylistManager = new PlaylistManager();
 	pl.addTrack(song);
 	
-	prefetchedNext = trackScrobbled = false;
+	fbSongPosted = prefetchedNext = trackScrobbled = false;
 	
 	player.stop();
 	player.playlist = pl;

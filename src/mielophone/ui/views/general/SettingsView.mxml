@@ -67,11 +67,11 @@
 		
 		<s:Spacer height="20"/>
 		
-		<s:Button label="Save" click="{saveSettings()}" />
+		<s:Button buttonMode="true" useHandCursor="true" label="Save" click="{saveSettings()}" />
 	</s:VGroup>
 	
 	<!-- -->
 	<s:VGroup width="50%" right="0" top="36" bottom="0" variableRowHeight="true" paddingRight="10" paddingTop="10" gap="5">
-		<s:Button label="Login with Facebook" click="onFacebookClick(event)" />
+		<s:Button buttonMode="true" useHandCursor="true" label="Login with Facebook" click="onFacebookClick(event)" />
 	</s:VGroup>
 </s:Group>

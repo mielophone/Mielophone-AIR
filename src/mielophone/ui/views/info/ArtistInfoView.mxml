@@ -67,7 +67,7 @@
 		<s:VGroup width="100%" height="100%" variableRowHeight="true" gap="0">
 			<!-- buttons -->
 			<s:HGroup width="100%" paddingLeft="5" paddingTop="5" paddingBottom="5">
-				<s:Button label="Get top songs" />
+				<s:Button label="Get top songs" buttonMode="true" useHandCursor="true" />
 			</s:HGroup>
 			
 			<!-- similar artists -->

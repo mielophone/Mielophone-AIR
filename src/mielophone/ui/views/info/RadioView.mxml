@@ -36,6 +36,7 @@
 			
 			<s:Group width="200">
 				<s:Button id="openURL" chromeColor="#000000" color="#FFFFFF" 
+						  buttonMode="true" useHandCursor="true"
 						  label="Open URL" click="{openRadioByURL()}" />
 				<s:TextInput id="streamURL" prompt="Enter radio URL.."
 							 width="200" visible="false" 

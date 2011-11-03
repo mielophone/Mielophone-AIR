@@ -17,7 +17,8 @@
 		</s:fill>
 	</s:Rect>
 	
-	<s:Button label="Close" id="videoCloseButton" visible="false"  
+	<s:Button label="Close" id="videoCloseButton" visible="false"
+			  buttonMode="true" useHandCursor="true"
 			  click="{closeVideo()}" />
 	
 	<s:VGroup width="100%" height="100%" horizontalAlign="center" variableRowHeight="true" id="searchUI">

@@ -24,7 +24,7 @@
   <flashCatalyst validateFlashCatalystCompatibility="false"/>
   <buildTargets>
     <buildTarget buildTargetName="default">
-      <airSettings airCertificatePath="C:/Users/Light/Documents/Projects/certs/cert.p12" airTimestamp="true" anePathSet="true" version="1">
+      <airSettings airCertificatePath="/Users/yamalight/Projects/certs/cert.p12" airTimestamp="true" anePathSet="true" version="1">
         <airExcludes/>
         <anePaths/>
       </airSettings>

@@ -118,12 +118,31 @@
 			<!-- album image -->
 			<!-- <s:Image width="24" height="24" source="{nocoverImg}" 
 			smooth="true" smoothingQuality="high" id="albumCover" /> -->
-			<!-- track info -->
-			<s:RichText fontSize="14" color="#FFFFFF" 
-						text="Nothing is playing" paddingLeft="30" paddingRight="30"
-						width="100%" maxDisplayedLines="1" id="nowPlayingText" 
-						buttonMode="true" useHandCursor="true"
-						click="{playlistGroup.visible=true;}"/>
+			
+			<s:HGroup width="100%" variableColumnWidth="true" verticalAlign="middle"
+					  buttonMode="true" useHandCursor="true"
+					  click="{playlistGroup.visible=true;}">
+				<!-- track info -->
+				<s:RichText fontSize="14" color="#FFFFFF" 
+							text="Nothing is playing" paddingLeft="30" paddingRight="30"
+							width="90%" maxDisplayedLines="1" id="nowPlayingText" />
+				
+				<!-- playlist indicator -->
+				<s:Path data="
+						M 0 8 
+						L 8 8 
+						L 4 0 
+						M 8 8 
+						L 4 0">
+					<s:stroke>
+						<s:SolidColorStroke color="#FFFFFF"/>
+					</s:stroke>
+					<s:fill>
+						<s:SolidColor color="#FFFFFF" />
+					</s:fill>
+				</s:Path>
+				
+			</s:HGroup>
 			
 			<s:HGroup width="100%" verticalAlign="middle" variableColumnWidth="true"
 					  paddingLeft="20" paddingRight="20">

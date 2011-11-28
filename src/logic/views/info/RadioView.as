@@ -45,6 +45,7 @@ private var radioVolume:Number;
 public function initRadio():void{
 	isPlaying = false;
 	currentRadioURL = null;
+	radioVolume = 100;
 }
 
 public function doWork():void{

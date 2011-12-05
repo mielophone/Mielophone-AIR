@@ -10,11 +10,15 @@ import flash.display.NativeWindowDisplayState;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.events.NativeWindowDisplayStateEvent;
+import flash.net.SharedObject;
 
 import mx.core.FlexGlobals;
 
 [Embed(source='/assets/logo/logo-128.png')]
 private var trayIcon:Class;
+
+private var traySettings:SharedObject;
+public var minimizeToTray:Boolean;
 
 // System tray and doc icon classes
 private var sysTrayIcon:SystemTrayIcon;
@@ -25,11 +29,25 @@ public function setTrayTooltip(tip:String = "Mielophone"):void{
 		sysTrayIcon.tooltip = tip;
 }
 
+public function setMinimizeToTray(s:Boolean):void{
+	minimizeToTray = s;
+	// save
+	traySettings.data.minimize = s;
+	traySettings.flush();
+}
+
 /**
  * Initialize system tray or dock icon
  * add event listeners
  **/
 private function initDock():void{
+	// tray
+	traySettings = SharedObject.getLocal("mielophone.systray");
+	if( traySettings.data.minimize != null ){
+		minimizeToTray = traySettings.data.minimize; 
+	}else{
+		minimizeToTray = true;
+	}
 	// check if it's mac
 	//if(NativeApplication.supportsDockIcon){
 	//	dockIcon = NativeApplication.nativeApplication.icon as DockIcon; // stopIcon as DockIcon;
@@ -50,7 +68,7 @@ private function initDock():void{
  * On minimize go to tray
  **/
 private function onMinimize(e:NativeWindowDisplayStateEvent):void{
-	if(e.afterDisplayState == NativeWindowDisplayState.MINIMIZED){
+	if(e.afterDisplayState == NativeWindowDisplayState.MINIMIZED && minimizeToTray){
 		dock();
 	}
 }

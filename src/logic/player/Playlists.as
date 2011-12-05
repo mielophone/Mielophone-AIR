@@ -12,8 +12,8 @@ import mx.collections.ArrayCollection;
 import mx.utils.ObjectUtil;
 
 private function storePlaylist():void{
-	//playerSettings.data.playlist = playQueue;
-	//playerSettings.flush();
+	playerSettings.data.playlist = playQueue;
+	playerSettings.flush();
 }
 
 private function clearPlaylist():void{

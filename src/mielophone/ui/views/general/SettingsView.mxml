@@ -52,6 +52,10 @@
 					color="#FFFFFF"
 					change="{onEnableAnimationChange(event)}"/>
 		
+		<s:CheckBox label="Minimize to system tray" selected="true" id="enableTray"
+					color="#FFFFFF"
+					change="{onMinimizeToTrayChange(event)}"/>
+		
 		<s:Spacer height="20"/>
 		
 		<!-- last.fm -->

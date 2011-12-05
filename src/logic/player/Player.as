@@ -1,6 +1,7 @@
 
 import com.codezen.mse.MusicSearchEngine;
 import com.codezen.mse.models.Album;
+import com.codezen.mse.models.Artist;
 import com.codezen.mse.models.Song;
 import com.codezen.mse.playr.PlaylistManager;
 import com.codezen.mse.playr.Playr;
@@ -76,12 +77,27 @@ public function initPlayer():void{
 		playerBehavior = PLAYLIST_IGNORE;
 	}
 	// playlist
-	//if( playerSettings.data.playlist != null ){
-	//	playQueue = playerSettings.data.playlist;
-	//	songList.dataProvider = new ArrayCollection(playQueue);
-	//}else{
+	if( playerSettings.data.playlist != null ){
 		playQueue = [];
-	//}
+		
+		var s:Song;
+		var o:Object;
+		for each(o in playerSettings.data.playlist){
+			s = new Song();
+			s.duration = o.duration;
+			s.durationText = o.durationText;
+			s.name = o.name;
+			s.number = o.number;
+			s.artist = new Artist();
+			s.artist.name = o.artist.name;
+			s.artist.mbID = o.artist.mbID;
+			
+			playQueue.push(s);
+		} 
+		songList.dataProvider = new ArrayCollection(playQueue);
+	}else{
+		playQueue = [];
+	}
 	
 	timeSlider.slider.addEventListener(FlexEvent.CHANGE_END, onSeek);
 	timeSlider.slider.dataTipFormatFunction = timeDataTip;

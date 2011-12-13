@@ -247,6 +247,8 @@ public function findNextSong():void{
 		if(playerRepeat){
 			playPos = 0;
 			findSongAndPlay(playQueue[playPos] as Song);
+		}else{
+			nowSearching = false;
 		}
 	}else{
 		findSongAndPlay(playQueue[playPos] as Song);
@@ -271,6 +273,7 @@ public function findPrevSong():void{
 	
 	if(playPos < 0){
 		playPos = -1;
+		nowSearching = false;
 	}else{
 		findSongAndPlay(playQueue[playPos] as Song);
 	}

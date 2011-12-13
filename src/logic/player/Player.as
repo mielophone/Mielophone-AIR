@@ -43,7 +43,7 @@ public function initPlayer():void{
 	prefetchedNext = false;
 	fbSongPosted = false;
 	
-	nextRandomPos = -1;
+	playPos = nextRandomPos = -1;
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -168,6 +168,10 @@ public function setScrobblingAuth(login:String, pass:String):void{
 
 public function togglePlayPause():void{
 	player.togglePlayPause();
+	
+	if(playQueue.length > 0 && player.playrState == PlayrStates.WAITING && playPos == -1){
+		playSongByNum(0);
+	}
 }
 
 public function pausePlayback():void{

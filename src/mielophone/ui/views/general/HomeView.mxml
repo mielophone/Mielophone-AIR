@@ -14,7 +14,7 @@
 		<s:Label text="Mielophone" color="#FFFFFF" fontSize="36" />
 		<s:Spacer width="100%" />
 		<s:TextInput width="200" height="30" fontSize="18" id="searchInput"
-					 keyDown="{onSearchKey(event)}"/>
+					 keyDown="{onSearchKey(event)}" prompt="search..."/>
 	</s:HGroup>
 	
 	<s:Spacer height="20" />

@@ -43,7 +43,7 @@ public function initPlayer():void{
 	prefetchedNext = false;
 	fbSongPosted = false;
 	
-	nextRandomPos = -1;
+	playPos = nextRandomPos = -1;
 	
 	mse = FlexGlobals.topLevelApplication.mse;
 	
@@ -124,6 +124,7 @@ public function initScrobbler():void{
 		});
 		scrobbler.addEventListener(Event.INIT, function(e:Event):void{
 			trace('scrobble inited');
+			FlexGlobals.topLevelApplication.settingsView.lastfmIcon.alpha = 1;
 		});
 		scrobbler.auth(scrobbleName, scrobblePass);
 	}
@@ -168,6 +169,10 @@ public function setScrobblingAuth(login:String, pass:String):void{
 
 public function togglePlayPause():void{
 	player.togglePlayPause();
+	
+	if(playQueue.length > 0 && player.playrState == PlayrStates.WAITING && playPos == -1){
+		playSongByNum(0);
+	}
 }
 
 public function pausePlayback():void{
@@ -247,6 +252,8 @@ public function findNextSong():void{
 		if(playerRepeat){
 			playPos = 0;
 			findSongAndPlay(playQueue[playPos] as Song);
+		}else{
+			nowSearching = false;
 		}
 	}else{
 		findSongAndPlay(playQueue[playPos] as Song);
@@ -271,6 +278,7 @@ public function findPrevSong():void{
 	
 	if(playPos < 0){
 		playPos = -1;
+		nowSearching = false;
 	}else{
 		findSongAndPlay(playQueue[playPos] as Song);
 	}

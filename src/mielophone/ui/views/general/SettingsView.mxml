@@ -59,7 +59,10 @@
 		<s:Spacer height="20"/>
 		
 		<!-- last.fm -->
-		<s:Label color="#FFFFFF" text="Last.FM Scrobbling" fontSize="14" />
+		<s:HGroup verticalAlign="middle">
+			<s:Image source="@Embed('/assets/icons/lastfm.png')" alpha="0.2" id="lastfmIcon" />
+			<s:Label color="#FFFFFF" text="Last.FM Scrobbling" fontSize="14" />
+		</s:HGroup>
 		<s:HGroup verticalAlign="middle">
 			<s:Label color="#FFFFFF" text="Last.FM login:" />
 			<s:TextInput id="lastfmLogin" />					
@@ -76,6 +79,9 @@
 	
 	<!-- -->
 	<s:VGroup width="50%" right="0" top="36" bottom="0" variableRowHeight="true" paddingRight="10" paddingTop="10" gap="5">
-		<s:Button buttonMode="true" useHandCursor="true" label="Login with Facebook" click="onFacebookClick(event)" />
+		<s:HGroup verticalAlign="middle">
+			<s:Image source="@Embed('/assets/icons/facebook.png')" alpha="0.2" id="facebookIcon" />
+			<s:Button buttonMode="true" useHandCursor="true" label="Login with Facebook" id="facebookButton" click="onFacebookClick(event)" />
+		</s:HGroup>
 	</s:VGroup>
 </s:Group>

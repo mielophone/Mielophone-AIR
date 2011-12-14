@@ -160,7 +160,8 @@
 			<s:VSlider height="100%" minimum="0" maximum="100" value="100" 
 					   liveDragging="true" mouseFocusEnabled="false" 
 					   id="volumeSlider" change="{onVolumeSlider(event)}"/>
-			<s:Image source="@Embed('/assets/player/volume.png')" />
+			<s:Image source="@Embed('/assets/player/volume.png')" click="{toggleMute()}"
+					 buttonMode="true" useHandCursor="true" />
 		</s:VGroup>
 		
 		<!-- <s:Image source="{fullImg}" id="toggleFullBtn" click="{toggleFullMode()}"

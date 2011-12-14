@@ -75,7 +75,10 @@ private function onProgress(e:PlayrEvent):void{
 	if( player.currentSeconds > (player.totalSeconds * 0.7) ){
 		// scrobble track on 70%
 		if(scrobbler != null && scrobbler.isInitialized && !trackScrobbled){
-			scrobbler.doScrobble(player.artist, player.title, new Date().time.toString());
+			scrobbler.doScrobble(
+				CUtils.convertHTMLEntities(player.artist), 
+				CUtils.convertHTMLEntities(player.title), 
+				new Date().time.toString());
 			trackScrobbled = true;
 		}
 		

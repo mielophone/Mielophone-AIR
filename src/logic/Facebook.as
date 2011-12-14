@@ -5,6 +5,7 @@ import com.facebook.graph.Facebook;
 import com.facebook.graph.FacebookDesktop;
 
 import mx.controls.Alert;
+import mx.core.FlexGlobals;
 import mx.utils.ObjectUtil;
 
 private var fbAppID:String = "255624951156266";
@@ -21,6 +22,8 @@ private function onFbInit(session:Object, failure:Object):void{
 	if( session != null ){ // logged in
 		trace('fb init ok. session exists');
 		fbLoggedIn = true;
+		FlexGlobals.topLevelApplication.settingsView.facebookIcon.alpha = 1;
+		FlexGlobals.topLevelApplication.settingsView.facebookButton.label = "Disconnect from Facebook";
 	}else if( failure != null ){
 		trace("Initialized with error. Need login.");
 		trace(ObjectUtil.toString(failure));
@@ -43,6 +46,9 @@ private function onFbLogin(session:Object, failure:Object):void{
 				'lname':session.user.last_name,
 				'location':session.user.location.name
 		};
+		
+		FlexGlobals.topLevelApplication.settingsView.facebookIcon.alpha = 1;
+		FlexGlobals.topLevelApplication.settingsView.facebookButton.label = "Disconnect from Facebook";
 		
 		fbLoggedIn = true;
 	}else if( failure != null ){

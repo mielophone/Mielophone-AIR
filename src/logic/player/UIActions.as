@@ -36,6 +36,16 @@ private function onVolumeSlider(e:Event):void{
 	FlexGlobals.topLevelApplication.radioView.setVolume(volumeSlider.value);
 }
 
+private function toggleMute():void{
+	if( player.volume > 0 ){
+		player.volume = 0;
+		volumeSlider.value = 0;
+	}else{
+		player.volume = playerVolume / 100;
+		volumeSlider.value = playerVolume;
+	}
+}
+
 /******************************************************/
 /**					UI STUFF					 **/
 /******************************************************/

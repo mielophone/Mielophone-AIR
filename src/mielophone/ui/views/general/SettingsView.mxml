@@ -59,7 +59,10 @@
 		<s:Spacer height="20"/>
 		
 		<!-- last.fm -->
-		<s:Label color="#FFFFFF" text="Last.FM Scrobbling" fontSize="14" />
+		<s:HGroup verticalAlign="middle">
+			<s:Image source="@Embed('/assets/icons/lastfm.png')" alpha="0.2" id="lastfmIcon" />
+			<s:Label color="#FFFFFF" text="Last.FM Scrobbling" fontSize="14" />
+		</s:HGroup>
 		<s:HGroup verticalAlign="middle">
 			<s:Label color="#FFFFFF" text="Last.FM login:" />
 			<s:TextInput id="lastfmLogin" />					

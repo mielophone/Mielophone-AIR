@@ -124,6 +124,7 @@ public function initScrobbler():void{
 		});
 		scrobbler.addEventListener(Event.INIT, function(e:Event):void{
 			trace('scrobble inited');
+			FlexGlobals.topLevelApplication.settingsView.lastfmIcon.alpha = 1;
 		});
 		scrobbler.auth(scrobbleName, scrobblePass);
 	}
